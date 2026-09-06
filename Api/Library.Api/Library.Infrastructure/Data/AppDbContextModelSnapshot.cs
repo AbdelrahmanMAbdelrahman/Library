@@ -51,7 +51,7 @@ namespace Library.Infrastructure.Data
 
                     b.HasKey("Id");
 
-                    b.ToTable("RefreshTokens");
+                    b.ToTable("RefreshTokens", (string)null);
                 });
 
             modelBuilder.Entity("Library.Domain.Identity.Roles.AppRole", b =>

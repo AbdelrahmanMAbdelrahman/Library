@@ -1,9 +1,15 @@
 ﻿namespace Library.Application.Features.Identity.Queries.GetUserInfo;
-
-public sealed class getUserHandler : IRequestHandler<getUserQuery, Result<AppUserDto>>
+public sealed class getUserHandler
+    (ILogger<getUserHandler> logger,IIdentityService service): IRequestHandler<getUserQuery, Result<AppUserDto>>
 {
-    public Task<Result<AppUserDto>> Handle(getUserQuery request, CancellationToken cancellationToken)
+    public async Task<Result<AppUserDto>> Handle(getUserQuery request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        Result<AppUserDto> getuserResult=await service.GetUserByIdAsync(request.Id??"");
+        if (getuserResult.IsError)
+        {
+            logger.LogError("no user found ");
+            return getuserResult.Errors;
+        }
+        return getuserResult.Value;
     }
 }

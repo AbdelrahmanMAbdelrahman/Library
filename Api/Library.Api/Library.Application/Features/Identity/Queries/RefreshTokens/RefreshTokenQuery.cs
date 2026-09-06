@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Library.Application.Features.Identity.Queries.RefreshTokens;
 
-namespace Library.Application.Features.Identity.Queries.RefreshTokens
-{
-    internal class RefreshTokenQuery
-    {
-    }
-}
+public sealed record RefreshTokenQuery(string RefreshToken,string ExpiredAccessToken):
+    IRequest<Result<TokenResponse>>;

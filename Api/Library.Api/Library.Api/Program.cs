@@ -1,5 +1,6 @@
 using Library.Api;
 using Library.Infrastructure;
+using Library.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,7 +8,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddInfrastructure(builder.Configuration).AddPresentation();
 
 var app = builder.Build();
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -18,5 +18,6 @@ if (app.Environment.IsDevelopment())
 app.UseMiddleware();
 
 app.MapControllers();
+await app.InitializeAsync();
 
 app.Run();

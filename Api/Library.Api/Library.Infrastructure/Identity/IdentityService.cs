@@ -15,9 +15,9 @@ namespace Library.Infrastructure.Identity
             if (appUser is null) return Error.NotFound("AppUser.NotFound","No user found for this email");
 
             bool confirmed = await manager.IsEmailConfirmedAsync(appUser);
-            if (!confirmed) return Error.Conflict("AppUser.EmailNotConfirmed", "Must confirm your email");
+            //if (!confirmed) return Error.Conflict("AppUser.EmailNotConfirmed", "Must confirm your email"); later
             bool CorrectPass = await manager.CheckPasswordAsync(appUser,Password);
-            if (!confirmed) return Error.Conflict("Invalid Authentication", "Incorrect email or password");
+            if (!CorrectPass) return Error.Conflict("Invalid Authentication", "Incorrect email or password");
 
             return new AppUserDto(appUser.Id,
                 appUser.Email!,await manager.GetRolesAsync(appUser),
@@ -61,12 +61,13 @@ namespace Library.Infrastructure.Identity
             if (appUser is not null) return Error.Conflict("AppUser.UserExist", "User Already Exist");
             var appUserResult = AppUser.Create(Name,Email,Phone,UserName); 
             if (appUserResult.IsError) return appUserResult.Errors;
+            appUser = appUserResult.Value;
             var AddUserRes=await manager.CreateAsync(appUser!,Password);
             if (!AddUserRes.Succeeded) return Error.Conflict("AppUser.CreateFailed","Unable to create user");
-            appUser = appUserResult.Value;
             IdentityResult AddRoleToUserResult = await manager.AddToRoleAsync(appUser,"User");
             if (!AddRoleToUserResult.Succeeded) return Error.Conflict("AppUser.RoleInvalid","Invalid role");
             return Result.Success;
         }
     }
+
 }

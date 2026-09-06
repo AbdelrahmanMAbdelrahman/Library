@@ -48,7 +48,10 @@ public sealed class Result<T> : IResult<T>
         _errors = errors;
         IsSuccess = false;
     }
-
+    public TNextValue Match<TNextValue>(Func<T, TNextValue> OnValue, Func<List<Error>, TNextValue> OnError)
+    {
+        return IsSuccess ? OnValue(Value) : OnError(Errors);
+    }
     public static implicit operator Result<T>(T value)=>new Result<T>(value);
     public static implicit operator Result<T>(Error error)=>new Result<T>(error);
     public static implicit operator Result<T>(List<Error> errors) => new Result<T>(errors);

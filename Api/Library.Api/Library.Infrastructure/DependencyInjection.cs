@@ -41,7 +41,7 @@ public static class DependencyInjection
 
         services.AddIdentityCore<AppUser>();
 
-        services.AddIdentity<AppUser, AppRole>()
+        services.AddIdentity<AppUser,IdentityRole>()
             .AddEntityFrameworkStores<AppDbContext>()
             .AddDefaultTokenProviders();
 
@@ -73,9 +73,12 @@ public static class DependencyInjection
     }
     public static IServiceCollection AddDependencyInjection(this IServiceCollection services) {
         services.AddScoped<IIdentityService, IdentityService>()
-            .AddScoped<IAppDbContext,AppDbContext>();
+            .AddScoped<IAppDbContext, AppDbContext>()
+            .AddScoped<ITokenProvider, TokenProvider>()
+            .AddScoped<AppDbContextInitializer>();
+
         return services;
     }
-
+    
 
 }

@@ -12,5 +12,8 @@ global using System.IdentityModel.Tokens.Jwt;
 global using System.Security.Claims;
 global using System.Security.Cryptography;
 global using System.Text;
+global using Microsoft.Extensions.Logging;
+global using Library.Domain.Identity.Roles;
+global using Library.Domain.Identity.Users;
 namespace Library.Infrastructure.Global;
 
