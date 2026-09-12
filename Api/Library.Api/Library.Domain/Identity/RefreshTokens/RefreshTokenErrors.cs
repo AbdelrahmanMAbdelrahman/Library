@@ -1,6 +1,6 @@
 ﻿namespace Library.Domain.Identity.RefreshTokens;
 
-public static class RefreshTokenErrors
+internal static class RefreshTokenErrors
 {
     internal static Error IdRequired => Error.Validation("RefreshTokenErrors.IdReuired","Provide a valid id");
     internal static Error TokenRequired => Error.Validation("RefreshTokenErrors.TokenRequired","Provide a valid token");

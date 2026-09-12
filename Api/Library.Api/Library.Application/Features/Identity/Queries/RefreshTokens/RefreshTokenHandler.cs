@@ -1,9 +1,4 @@
-﻿
-using Library.Application.Common.Errors;
-using Library.Domain.Identity.RefreshTokens;
-using Microsoft.EntityFrameworkCore;
-
-namespace Library.Application.Features.Identity.Queries.RefreshTokens
+﻿namespace Library.Application.Features.Identity.Queries.RefreshTokens
 {
     public sealed class RefreshTokenHandler 
         (ILogger<RefreshTokenHandler>logger,IIdentityService identityService,
@@ -16,12 +11,12 @@ namespace Library.Application.Features.Identity.Queries.RefreshTokens
             if(claimsPrincipal is null)
             {
                 logger.LogError("invalid Expired access Token");
-                return ApplicationErrors.InvalidExpireAccessToken;
+                return ApplicationErrors.InvalidExpireAccessToken(request.ExpiredAccessToken);
             }
             string? userId = claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (string.IsNullOrEmpty(userId)) {
                 logger.LogError("no user found ");
-                return ApplicationErrors.UserNotFound;
+                return ApplicationErrors.UserNotFound(userId);
             }
 
            Result<AppUserDto> getUserResult =await identityService.GetUserByIdAsync(userId);
@@ -35,7 +30,7 @@ namespace Library.Application.Features.Identity.Queries.RefreshTokens
                 .FirstOrDefaultAsync(rt => rt.UserId == userId && rt.ExpireOn < DateTime.UtcNow);
             if (refreshToken is null) {
                 logger.LogError("Can't find Refresh Token");
-                return ApplicationErrors.RefreshTokenNotFound;
+                return ApplicationErrors.RefreshTokenNotFound(request.RefreshToken);
             }
             Result<TokenResponse> GenerateTokenResult =await provider.GenerateJwtToken(getUserResult.Value,cancellationToken);
             if (GenerateTokenResult.IsError)

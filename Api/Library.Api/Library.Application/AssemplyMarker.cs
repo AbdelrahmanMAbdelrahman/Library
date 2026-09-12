@@ -1,6 +1,4 @@
-﻿
-
-namespace Library.Application
+﻿namespace Library.Application
 {
     public class AssemplyMarker
     {

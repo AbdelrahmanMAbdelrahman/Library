@@ -3,6 +3,9 @@
 public sealed class AppUser:IdentityUser
 {
     public string? Name { get;private set; }
+    public ICollection<BorrowingRecord> BorrowingRecords { get;  set; } 
+    public ICollection< Fine> Fines { get;  set; }
+    public ICollection<Reservation> Reservations { get; set; }
     private AppUser(){}
     private AppUser(string id,string name,string email,string phone,string userName){
 

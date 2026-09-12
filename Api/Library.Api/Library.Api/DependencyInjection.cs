@@ -1,7 +1,4 @@
-﻿using Library.Application;
-using Library.Application.Common.Interfaces;
-
-namespace Library.Api;
+﻿namespace Library.Api;
 
 public static class DependencyInjection
 {
@@ -10,13 +7,15 @@ public static class DependencyInjection
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
         services.AddValidation()
-            .AddMediator(); ;
+            .AddIdentityInfrastructure()
+            .AddMediator() ;
         return services;
     }
 
     public static IServiceCollection AddValidation(this IServiceCollection services) {
         services.AddFluentValidationAutoValidation()
-            .AddValidatorsFromAssembly(typeof(AssemplyMarker).Assembly);
+            .AddValidatorsFromAssembly(typeof(AssemplyMarker).Assembly)
+            .AddValidatorsFromAssembly(typeof(BookReq).Assembly);
         return services;
     }
 
@@ -30,7 +29,7 @@ public static class DependencyInjection
     }
     public static IServiceCollection AddIdentityInfrastructure(this IServiceCollection services)
     {
-        services.AddScoped<IUser,currentuser>
+        services.AddScoped<IUser, CurrentUser>();
         services.AddHttpContextAccessor();
         return services;
     }

@@ -1,8 +1,4 @@
-﻿using Library.Application.Features.Identity.Dtos;
-using Library.Application.Features.Identity.Queries.SignIn;
-using System.Threading.Tasks;
-
-namespace Library.Api.Controllers;
+﻿namespace Library.Api.Controllers;
 
 [Route("api/[Controller]")]
 public class IdentityController(ISender sender):ApiController

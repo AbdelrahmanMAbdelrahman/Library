@@ -1,7 +1,3 @@
-using Library.Api;
-using Library.Infrastructure;
-using Library.Infrastructure.Data;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.

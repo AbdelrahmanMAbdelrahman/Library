@@ -1,21 +1,7 @@
-﻿using Library.Domain.Identity.Roles;
-using Library.Domain.Identity.Users;
-using Library.Infrastructure.Configuration;
-using Library.Infrastructure.Data;
-using Library.Infrastructure.Identity;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Library.Infrastructure.Configuration.Options;
+using Library.Infrastructure.Services;
 
 namespace Library.Infrastructure;
-
 public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services,IConfiguration configuration)
@@ -75,6 +61,7 @@ public static class DependencyInjection
         services.AddScoped<IIdentityService, IdentityService>()
             .AddScoped<IAppDbContext, AppDbContext>()
             .AddScoped<ITokenProvider, TokenProvider>()
+            .AddScoped<IFileStorage, FileStorageService>()
             .AddScoped<AppDbContextInitializer>();
 
         return services;

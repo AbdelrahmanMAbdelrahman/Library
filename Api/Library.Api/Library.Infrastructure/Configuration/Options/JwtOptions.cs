@@ -1,4 +1,4 @@
-﻿namespace Library.Infrastructure.Configuration;
+﻿namespace Library.Infrastructure.Configuration.Options;
 public class JwtOptions
 {
     public required string Key { get; set; }

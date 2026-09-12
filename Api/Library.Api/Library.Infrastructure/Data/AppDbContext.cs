@@ -1,8 +1,4 @@
-﻿using Library.Domain.Common;
-using Library.Domain.Identity.RefreshTokens;
-using Library.Domain.Identity.Roles;
-using Library.Domain.Identity.Users;
-using MediatR;
+﻿using Library.Domain.Reservations;
 
 namespace Library.Infrastructure.Data;
 
@@ -11,8 +7,21 @@ public sealed class AppDbContext(DbContextOptions<AppDbContext> options, IMediat
 {
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 
+    public DbSet<Book> Books => Set<Book>();
+
+    public DbSet<Copy> Copies => Set<Copy>();
+
+    public DbSet<UploadedFile> UploadedFiles => Set<UploadedFile>();
+
+    public DbSet<BorrowingRecord> BorrowingRecords =>Set<BorrowingRecord>();
+
+    public DbSet<Fine> Fines => Set<Fine>();
+
+    public DbSet<Reservation> Reservations => Set<Reservation>();
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
+        builder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
         base.OnModelCreating(builder);
     }
 

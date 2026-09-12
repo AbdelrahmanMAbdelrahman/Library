@@ -1,6 +1,4 @@
-﻿using Library.Domain.Identity.RefreshTokens;
-
-namespace Library.Infrastructure.Identity
+﻿namespace Library.Infrastructure.Identity
 {
     public sealed class TokenProvider(
         IAppDbContext context,IOptions<JwtOptions> jwtOptions
@@ -39,7 +37,8 @@ namespace Library.Infrastructure.Identity
             DateTime ExpireOn = DateTime.UtcNow.AddMinutes(jwtOptions.Value.Period);
             List<Claim> claims = new List<Claim> {
         new Claim(JwtRegisteredClaimNames.Sub,appUser.Id),
-        new Claim(JwtRegisteredClaimNames.Email,appUser.Email)
+        new Claim(JwtRegisteredClaimNames.Email,appUser.Email),
+        new Claim(JwtRegisteredClaimNames.Name,appUser.Name)
         };
            
             foreach (string role in appUser.Roles) {

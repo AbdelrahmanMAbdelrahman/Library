@@ -1,7 +1,4 @@
-﻿using Library.Domain.Common.Results;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-
-namespace Library.Api.Controllers;
+﻿namespace Library.Api.Controllers;
 
 [ApiController]
 public class ApiController:ControllerBase

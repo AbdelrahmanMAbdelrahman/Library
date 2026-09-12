@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Library.Domain.Copies;
 
-namespace Library.Domain.Copies
+internal sealed class CopyErrors
 {
-    public sealed class CopyErrors
-    {
-    }
+    internal static Error InvalidBookId => Error.Validation("CopyErrors.", "Provide a valid book id");
+    internal static Error InvalidCopyId=>Error.Validation("CopyErrors.","Provide a valid copy id");
 }

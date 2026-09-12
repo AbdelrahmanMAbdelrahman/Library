@@ -1,9 +1,4 @@
-﻿
-
-using Library.Domain.Identity.Users;
-using Microsoft.AspNetCore.Authorization;
-
-namespace Library.Infrastructure.Identity
+﻿namespace Library.Infrastructure.Identity
 {
     public sealed class IdentityService(UserManager<AppUser> manager,
         IAuthorizationService authorizationService,
@@ -19,7 +14,7 @@ namespace Library.Infrastructure.Identity
             bool CorrectPass = await manager.CheckPasswordAsync(appUser,Password);
             if (!CorrectPass) return Error.Conflict("Invalid Authentication", "Incorrect email or password");
 
-            return new AppUserDto(appUser.Id,
+            return new AppUserDto(appUser.Id,appUser.Name,
                 appUser.Email!,await manager.GetRolesAsync(appUser),
                 await manager.GetClaimsAsync(appUser));
         }
@@ -40,7 +35,7 @@ namespace Library.Infrastructure.Identity
             if (appUser is null) throw new InvalidOperationException("id not found");
             IList<string> roles = await manager.GetRolesAsync(appUser);
             IList<Claim> claims=await manager.GetClaimsAsync(appUser);
-            return new AppUserDto(UserId,appUser.Email!,roles,claims);
+            return new AppUserDto(UserId,appUser.Name,appUser.Email!,roles,claims);
         }
 
         public async Task<string> GetUserNameAsync(string UserId)
