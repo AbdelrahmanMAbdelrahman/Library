@@ -1,0 +1,31 @@
+     <div class="card">
+            <div class="card-header">
+                <h6 class="text-primary">books</h6>
+            </div>
+            <div class="card-body">
+                <div class="book-cards">
+
+                    <div *ngFor="let book of paginatedBooks?.items" class="card">
+                        <!-- <div class="card-header"><p class="text-info">title</p></div> -->
+                        <div class="card-body"><img src="" class="book-img" alt="not found"></div>
+                        <div class="card-footer">
+                            <div class="book-card-details">
+                                <p class="text-info">{{book.title}}</p>
+                                <p class="text-info">{{book.genere}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+            </div>
+            <div class="card-footer">
+                <div class="books-footer-details">
+                    <h6 class="text-info">Count : </h6>
+                    <div class="pagination">
+                        <button class="btn btn-outline-primary">Previous</button>
+                        <p class="text-info m-2">Page 2/1</p>
+                        <button class="btn btn-outline-primary">Next</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>

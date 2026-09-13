@@ -1,0 +1,10 @@
+.book-search-controls{
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(35%,1fr));
+    gap: 1%;
+}
+.book-search-btns{
+    display: flex;
+    justify-content: end;
+    gap: 1%;
+}

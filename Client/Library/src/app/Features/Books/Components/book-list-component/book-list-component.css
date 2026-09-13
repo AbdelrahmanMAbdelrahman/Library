@@ -1,0 +1,20 @@
+
+/* .book-card-details{
+    display: flex;
+    justify-content: space-evenly;
+} */
+.books-footer-details{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.book-cards{
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(25%,1fr));
+    gap: 1%;
+/* width: 200px; */
+}
+p{
+    margin: 0;
+    padding: 0;
+}

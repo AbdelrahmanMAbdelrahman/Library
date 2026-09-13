@@ -1,0 +1,13 @@
+
+
+
+<div class="book-page">
+    <div class="book-search">
+        <app-book-search></app-book-search>
+    </div>
+    <div class="book-grid">
+       <app-book-list-component
+         [paginatedBooks]="(paginatedBooks|async)!">
+       </app-book-list-component>
+    </div>
+</div>

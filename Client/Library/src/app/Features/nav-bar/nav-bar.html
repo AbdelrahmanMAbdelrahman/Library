@@ -1,0 +1,34 @@
+<nav>
+    <div class="dashboard">
+
+        <a href="" class="nav-link d-flex ">
+            <i class="bi bi-ui-radios-grid"></i>
+            <p class="">Dashboard</p>
+        </a>
+    </div>
+    <div class="nav-bar">
+        <ul>
+        
+            <li class="">
+                <a [routerLink]="['BookPage','BookListPage']">
+                    
+                    <i class="bi bi-book"></i>
+                    <p class="text-light">Books</p>
+                </a>
+                </li>
+            <li>
+                <a [routerLink]="['BorrowingRecordPage']">
+
+                    <i class="bi bi-journal-plus"></i>
+                    <p class="">Borrowing Record</p>    
+                </a>
+            </li>
+            <li>
+                <a [routerLink]="['BookPage']">
+                    <i class="bi bi-calendar-event"></i>
+                    <p class="">  Reservation</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>

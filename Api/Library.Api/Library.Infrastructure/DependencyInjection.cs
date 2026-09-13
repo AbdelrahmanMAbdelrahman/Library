@@ -9,6 +9,7 @@ public static class DependencyInjection
         return services.AddSingleton(TimeProvider.System)
             .AddConnectionString(configuration)
             .AddDependencyInjection()
+            .AddCorsService()
             .AddJwt(configuration);
 
     }
@@ -20,6 +21,19 @@ public static class DependencyInjection
             options.UseSqlServer(ConnectionString);
         });
         return services;    
+    }
+    static IServiceCollection AddCorsService(this IServiceCollection services)
+    {
+        services.AddCors(options =>
+        {
+            options.AddPolicy("LibraryApp", policy =>
+            {
+                policy.AllowAnyHeader()
+                 .AllowAnyMethod()
+                 .WithOrigins(["http://localhost:4200"]);
+            });
+        });
+        return services;
     }
     public static IServiceCollection AddJwt(this IServiceCollection services,IConfiguration configuration) {
         JwtOptions? jwtOptions=configuration.GetSection(nameof(JwtOptions)).Get<JwtOptions>();
@@ -62,7 +76,8 @@ public static class DependencyInjection
             .AddScoped<IAppDbContext, AppDbContext>()
             .AddScoped<ITokenProvider, TokenProvider>()
             .AddScoped<IFileStorage, FileStorageService>()
-            .AddScoped<AppDbContextInitializer>();
+            .AddScoped<AppDbContextInitializer>()
+            ;
 
         return services;
     }

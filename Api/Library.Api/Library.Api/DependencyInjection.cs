@@ -39,7 +39,8 @@ public static class DependencyInjection
             .UseHttpsRedirection()
             .UseStatusCodePages()
             .UseAuthentication()
-            .UseAuthorization();
+            .UseAuthorization()
+            .UseCors("LibraryApp");
     }
 
 }

@@ -1,5 +1,7 @@
-﻿using Library.Application.Features.Books.Commands.DeleteBooks;
+﻿using Library.Application.Common.Models;
+using Library.Application.Features.Books.Commands.DeleteBooks;
 using Library.Application.Features.Books.Commands.UpdateBooks;
+using Library.Application.Features.Books.Dtos;
 using Library.Application.Features.Books.Queries.GetBooks;
 using System.Threading.Tasks;
 
@@ -7,8 +9,8 @@ namespace Library.Api.Controllers;
 [Route("api/[controller]")]
 public class BookController(ISender sender):ApiController
 {
-    [HttpPost(nameof(CreateBook))]
-    [ProducesResponseType(typeof(BorrowingRecordDto), StatusCodes.Status201Created)]
+    [HttpPost()]
+    [ProducesResponseType(typeof(BookDto), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     [EndpointName(nameof(CreateBook))]
@@ -28,7 +30,7 @@ public class BookController(ISender sender):ApiController
             );
     }
     [HttpGet("{Id}")]
-    [ProducesResponseType(typeof(BorrowingRecordDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(BookDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
@@ -44,8 +46,8 @@ public class BookController(ISender sender):ApiController
             Problem
             );
     }
-    [HttpGet(nameof(GetBooks))]
-    [ProducesResponseType(typeof(BorrowingRecordDto), StatusCodes.Status200OK)]
+    [HttpGet()]
+    [ProducesResponseType(typeof(PaginatedList<BookDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     [EndpointName(nameof(GetBooks))]
@@ -59,7 +61,7 @@ public class BookController(ISender sender):ApiController
             res=>Ok(res), Problem);
     }
     [HttpPut("{Id}")]
-    [ProducesResponseType(typeof(BorrowingRecordDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(BookDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     [EndpointName(nameof(UpdateBook))]
@@ -72,7 +74,7 @@ public class BookController(ISender sender):ApiController
         return result.Match(res=>NoContent(),Problem);
     }
     [HttpDelete("{Id}")]
-    [ProducesResponseType(typeof(BorrowingRecordDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(BookDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     [EndpointName(nameof(DeleteBook))]
