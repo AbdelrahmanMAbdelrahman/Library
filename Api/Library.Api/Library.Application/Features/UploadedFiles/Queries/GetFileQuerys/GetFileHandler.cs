@@ -8,6 +8,11 @@ public sealed class GetFileHandler(ILogger<GetFileHandler>logger,IAppDbContext c
     public async Task<Result<DownloadFileDto>> Handle(GetFileQuery request, CancellationToken cancellationToken)
     {
         Result<DownloadFileDto> result =await storage.DownloadAsync(request.Id,cancellationToken);
+        if (result.IsError)
+        {
+            logger.LogError(string.Join(" - ", result.Errors));
+            return result.Errors;
+        }
         //UploadedFile? uploadedFile = await context.UploadedFiles.FindAsync(request.Id);
         //if(uploadedFile is null)
         //{

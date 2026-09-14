@@ -20,11 +20,22 @@ export class BookListPage implements OnInit {
   ngOnInit(): void {
     debugger;
     console.log("called");
-let bookFilter:BookFilter={
-  PageNumber: 1,
-  PageSize: 10
-}
-     this.paginatedBooks=this.bookService.GetBooks(bookFilter);
+    let bookFilter:BookFilter={
+      PageNumber: 1,
+      PageSize: 10
+    }
+    this.paginatedBooks=this.bookService.GetBooks(bookFilter);
+  }
+  search(book: BookFilter) {
+  let bookFilter:BookFilter={
+      PageNumber: book.PageNumber,
+      PageSize: book.PageSize,
+      Title:book.Title,
+      Genere:book.Genere,
+      PublicationDateFrom:book.PublicationDateFrom,
+      PublicationDateTo:book.PublicationDateTo
+    }
+    this.paginatedBooks=this.bookService.GetBooks(bookFilter);
   }
 
 }

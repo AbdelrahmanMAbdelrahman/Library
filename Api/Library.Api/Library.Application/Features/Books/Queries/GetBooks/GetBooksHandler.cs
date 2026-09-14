@@ -37,23 +37,23 @@ public sealed class GetBooksHandler(ILogger<GetBooksHandler>logger,IAppDbContext
     {
         if (!string.IsNullOrEmpty(title))
         {
-            booksQuery = booksQuery.Where(b => b.Title == title);
+            booksQuery = booksQuery.Where(b => b.Title.StartsWith( title));
         }
         if (!string.IsNullOrEmpty(iSBN))
         {
-            booksQuery = booksQuery.Where(b => b.ISBN == iSBN);
+            booksQuery = booksQuery.Where(b => b.ISBN.StartsWith( iSBN));
         }
         if (publicationDateFrom.HasValue)
         {
-            booksQuery = booksQuery.Where(b => b.PublicationDate > publicationDateFrom);
+            booksQuery = booksQuery.Where(b => b.PublicationDate >= publicationDateFrom);
         }
         if (publicationDateTo.HasValue)
         {
-            booksQuery = booksQuery.Where(b => b.PublicationDate > publicationDateTo);
+            booksQuery = booksQuery.Where(b => b.PublicationDate <= publicationDateTo);
         }
         if (!string.IsNullOrEmpty(genere))
         {
-            booksQuery = booksQuery.Where(b => b.Genere == genere);
+            booksQuery = booksQuery.Where(b => b.Genere.StartsWith( genere));
         }
         return booksQuery;
     }

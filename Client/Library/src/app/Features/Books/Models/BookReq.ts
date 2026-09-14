@@ -1,6 +1,6 @@
 export interface BookReq{
 title:string,
-iSBN:string, 
+isbn:string, 
 genere:string,
 additionalDetails:string,
 publicationDate:Date, 

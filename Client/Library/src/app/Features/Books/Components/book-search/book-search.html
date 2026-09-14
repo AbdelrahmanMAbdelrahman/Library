@@ -2,32 +2,32 @@
             <div class="card-header">
                 <h6 class="text-primary">Books Search</h6>
             </div>
+            <form action="" [formGroup]="searchForm!" (submit)="Search()">
             <div class="card-body">
-                <form action="">
                     <div class="book-search-controls">
                         <div class="form-group">
                             <label for="title" class="form-label">Title</label>
-                            <input type="text" id="title" class="form-control">
+                            <input type="text" id="title" class="form-control" formControlName="title">
                         </div>
                         <div class="form-group">
                             <label for="genere" class="form-label">Genere</label>
-                            <input type="text" id="genere" class="form-control">
+                            <input type="text" id="genere" class="form-control" formControlName="genere">
                         </div>
                         <div class="form-group">
                             <label for="publication-date-from" class="form-label">Publication Date From</label>
-                            <input type="date" id="publication-date-from" class="form-control">
+                            <input type="date" id="publication-date-from" class="form-control" formControlName="publicationDateFrom">
                         </div>
                     <div class="form-group">
                         <label for="publication-date-to" class="form-label">Publication Date To</label>
-                        <input type="date" id="publication-date-to" class="form-control">
+                        <input type="date" id="publication-date-to" class="form-control" formControlName="publicationDateTo">
                     </div>
                 </div>
-                </form>
             </div>
             <div class="card-footer">
                 <div class="book-search-btns">
                     <button class="btn btn-secondary">Clear</button>
-                    <button class="btn btn-primary">Search</button>
+                    <button type="submit" class="btn btn-primary">Search</button>
                 </div>
             </div>
+        </form>
         </div>

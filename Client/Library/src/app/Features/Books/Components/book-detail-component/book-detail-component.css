@@ -1,0 +1,26 @@
+.book-image{
+    display: flex;
+    justify-content: center;
+    align-items: start;
+}
+img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    max-height: 300px;
+    max-width: 200px;
+    border-radius: 10%;
+}
+.book-card-details{
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(45%,1fr));
+    gap: 1%;
+}
+.footer-btns{
+    display: flex;
+    justify-content: end;
+    gap: 1%;
+}
+/* button{
+    margin: 1%;
+} */

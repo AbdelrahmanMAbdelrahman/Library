@@ -3,7 +3,8 @@
 
 <div class="book-page">
     <div class="book-search">
-        <app-book-search></app-book-search>
+        <app-book-search 
+        (OnSearch)="search($event)"></app-book-search>
     </div>
     <div class="book-grid">
        <app-book-list-component

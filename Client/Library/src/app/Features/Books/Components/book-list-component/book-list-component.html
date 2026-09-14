@@ -7,23 +7,38 @@
 
                     <div *ngFor="let book of paginatedBooks?.items" class="card">
                         <!-- <div class="card-header"><p class="text-info">title</p></div> -->
-                        <div class="card-body"><img src="" class="book-img" alt="not found"></div>
-                        <div class="card-footer">
-                            <div class="book-card-details">
-                                <p class="text-info">{{book.title}}</p>
-                                <p class="text-info">{{book.genere}}</p>
-                            </div>
-                        </div>
+                         <!-- <a [routerLink]="['/BookPage','BookDetailPage']"> -->
+
+                             <div [routerLink]="['/BookPage','BookDetailPage',book.id]" class="card-body">
+                                 <img [src]="filePath+'/'+book.fileId" 
+                                 class="book-img" 
+                                 alt="not found"
+                                 (error)="OnImageError($event)"
+                                 ></div>
+                                 <div class="card-footer">
+                                     <div class="book-card-details">
+                                         <p class="card-title bg-secondary p-1">{{book.genere}}</p>
+                                         <p class="card-description">{{book.title}}</p>
+                                        </div>
+                             </div>
+                         <!-- </a> -->
                     </div>
                     </div>
             </div>
             <div class="card-footer">
                 <div class="books-footer-details">
-                    <h6 class="text-info">Count : </h6>
+                    <h6 class="text-info">Count : <span>{{paginatedBooks?.totalPages}}</span></h6>
+                    <button [routerLink]="['/BookPage','BookCreatePage','0']" class="btn btn-primary ">
+                        <i class="bi bi-file-earmark-plus-fill"></i>
+                      <span class="p-1">New book</span>    
+                    </button>
+                     <!-- <a href="">
+                        <i class="bi bi-file-earmark-plus-fill"></i>
+                     </a> -->
                     <div class="pagination">
-                        <button class="btn btn-outline-primary">Previous</button>
-                        <p class="text-info m-2">Page 2/1</p>
-                        <button class="btn btn-outline-primary">Next</button>
+                        <button [disabled]="!paginatedBooks?.hasPreviousPage" class="btn btn-outline-primary">Previous</button>
+                        <p class="text-info m-2">Page {{paginatedBooks?.totalPages}}/{{paginatedBooks?.pageNumber}}</p>
+                        <button [disabled]="!paginatedBooks?.hasNextPage" class="btn btn-outline-primary">Next</button>
                     </div>
                 </div>
             </div>

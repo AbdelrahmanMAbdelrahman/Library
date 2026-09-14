@@ -1,1 +1,40 @@
-<p>book-detail-component works!</p>
+<div class="card">
+    <div class="card-header">
+        <div class="book-image">
+            <img [src]="imageUrl+ '/' + book?.fileId" alt="no image found"
+            (error)="handleImageError($event)">
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="book-card-details">
+            <div class="form-group">
+                <label for="genere" class="form-label">Genere</label>
+                <input type="text" id="genere" [readonly]="true" [value]="book?.genere" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" id="title" [readonly]="true" [value]="book?.title" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="isbn" class="form-label">ISBN</label>
+                <input type="text" id="isbn" [readonly]="true" [value]="book?.isbn" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="publicationDate" class="form-label">Publication Date</label>
+                <input type="text" id="publicationDate" [readonly]="true" [value]="book?.publiationDate" class="form-control">
+            </div>
+            <div class="form-group">
+
+                <label for="additionDetails" class="form-label">additional Details</label>
+                <textarea name="additionDetails" rows="4" [readonly]="true" [value]="book?.additionalDetails" class="form-control" id="additionDetails"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <div class="footer-btns">
+            <button [routerLink]="['/BookPage','BookListPage']" class="btn btn-secondary">Cancel</button>
+            <button [routerLink]="['/BookPage','BookCreatePage',book?.id]" class="btn btn-warning">Edit</button>
+            <button class="btn btn-primary">Borrow</button>
+        </div>
+    </div>
+</div>
