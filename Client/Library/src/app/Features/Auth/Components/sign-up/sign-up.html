@@ -1,0 +1,43 @@
+<div class="sign-up-container">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="text-white">Sign Up</h3>
+        </div>
+        <form action="" [formGroup]="registerForm!" (submit)="SignUp()">
+
+            <div class="card-body">
+            <div class="form-group">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" formControlName="name" placeholder="your name" id="name" class="form-control">
+            </div>    
+            <div class="form-group">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" formControlName="email" placeholder="example@gmail.com" id="email" class="form-control">
+            </div>    
+            <div class="form-group">
+                <label for="userName" class="form-label">User Name</label>
+                <input type="userName" formControlName="userName" placeholder="example@gmail.com" id="username" class="form-control">
+            </div>    
+            <div class="form-group">
+                <label for="phone" class="form-label">phone</label>
+                <input type="tel" formControlName="phone" placeholder="+20" id="phone" class="form-control">
+            </div>    
+            <div class="form-group">
+                <label for="password" class="form-label">Password</label>
+                <input type="password"  formControlName="password" placeholder="*****" id="password" class="form-control">
+            </div>    
+            </div>
+            <div class="card-footer">
+                <div class="footer-btns">
+                    <div class="sign-up-btn">
+                        <button class="btn btn-primary">Sign Up</button>
+                    </div>
+                    <div class="sign-in-options">
+                        <span class="text-secondary">already have an account ?</span>
+                        <button type="button" [routerLink]="['../SignIn']" class="btn btn-secondary">Sign In</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

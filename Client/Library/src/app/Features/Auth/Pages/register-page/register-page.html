@@ -1,0 +1,7 @@
+<div class="register-page">
+
+    <app-sign-up
+    (OnRegister)="SignUp($event)"
+></app-sign-up>
+<div *ngIf="errorMessage" class="alert alert-danger">{{errorMessage}}</div>
+</div>

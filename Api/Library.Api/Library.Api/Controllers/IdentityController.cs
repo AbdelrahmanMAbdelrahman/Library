@@ -9,11 +9,11 @@ public class IdentityController(ISender sender):ApiController
     [EndpointName(nameof(Register))]
     [EndpointSummary("Register new user")]
     [EndpointDescription("Take name ,email ,phone ,username , password then create user account in the database")]
-    [HttpPost(Name ="Register")]
+    [HttpPost("register",Name =nameof(Register))]
     public async Task<IActionResult> Register(SignUpCommand command,CancellationToken ct)
     {
         Result<Success> result = await sender.Send(command,ct);
-        return result.Match(_=>Ok("Created"), Problem);
+        return result.Match(_=>NoContent(), Problem);
     }
     [ProducesResponseType(typeof(TokenResponse),StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
@@ -22,7 +22,7 @@ public class IdentityController(ISender sender):ApiController
     [EndpointSummary("Authenticate user")]
     [EndpointDescription("Take email, password then create access token , " +
         "refresh token and expiration date of the access token")]
-    [HttpGet(Name = nameof(Login))]
+    [HttpPost("login",Name = nameof(Login))]
     public async Task<IActionResult> Login(SignInQuery query,CancellationToken ct)
     {
         Result<TokenResponse> tokenResult = await sender.Send(query,ct);

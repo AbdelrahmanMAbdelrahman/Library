@@ -1,0 +1,9 @@
+<div class="login-page">
+
+    <app-sign-in
+    (OnLogin)="SignIn($event)"
+>
+</app-sign-in>
+
+<div *ngIf="errorMessage" class="alert alert-danger" >{{errorMessage}}</div>
+</div>

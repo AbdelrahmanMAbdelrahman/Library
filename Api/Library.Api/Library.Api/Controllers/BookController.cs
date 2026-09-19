@@ -16,7 +16,7 @@ public class BookController(ISender sender):ApiController
     [EndpointName(nameof(CreateBook))]
     [EndpointSummary("create borrowing record")]
     [EndpointDescription("return created book")]
-    //[Authorize(Roles = "User")]
+    [Authorize(Roles = "User")]
     public async Task<IActionResult> CreateBook([FromForm]BookReq book,CancellationToken ct)
     {
         CreateBookCommand createBookCommand = new CreateBookCommand(
@@ -37,7 +37,7 @@ public class BookController(ISender sender):ApiController
     [EndpointName(nameof(GetBook))]
     [EndpointSummary("return book")]
     [EndpointDescription("return book by provide an id")]
-    //[Authorize(Roles = "User")]
+    [Authorize(Roles = "User")]
     public async Task<IActionResult> GetBook([FromRoute] GetBookQuery query,CancellationToken ct)
     {
         var result = await sender.Send(query);
@@ -53,7 +53,7 @@ public class BookController(ISender sender):ApiController
     [EndpointName(nameof(GetBooks))]
     [EndpointSummary("return books")]
     [EndpointDescription("return All Books")]
-    //[Authorize(Roles = "User")]
+    [Authorize(Roles = "User")]
     public async Task<IActionResult> GetBooks([FromQuery]GetBooksQuery query,CancellationToken ct)
     {
         var result = await sender.Send(query,ct);
@@ -67,6 +67,7 @@ public class BookController(ISender sender):ApiController
     [EndpointName(nameof(UpdateBook))]
     [EndpointSummary("return books")]
     [EndpointDescription("return All Books")]
+    [Authorize(Roles = "User")]
     public async Task<IActionResult> UpdateBook([FromRoute]Guid Id, [FromForm]UpdateBookReq req,CancellationToken ct) {
         UpdateBookCommand command = new UpdateBookCommand(Id,req.Title,req.ISBN,req.Genere,req.AdditionalDetails,
             req.PublicationDate,req.Image.OpenReadStream(),req.Image.ContentType,req.Image.FileName);
@@ -80,6 +81,7 @@ public class BookController(ISender sender):ApiController
     [EndpointName(nameof(DeleteBook))]
     [EndpointSummary("updates book")]
     [EndpointDescription("updates Book by id")]
+    [Authorize(Roles = "User")]
     public async Task<IActionResult> DeleteBook([FromRoute] DeleteBookCommand command,CancellationToken ct) {
         var result = await sender.Send(command, ct);
         return result.Match(res=>NoContent(),Problem);

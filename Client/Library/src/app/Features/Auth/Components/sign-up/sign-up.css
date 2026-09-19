@@ -1,0 +1,21 @@
+.sign-up-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.card
+{
+    width: 25%;
+}
+.sign-up-btn{
+    display: flex;
+    justify-self: center;
+    margin: 5% auto;
+}
+.sign-in-options{
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 5%;
+
+}
