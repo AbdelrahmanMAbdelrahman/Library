@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { PaginatedList } from "../../../Global/PaginatedList";
 import { BookRes } from "../Models/BookRes";
 import { BookFilter } from "../Models/BookFilter";
+import { BookReq } from "../Models/BookReq";
 
 
 @Injectable({
@@ -17,24 +18,45 @@ export class BookService{
 GetBooks(bookFilter:BookFilter):Observable<PaginatedList<BookRes>>{
     debugger;
     let params=new HttpParams()
-    .set("PageNumber",bookFilter.PageNumber)
-    .set("PageSize",bookFilter.PageSize);
-    if(bookFilter.SortColumn)
-        params=params.set("SortColumn",bookFilter.SortColumn!);
-if(bookFilter.SortDirection)
-params=params.set("SortDirection",bookFilter.SortDirection!);
-if(bookFilter.Title)
-    params=params.set("Title",bookFilter.Title!);
-if(bookFilter.Genere)
-    params= params.set("Genere",bookFilter.Genere!);
-if(bookFilter.PublicationDateFrom)
-    params=params.set("PublicationDateFrom",bookFilter.PublicationDateFrom!.toString());
-if(bookFilter.PublicationDateTo)
-    params=params.set("PublicationDateTo",bookFilter.PublicationDateTo!.toString());
+    .set("PageNumber",bookFilter.pageNumber)
+    .set("PageSize",bookFilter.pageSize);
+    if(bookFilter.sortColumn)
+        params=params.set("SortColumn",bookFilter.sortColumn!);
+if(bookFilter.sortDirection)
+params=params.set("SortDirection",bookFilter.sortDirection!);
+if(bookFilter.title)
+    params=params.set("Title",bookFilter.title!);
+if(bookFilter.genere)
+    params= params.set("Genere",bookFilter.genere!);
+if(bookFilter.publicationDateFrom)
+    params=params.set("PublicationDateFrom",bookFilter.publicationDateFrom!.toString());
+if(bookFilter.publicationDateTo)
+    params=params.set("PublicationDateTo",bookFilter.publicationDateTo!.toString());
 
 return this.http.get<PaginatedList<BookRes>>(this.baseUrl,{params});
 }
 GetBook(Id: string): Observable<BookRes> {
  return this.http.get<BookRes>(`${this.baseUrl}/${Id}`);
+}
+CreateBook(req:BookReq):Observable<BookRes>{
+    const formData=new FormData();
+    formData.append('title',req.title);
+    formData.append('genere',req.genere);
+    formData.append('isbn',req.isbn);
+    formData.append('additionalDetails',req.additionalDetails);
+    formData.append('numberOfCopies',req.numberOfCopies.toString());
+    formData.append('publicationDate',req.publicationDate);
+    if(req.image)
+    formData.append('image',req.image);
+return this.http.post<BookRes>(this.baseUrl,formData)
+}
+UpdateBook(req:BookReq,id:string):Observable<any>{
+    const formData=new FormData();
+    formData.append('title',req.title);
+    formData.append('genere',req.genere);
+    formData.append('isbn',req.isbn);
+    formData.append('additionalDetails',req.additionalDetails);
+    formData.append('publicationDate',req.publicationDate);
+return this.http.put(`${this.baseUrl}/${id}`,formData);
 }
 }

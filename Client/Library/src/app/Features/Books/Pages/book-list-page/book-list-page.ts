@@ -21,19 +21,19 @@ export class BookListPage implements OnInit {
     debugger;
     console.log("called");
     let bookFilter:BookFilter={
-      PageNumber: 1,
-      PageSize: 10
+      pageNumber: 1,
+      pageSize: 10
     }
     this.paginatedBooks=this.bookService.GetBooks(bookFilter);
   }
   search(book: BookFilter) {
   let bookFilter:BookFilter={
-      PageNumber: book.PageNumber,
-      PageSize: book.PageSize,
-      Title:book.Title,
-      Genere:book.Genere,
-      PublicationDateFrom:book.PublicationDateFrom,
-      PublicationDateTo:book.PublicationDateTo
+      pageNumber: book.pageNumber,
+      pageSize: book.pageSize,
+      title:book.title,
+      genere:book.genere,
+      publicationDateFrom:book.publicationDateFrom,
+      publicationDateTo:book.publicationDateTo
     }
     this.paginatedBooks=this.bookService.GetBooks(bookFilter);
   }

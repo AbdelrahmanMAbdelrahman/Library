@@ -1,11 +1,11 @@
 export interface BookFilter{
-PageNumber:number,
-PageSize:number,
-SortColumn?:string,
-SortDirection?:string,
-Title?:string,
-ISBN?:string,
-Genere?:string,
-PublicationDateFrom?:Date,
-PublicationDateTo?:Date
+pageNumber:number,
+pageSize:number,
+sortColumn?:string,
+sortDirection?:string,
+title?:string,
+iSBN?:string,
+genere?:string,
+publicationDateFrom?:Date,
+publicationDateTo?:Date
 }

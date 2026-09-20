@@ -4,6 +4,6 @@ export interface BookRes{
      isbn:string,
      genere:string,
      additionalDetails:string,
-     publiationDate:Date,
+     publicationDate:string,
      fileId:string
 }

@@ -53,7 +53,7 @@ public class BookController(ISender sender):ApiController
     [EndpointName(nameof(GetBooks))]
     [EndpointSummary("return books")]
     [EndpointDescription("return All Books")]
-    [Authorize(Roles = "User")]
+    //[Authorize(Roles = "User")]
     public async Task<IActionResult> GetBooks([FromQuery]GetBooksQuery query,CancellationToken ct)
     {
         var result = await sender.Send(query,ct);
@@ -70,7 +70,7 @@ public class BookController(ISender sender):ApiController
     [Authorize(Roles = "User")]
     public async Task<IActionResult> UpdateBook([FromRoute]Guid Id, [FromForm]UpdateBookReq req,CancellationToken ct) {
         UpdateBookCommand command = new UpdateBookCommand(Id,req.Title,req.ISBN,req.Genere,req.AdditionalDetails,
-            req.PublicationDate,req.Image.OpenReadStream(),req.Image.ContentType,req.Image.FileName);
+            req.PublicationDate,req.Image?.OpenReadStream(),req.Image?.ContentType,req.Image?.FileName);
         var result = await sender.Send(command,ct);
         return result.Match(res=>NoContent(),Problem);
     }

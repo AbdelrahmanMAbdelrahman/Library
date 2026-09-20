@@ -1,9 +1,10 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { outputToObservable } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { url } from 'inspector';
 
 import { BookReq } from '../../Models/BookReq';
+import { BookRes } from '../../Models/BookRes';
 
 @Component({
   selector: 'app-book-create-component',
@@ -11,21 +12,31 @@ import { BookReq } from '../../Models/BookReq';
   templateUrl: './book-create-component.html',
   styleUrl: './book-create-component.css',
 })
-export class BookCreateComponent implements OnInit {
+export class BookCreateComponent implements OnInit,OnChanges {
+
   bookForm?:FormGroup;
   @Output()OnSaveBook=new EventEmitter<BookReq>(); 
-  
+  @Input() book?:BookRes;
   constructor() {
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes['book']&&this.book)
+      this.FillForm();
   }
   
   ngOnInit(): void {
+    debugger;
+    this.InitForm();
+    
+  }
+  InitForm() {
     this.bookForm=new FormGroup({
       'title':new FormControl(null,Validators.required),
       'isbn':new FormControl(null,Validators.required),
       'genere':new FormControl(null,Validators.required),
       'additionalDetails':new FormControl(null,Validators.required),
       'publicationDate':new FormControl(null,Validators.required),
-      'numberOfCopies':new FormControl(null,Validators.required),
+      // 'numberOfCopies':new FormControl(null,Validators.required),
       'image':new FormControl<File|null>(null),
     });
   }
@@ -37,11 +48,12 @@ export class BookCreateComponent implements OnInit {
   
 }
 clearImage(image: HTMLInputElement) {
-  console.log("remove image");
+
   image.value='';
   this.bookForm?.patchValue({image:null});
 }
 SaveBook() {
+
 let req:BookReq=this.fillObject();
 this.OnSaveBook.emit(req);
 }
@@ -53,10 +65,26 @@ let req: BookReq={
  genere: this.bookForm?.get('genere')?.value??'',
  additionalDetails: this.bookForm?.get('additionalDetails')?.value??'',
  publicationDate: this.bookForm?.get('publicationDate')?.value??'',
- numberOfCopies: this.bookForm?.get('numberOfCopies')?.value??'',
+ numberOfCopies:0,
  image: this.bookForm?.get('image')?.value??''
 }
 return req;
 }
+FillForm() {
+
+  console.log(this.book?.publicationDate);
+  this.bookForm?.patchValue({
+    'title':this.book?.title,
+    'isbn':this.book?.isbn,
+    'genere':this.book?.genere,
+    'additionalDetails':this.book?.additionalDetails,
+    'publicationDate':this.book?.publicationDate? 
+    this.book?.publicationDate.split('T')[0]:
+    null
+    
+  });
+  
 }
+}
+
 

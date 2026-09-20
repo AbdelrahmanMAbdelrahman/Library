@@ -24,12 +24,12 @@ export class BookSearch implements OnInit {
   Search() {
     debugger;
   let bookFilter:BookFilter={
-    PageNumber: 1,
-    PageSize: DefaultSettings.PageSize,
-    Title:this.searchForm?.get("title")?.value,
-    Genere:this.searchForm?.get("genere")?.value,
-    PublicationDateFrom:this.searchForm?.get("publicationDateFrom")?.value,
-    PublicationDateTo:this.searchForm?.get("publicationDateTo")?.value
+    pageNumber: 1,
+    pageSize: DefaultSettings.PageSize,
+    title:this.searchForm?.get("title")?.value,
+    genere:this.searchForm?.get("genere")?.value,
+    publicationDateFrom:this.searchForm?.get("publicationDateFrom")?.value,
+    publicationDateTo:this.searchForm?.get("publicationDateTo")?.value
   }
   this.OnSearch.emit(bookFilter);
   }

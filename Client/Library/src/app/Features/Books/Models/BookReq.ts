@@ -3,7 +3,7 @@ title:string,
 isbn:string, 
 genere:string,
 additionalDetails:string,
-publicationDate:Date, 
+publicationDate:string, 
 numberOfCopies:Number,
 image:File
 }

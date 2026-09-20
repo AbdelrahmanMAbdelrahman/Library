@@ -1,3 +1,4 @@
 <app-book-create-component
 (OnSaveBook)="SaveBook($event)"
+[book]="(book|async)!"
 ></app-book-create-component>
