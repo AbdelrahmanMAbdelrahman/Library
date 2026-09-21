@@ -27,7 +27,7 @@ public sealed class BorrowingRecord : Audit
         if (copyId == Guid.Empty) return borrowingRecordErrors.InvalidCopyId;
         if(string.IsNullOrEmpty(appUserId))return borrowingRecordErrors.InvalidUserId;
         if (DueDate <= DateTime.UtcNow) return borrowingRecordErrors.InvalidDueDate;
-        if (borrowingDate < DateTime.UtcNow) return borrowingRecordErrors.InalidBorrowingDate;
+        if (borrowingDate < DateTime.UtcNow.Subtract(TimeSpan.FromHours(6))) return borrowingRecordErrors.InalidBorrowingDate;
 
         return new BorrowingRecord(Guid.NewGuid(),copyId,appUserId,DueDate,
             borrowingDate,ActualReturnDate);

@@ -9,10 +9,14 @@ import { AuthGuard } from './Global/AuthGuard';
 import { App } from './app';
 import { DashboardPage } from './Features/Dashboard/Pages/dashboard-page/dashboard-page';
 import { MainPage } from './Features/Dashboard/Pages/main-page/main-page';
+import { BorrowingRecordListPage } from './Features/BorrowingRecords/Pages/borrowing-record-list-page/borrowing-record-list-page';
+import { BorrowingRecordCreatePage } from './Features/BorrowingRecords/Pages/borrowing-record-create-page/borrowing-record-create-page';
+import { BorrowingRecordDetailPage } from './Features/BorrowingRecords/Pages/borrowing-record-detail-page/borrowing-record-detail-page';
 
 
 export const routes: Routes = [
-    {path:"",component:MainPage,canActivate:[AuthGuard]},
+    {path:"",component:MainPage,canActivate:[AuthGuard],
+        children:[
     {path:"Dashboard",component:DashboardPage,canActivate:[AuthGuard]},
     {path:"BookPage",
         children:[
@@ -20,7 +24,17 @@ export const routes: Routes = [
             {path:"BookCreatePage/:id",component:BookCreatePage,canActivate:[AuthGuard]},
             {path:"BookDetailPage/:id",component:BookDetailPage,canActivate:[AuthGuard]},
         ]},
-        {path:"AuthPage",children:[
+        {path:"BorrowingRecordPage",
+            children:[
+                {path:"BorrowingRecordListPage",component:BorrowingRecordListPage},
+                {path:"BorrowingRecordCreatePage/:id",component:BorrowingRecordCreatePage},
+                {path:"BorrowingRecordDetailPage/:id",component:BorrowingRecordDetailPage},
+
+            ]
+        },
+        ]
+    },
+    {path:"AuthPage",children:[
             {path:"SignUp",component:RegisterPage},
             {path:"SignIn",component:LoginPage},
         ]

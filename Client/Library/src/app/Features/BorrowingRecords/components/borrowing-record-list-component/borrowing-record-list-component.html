@@ -1,0 +1,54 @@
+<div class="card">
+</div>
+<div class="card-header">
+    <h6 class="text-primary">Borrowing Records</h6>
+    <button class="btn btn-primary">Export</button>
+</div>
+<div class="card-body">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Serial</th>
+                <th>User Name</th>
+                <th>Title</th>
+                <th>Genere</th>
+                <th>Borrowing Date</th>
+                <th>Due Date</th>
+                <th>Actual Return Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let br of PaginatedBorrowingRecords?.items;let index=index">
+                <td>
+                   <a [routerLink]="['/BorrowingRecordPage','BorrowingRecordDetail',br.id]">
+                     {{index+1}}</a>
+                </td>
+                <td>
+                    <a [routerLink]="['/UserInfoPage','UserInfo',br.userInfo.userId]">
+                    {{br.userInfo.name}}</a>
+                </td>
+                <td>
+                    <a [routerLink]="['/BookPage','BookDetailPage',br.copy.id]">
+                    {{br.copy.book.title}}</a>
+                </td>
+                <td>{{br.copy.book.genere}}</td>
+                <td>{{br.borrowingDate|date:'dd/MM/yyyy'}}</td>
+                <td>{{br.dueDate|date:'dd/MM/yyyy'}}</td>
+                <td>{{br.actualReturnDate|date:'dd/MM/yyyy'}}</td>
+            </tr>
+        </tbody>
+        <!-- <tfoot>
+           
+        </tfoot> -->
+    </table>
+</div>
+<div class="card-footer">
+     <div class="borrowing-record-footer">
+                <p class="text-info">Records</p>
+                <div class="pagination">
+                    <button [disabled]="!PaginatedBorrowingRecords?.hasPreviousPage" class="btn btn-outline-primary">Previous</button>
+                    <p class="align-self">Pages  {{PaginatedBorrowingRecords?.totalPages}} / {{PaginatedBorrowingRecords?.pageNumber}} </p>
+                    <button [disabled]="!PaginatedBorrowingRecords?.hasNextPage" class="btn btn-outline-primary">next</button>
+                </div>
+            </div>
+</div>

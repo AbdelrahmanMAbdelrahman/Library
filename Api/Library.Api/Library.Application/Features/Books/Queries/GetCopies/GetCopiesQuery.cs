@@ -2,9 +2,9 @@
 
 namespace Library.Application.Features.Books.Queries.GetBooks;
 
-public sealed record GetBooksQuery(
+public sealed record GetCopiesQuery(
     int PageNumber=1,int PageSize=10,
     string SortColumn="Title",string SortDirection="Desc",
     string?Title=null,string? ISBN=null,string?Genere=null,
     DateTime?PublicationDateFrom=null, DateTime? PublicationDateTo = null
-    ):IRequest<Result<PaginatedList<BookDto>>>;
+    ):IRequest<Result<PaginatedList<CopyDto>>>;

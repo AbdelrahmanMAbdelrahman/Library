@@ -10,7 +10,6 @@ global using System.Security.Claims;
 global using Library.Api.Services;
 global using Library.Api.Requests;
 global using Library.Application.Features.Books.Commands.CreateBooks;
-global using Library.Application.Features.Books.Queries.GetBook;
 global using Library.Domain.Common.Constants;
 global using Library.Application.Features.UploadedFiles.Queries.GetFileQuerys;
 global using Library.Application.Features.Identity.Dtos;

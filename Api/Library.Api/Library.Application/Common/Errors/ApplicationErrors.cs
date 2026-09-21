@@ -10,7 +10,7 @@ namespace Library.Application.Common.Errors;
 
 public sealed class ApplicationErrors
 {
-    internal static Result<BorrowingRecordDto> RecordAlreadyBorrowed;
+    internal static Result<BorrowingRecordDto> RecordAlreadyBorrowed=>Error.Conflict("ApplicationErrors.RecordAlreadyBorrowed");
 
     internal static Error FineNotFound(Guid Id)=>Error.NotFound($"No Fine found for id = {Id}");
     internal static Error BookNotFound(Guid Id)=>Error.NotFound($"No book found for id = {Id}");

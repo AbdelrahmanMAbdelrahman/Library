@@ -1,6 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { BookRes } from '../../Models/BookRes';
 import { RouterLink } from '@angular/router';
+import { BorrowingRecordReq } from '../../../BorrowingRecords/Models/BorrowingRecordReq';
+import { CopyRes } from '../../Models/CopyRes';
 
 @Component({
   selector: 'app-book-detail-component',
@@ -10,10 +12,15 @@ import { RouterLink } from '@angular/router';
 })
 export class BookDetailComponent {
   imageUrl:string="https://localhost:7010/api/File";
-  @Input()book?:BookRes;
+  @Input()copy?:CopyRes;
+  @Output()OnSaveBorrowingRecord=new EventEmitter();
   handleImageError(event: Event) {
-  let image=event.target as HTMLImageElement;
-  image.onerror=null;
-  image.src="/Images/book.jpg"
+    let image=event.target as HTMLImageElement;
+    image.onerror=null;
+    image.src="/Images/book.jpg"
+  }
+  BorrowBook() {
+   
+  this.OnSaveBorrowingRecord.emit();
   }
 }

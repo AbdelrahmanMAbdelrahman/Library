@@ -5,17 +5,22 @@ import { PaginatedList } from "../../../Global/PaginatedList";
 import { BookRes } from "../Models/BookRes";
 import { BookFilter } from "../Models/BookFilter";
 import { BookReq } from "../Models/BookReq";
+import { CopyRes } from "../Models/CopyRes";
+
 
 
 @Injectable({
     providedIn:'root'
 })
 export class BookService{
-    baseUrl:string="https://localhost:7010/api/Book";
+    baseUrl:string="https://localhost:7010/api/Copies";
     constructor(private http:HttpClient) {
 }
-
-GetBooks(bookFilter:BookFilter):Observable<PaginatedList<BookRes>>{
+GetCopy(bookId:string):Observable<CopyRes>{
+    
+    return this.http.get<CopyRes>(`${this.baseUrl}/${bookId}`);
+}
+GetBooks(bookFilter:BookFilter):Observable<PaginatedList<CopyRes>>{
     debugger;
     let params=new HttpParams()
     .set("PageNumber",bookFilter.pageNumber)
@@ -33,7 +38,7 @@ if(bookFilter.publicationDateFrom)
 if(bookFilter.publicationDateTo)
     params=params.set("PublicationDateTo",bookFilter.publicationDateTo!.toString());
 
-return this.http.get<PaginatedList<BookRes>>(this.baseUrl,{params});
+return this.http.get<PaginatedList<CopyRes>>(this.baseUrl,{params});
 }
 GetBook(Id: string): Observable<BookRes> {
  return this.http.get<BookRes>(`${this.baseUrl}/${Id}`);

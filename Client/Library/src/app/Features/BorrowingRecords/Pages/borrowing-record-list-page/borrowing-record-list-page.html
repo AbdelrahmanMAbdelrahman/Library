@@ -1,0 +1,10 @@
+<div class="borrowing-record-page">
+<div class="borrowing-record-search">
+    <app-borrowing-record-search-component></app-borrowing-record-search-component>
+</div>
+<div class="borrowing-record-list">
+    <app-borrowing-record-list-component
+    [PaginatedBorrowingRecords]="(paginatedRecords|async)!"
+    ></app-borrowing-record-list-component>
+</div>
+</div>

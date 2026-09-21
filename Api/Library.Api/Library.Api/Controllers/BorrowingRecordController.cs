@@ -1,10 +1,14 @@
-﻿namespace Library.Api.Controllers
+﻿using Library.Application.Common.Models;
+using Library.Application.Features.BorrowingRecords.Queries.GetBorrowingRecords;
+using System.Threading.Tasks;
+
+namespace Library.Api.Controllers
 {
     [Route("api/[Controller]")]
-    [Authorize]
+    //[Authorize]
     public class BorrowingRecordController(ISender sender):ApiController
     {
-        [HttpPost(nameof(CreateBorrowingRecord))]
+        [HttpPost()]
         [ProducesResponseType(typeof(BorrowingRecordDto),StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ProblemDetails),StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails),StatusCodes.Status500InternalServerError)]
@@ -29,13 +33,27 @@
         [EndpointSummary("return borrowing record")]
         [EndpointDescription("return borrowing record by provide an id")]
         [Authorize(Roles = "User")]
-        public async Task<IActionResult> GetBorrowingRecord([FromRoute] GetBorrowingRecordCommand command,CancellationToken ct)
+        public async Task<IActionResult> GetBorrowingRecord([FromRoute] GetBorrowingRecordQuery command,CancellationToken ct)
         {
             Result<BorrowingRecordDto> result = await sender.Send(command);
             return result.Match(
                 response=>Ok(response),
                 Problem
                 );
+        }
+        [HttpGet("")]
+        [ProducesResponseType(typeof(BorrowingRecordDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+        [EndpointName(nameof(GetBorrowingRecords))]
+        [EndpointSummary("return borrowing records")]
+        [EndpointDescription("return borrowing records ")]
+        [Authorize(Roles = "User")]
+        public async Task<IActionResult> GetBorrowingRecords([FromQuery]GetBorrowingRecordsQuery command,CancellationToken ct)
+        {
+            Result<PaginatedList<BorrowingRecordDto>> paginatedResult = await sender.Send(command,ct);
+            return paginatedResult.Match(res=>Ok(res),Problem);
         }
     }
 }

@@ -6,14 +6,16 @@ namespace Library.Application.Features.Books.Commands.UpdateBooks
     {
         public async Task<Result<Updated>> Handle(UpdateBookCommand request, CancellationToken cancellationToken)
         {
-            Book? book = await context.Books.FindAsync(request.Id);
-            if(book is null)
+            Copy? copy = await context.Copies
+                .Include(c=>c.Book)
+                .FirstOrDefaultAsync(c=>c.Id== request.CopyId);
+            if(copy is null)
             {
-                logger.LogError($"no book found for id = {request.Id}");
-                return ApplicationErrors.BookNotFound(request.Id);
+                logger.LogError($"no book found for id = {request.CopyId}");
+                return ApplicationErrors.BookNotFound(request.CopyId);
             }
 
-            Result<Updated> UpdateBookResult = book.Update(request.Title,request.ISBN,
+            Result<Updated> UpdateBookResult = copy.Book.Update(request.Title,request.ISBN,
                 request.PublicationDate,request.Genere,request.AdditionalDetails);
             if (UpdateBookResult.IsError)
             {

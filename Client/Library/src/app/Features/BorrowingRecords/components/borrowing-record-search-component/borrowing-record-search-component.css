@@ -1,0 +1,10 @@
+.footer-btns{
+    display: flex;
+    justify-content: end;
+    gap: 1%;
+}
+.borrowing-record-controls{
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(19%,1fr));
+    gap: 1%;
+}

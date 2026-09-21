@@ -5,7 +5,7 @@ public sealed class UpdateBookValidator:AbstractValidator<UpdateBookCommand>
     public UpdateBookValidator()
     {
 
-        RuleFor(b => b.Id).NotEmpty().WithMessage("Must Provide '{PropertyName}'");
+        RuleFor(b => b.CopyId).NotEmpty().WithMessage("Must Provide '{PropertyName}'");
     RuleFor(b => b.Title).NotEmpty().WithMessage("Must Provide '{PropertyName}'")
             .Length(3,255).WithMessage(
             "'{PropertyName}' Must Has At least '{MinLenth} chars , '{MaxLength}' chars at most ");

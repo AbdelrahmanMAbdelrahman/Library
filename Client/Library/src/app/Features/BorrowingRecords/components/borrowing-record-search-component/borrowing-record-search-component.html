@@ -1,0 +1,53 @@
+<div class="card">
+    <!-- <div class="card-header">
+        <h6 class="text-primary">Search borrowing Records </h6>
+    </div> -->
+    <form action="" [formGroup]="searchForm!">
+        <div class="card-body">
+            <div class="borrowing-record-controls">
+                <div class="form-group">
+                    <label for="" class="form-label">Username</label>
+                    <input type="text" formControlName="userName" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="" class="form-label">Title</label>
+                    <input type="text" formControlName="title" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="" class="form-label">Genere</label>
+                    <input type="text" formControlName="genere" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="fromBorrowingDate" class="form-label">From Borrowing Date </label>
+                    <input type="date" formControlName="fromBorrowingDate" id="fromBorrowingDate" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="toBorrowingDate" class="form-label">To Borrowing Date </label>
+                    <input type="date" formControlName="toBorrowingDate" id="toBorrowingDate" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="fromDueDate" class="form-label">From Due Date</label>
+                    <input type="date" formControlName="fromDueDate" id="fromDueDate" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="toDueDate" class="form-label">To Due Date</label>
+                    <input type="date" formControlName="toDueDate" id="toDueDate" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="fromActualReturnDate" class="form-label">From Actual Return Date</label>
+                    <input type="date" formControlName="fromActualReturnDate" id="fromActualReturnDate" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="toActualReturnDate" class="form-label">To Actual Return Date</label>
+                <input type="date" formControlName="toActualReturnDate" id="toActualReturnDate" class="form-control">
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <div class="footer-btns">
+            <button type="button" (click)="clearForm()" class="btn btn-secondary">Clear</button>
+            <button (click)="search()" class="btn btn-primary">Search</button>
+        </div>
+    </div>
+</form>
+</div>

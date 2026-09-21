@@ -3,6 +3,7 @@ import { PaginatedList } from '../../../../Global/PaginatedList';
 import { BookRes } from '../../Models/BookRes';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { CopyRes } from '../../Models/CopyRes';
 
 @Component({
   selector: 'app-book-list-component',
@@ -11,10 +12,10 @@ import { RouterLink } from '@angular/router';
   styleUrl: './book-list-component.css',
 })
 export class BookListComponent  implements OnInit{
-  @Input()paginatedBooks?:PaginatedList<BookRes>;
+  @Input()paginatedCopies?:PaginatedList<CopyRes>;
   filePath:string="https://localhost:7010/api/File";
   ngOnInit(): void {
-    console.table(this.paginatedBooks?.items)
+    console.table(this.paginatedCopies?.items)
     
   }
   OnImageError(event: Event) {

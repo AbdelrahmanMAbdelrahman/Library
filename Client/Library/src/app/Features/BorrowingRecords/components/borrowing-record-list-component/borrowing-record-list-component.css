@@ -1,0 +1,15 @@
+.borrowing-record-footer{
+    display: flex;
+    justify-content: space-between;
+    margin: 0 1%;
+}
+.card-header{
+    display: flex;
+    justify-content: space-between;
+    margin: 0 1%;;
+}
+a{
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}

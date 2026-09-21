@@ -3,6 +3,7 @@ export interface BookRes{
      title:string,
      isbn:string,
      genere:string,
+     numberOfCopies:number,
      additionalDetails:string,
      publicationDate:string,
      fileId:string

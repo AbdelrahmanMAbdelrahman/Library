@@ -1,19 +1,19 @@
-﻿
-
-using Library.Application.Features.BorrowingRecords.Mappers;
-
-namespace Library.Application.Features.BorrowingRecords.Queries.GetBorrowingRecords;
+﻿namespace Library.Application.Features.BorrowingRecords.Queries.GetBorrowingRecords;
 
 public sealed class getBorrowingRecordsHandler(
     ILogger<getBorrowingRecordsHandler>logger,
     IAppDbContext context
     )
-    : IRequestHandler<GetBorrowingRecordsCommand, Result<PaginatedList<BorrowingRecordDto>>>
+    : IRequestHandler<GetBorrowingRecordsQuery, Result<PaginatedList<BorrowingRecordDto>>>
 {
-    public async Task<Result<PaginatedList<BorrowingRecordDto>>> Handle(GetBorrowingRecordsCommand request,
+    public async Task<Result<PaginatedList<BorrowingRecordDto>>> Handle(GetBorrowingRecordsQuery request,
         CancellationToken cancellationToken)
     {
-        IQueryable<BorrowingRecord> borrowingRecords= context.BorrowingRecords.AsQueryable();
+        IQueryable<BorrowingRecord> borrowingRecords= context.BorrowingRecords
+            .Include(br=>br.AppUser)
+            .Include(br=>br.Copy)
+              .ThenInclude(c=>c.Book)
+            .AsNoTracking().AsQueryable();
         borrowingRecords = ApplySort(borrowingRecords,request.SortColumn, request.SortDirection);
         borrowingRecords = ApplySearch(borrowingRecords,request.CopyId,
             request.BorrowingDateFrom,request.BorrowingDateTo,
@@ -34,7 +34,7 @@ public sealed class getBorrowingRecordsHandler(
         DateTime? borrowingDateFrom,DateTime? BorrowingDateTo,
         DateTime?  dueDateFrom,DateTime? dueDateTo)
     {
-        if (copyId != Guid.Empty) borrowingRecords = borrowingRecords.Where(b => b.CopyId == copyId);
+        if (copyId!=null&&copyId != Guid.Empty) borrowingRecords = borrowingRecords.Where(b => b.CopyId == copyId);
         if (borrowingDateFrom.HasValue) borrowingRecords = borrowingRecords
                 .Where(b=>b.BorrowingDate>= borrowingDateFrom );
         if (BorrowingDateTo.HasValue) borrowingRecords = borrowingRecords

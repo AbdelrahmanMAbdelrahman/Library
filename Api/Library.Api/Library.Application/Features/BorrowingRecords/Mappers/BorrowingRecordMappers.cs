@@ -9,7 +9,7 @@ public static class BorrowingRecordMappers
     {
         return new BorrowingRecordDto(borrowingRecord.Id,borrowingRecord.BorrowingDate,
             borrowingRecord.DueDate,borrowingRecord.ActualReturnDate,
-            borrowingRecord.Copy.Book.ToDto(),borrowingRecord.AppUser.ToDto());
+            borrowingRecord.Copy.ToDto(),borrowingRecord.AppUser.ToDto());
     }
 
     public static IQueryable<BorrowingRecordDto> ToDto(this IQueryable<BorrowingRecord> borrowingRecords)

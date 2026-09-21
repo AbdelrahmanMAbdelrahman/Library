@@ -5,20 +5,20 @@
             <div class="card-body">
                 <div class="book-cards">
 
-                    <div *ngFor="let book of paginatedBooks?.items" class="card">
+                    <div *ngFor="let copy of paginatedCopies?.items" class="card">
                         <!-- <div class="card-header"><p class="text-info">title</p></div> -->
                          <!-- <a [routerLink]="['/BookPage','BookDetailPage']"> -->
 
-                             <div [routerLink]="['/BookPage','BookDetailPage',book.id]" class="card-body">
-                                 <img [src]="filePath+'/'+book.fileId" 
+                             <div [routerLink]="['/BookPage','BookDetailPage',copy.id]" class="card-body">
+                                 <img [src]="filePath+'/'+ copy.book.fileId" 
                                  class="book-img" 
                                  alt="not found"
                                  (error)="OnImageError($event)"
                                  ></div>
                                  <div class="card-footer">
                                      <div class="book-card-details">
-                                         <p class="card-title bg-secondary p-1">{{book.genere}}</p>
-                                         <p class="card-description">{{book.title}}</p>
+                                         <p class="card-title bg-secondary p-1">{{copy.book.genere}}</p>
+                                         <p class="card-description">{{copy.book.title}}</p>
                                         </div>
                              </div>
                          <!-- </a> -->
@@ -27,7 +27,7 @@
             </div>
             <div class="card-footer">
                 <div class="books-footer-details">
-                    <h6 class="text-info">Count : <span>{{paginatedBooks?.totalPages}}</span></h6>
+                    <h6 class="text-info">Count : <span>{{paginatedCopies?.totalPages}}</span></h6>
                     <button [routerLink]="['/BookPage','BookCreatePage','0']" class="btn btn-primary ">
                         <i class="bi bi-file-earmark-plus-fill"></i>
                       <span class="p-1">New book</span>    
@@ -36,9 +36,9 @@
                         <i class="bi bi-file-earmark-plus-fill"></i>
                      </a> -->
                     <div class="pagination">
-                        <button [disabled]="!paginatedBooks?.hasPreviousPage" class="btn btn-outline-primary">Previous</button>
-                        <p class="text-info m-2">Page {{paginatedBooks?.totalPages}}/{{paginatedBooks?.pageNumber}}</p>
-                        <button [disabled]="!paginatedBooks?.hasNextPage" class="btn btn-outline-primary">Next</button>
+                        <button [disabled]="!paginatedCopies?.hasPreviousPage" class="btn btn-outline-primary">Previous</button>
+                        <p class="text-info m-2">Page {{paginatedCopies?.totalPages}}/{{paginatedCopies?.pageNumber}}</p>
+                        <button [disabled]="!paginatedCopies?.hasNextPage" class="btn btn-outline-primary">Next</button>
                     </div>
                 </div>
             </div>

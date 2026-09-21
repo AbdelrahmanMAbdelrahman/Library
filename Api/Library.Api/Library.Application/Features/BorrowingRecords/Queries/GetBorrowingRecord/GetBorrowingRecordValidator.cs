@@ -1,6 +1,6 @@
 ﻿namespace Library.Application.Features.BorrowingRecords.Queries.GetBorrowingRecord;
 
-public sealed class GetBorrowingRecordValidator:AbstractValidator<GetBorrowingRecordCommand>
+public sealed class GetBorrowingRecordValidator:AbstractValidator<GetBorrowingRecordQuery>
 {
     public GetBorrowingRecordValidator()
     {

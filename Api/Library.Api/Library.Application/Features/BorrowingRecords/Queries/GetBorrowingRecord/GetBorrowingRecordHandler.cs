@@ -2,9 +2,9 @@
 
 public sealed class GetBorrowingRecordHandler(
     ILogger<GetBorrowingRecordHandler>logger,
-    IAppDbContext context) : IRequestHandler<GetBorrowingRecordCommand, Result<BorrowingRecordDto>>
+    IAppDbContext context) : IRequestHandler<GetBorrowingRecordQuery, Result<BorrowingRecordDto>>
 {
-    public async Task<Result<BorrowingRecordDto>> Handle(GetBorrowingRecordCommand request, CancellationToken cancellationToken)
+    public async Task<Result<BorrowingRecordDto>> Handle(GetBorrowingRecordQuery request, CancellationToken cancellationToken)
     {
         BorrowingRecord? borrowingRecord = await context.BorrowingRecords
            .Include(b => b.AppUser)
@@ -19,7 +19,7 @@ public sealed class GetBorrowingRecordHandler(
         }
 
         return new BorrowingRecordDto(borrowingRecord.Id,borrowingRecord.BorrowingDate,borrowingRecord.DueDate,
-            borrowingRecord.ActualReturnDate,borrowingRecord.Copy.Book.ToDto(),
+            borrowingRecord.ActualReturnDate,borrowingRecord.Copy.ToDto(),
             borrowingRecord.AppUser.ToDto());
     }
 }

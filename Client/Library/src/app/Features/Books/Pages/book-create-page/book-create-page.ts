@@ -10,6 +10,7 @@ import { observableToBeFn } from 'rxjs/internal/testing/TestScheduler';
 import { Observable } from 'rxjs';
 import { asyncWrapProviders } from 'async_hooks';
 import { AsyncPipe } from '@angular/common';
+import { CopyRes } from '../../Models/CopyRes';
 
 @Component({
   selector: 'app-book-create-page',
@@ -18,23 +19,24 @@ import { AsyncPipe } from '@angular/common';
   styleUrl: './book-create-page.css',
 })
 export class BookCreatePage implements OnInit{
-  book?:Observable< BookRes>;
+  copy?:Observable< CopyRes>;
   constructor(private bookService:BookService,private route:ActivatedRoute,private router:Router) {
   }
   ngOnInit(): void {
     debugger;
-    if(this.BookId){
-this.book= this.bookService.GetBook(this.BookId)
+    if(this.CopyId){
+this.copy= this.bookService.GetCopy(this.CopyId)
+
   }}
 SaveBook(req: BookReq) {
-if(this.BookId==="0")
+if(this.CopyId==="0")
   this.Createbook(req);
 else
   this.UpdateBook(req);
 }
   UpdateBook(req: BookReq) {
-    this.bookService.UpdateBook(req,this.BookId).subscribe({
-      next:()=>{this.router.navigate(['/BookPage','BookDetailPage',this.BookId])},
+    this.bookService.UpdateBook(req,this.CopyId).subscribe({
+      next:()=>{this.router.navigate(['/BookPage','BookDetailPage',this.CopyId])},
       error:(err:HttpErrorResponse)=>{
         let failure=err.error as Failure ;
         console.log("fail",failure)
@@ -53,6 +55,6 @@ this.router.navigate(['/BookPage','BookDetailPage',res.id]);
     }
    });
   }
-get BookId(){return this.route.snapshot.paramMap.get('id')??"0"}
+get CopyId(){return this.route.snapshot.paramMap.get('id')??"0"}
 
 }

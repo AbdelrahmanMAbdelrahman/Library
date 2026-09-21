@@ -20,7 +20,7 @@ export class App {
    */
   // isAuthenticated:boolean=false;
   constructor(public authState:AuthStateService) {
-    debugger;
+    
     console.log(authState.isAuthenticated)
     // this.isAuthenticated=authState.isAuthenticated();
     // console.log(this.isAuthenticated?"authenticated":"not authencticated")

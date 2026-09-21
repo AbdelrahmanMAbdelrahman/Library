@@ -7,6 +7,7 @@ import { BookRes } from '../../Models/BookRes';
 import { BookFilter } from '../../Models/BookFilter';
 import { AsyncPipe } from '@angular/common';
 import { BookSearch } from '../../Components/book-search/book-search';
+import { CopyRes } from '../../Models/CopyRes';
 
 @Component({
   selector: 'app-book-list-page',
@@ -15,7 +16,7 @@ import { BookSearch } from '../../Components/book-search/book-search';
   styleUrl: './book-list-page.css',
 })
 export class BookListPage implements OnInit {
-  paginatedBooks?:Observable<PaginatedList<BookRes>>;
+  paginatedCopies?:Observable<PaginatedList<CopyRes>>;
   constructor(private bookService:BookService) {}
   ngOnInit(): void {
     debugger;
@@ -24,7 +25,7 @@ export class BookListPage implements OnInit {
       pageNumber: 1,
       pageSize: 10
     }
-    this.paginatedBooks=this.bookService.GetBooks(bookFilter);
+    this.paginatedCopies=this.bookService.GetBooks(bookFilter);
   }
   search(book: BookFilter) {
   let bookFilter:BookFilter={
@@ -35,7 +36,7 @@ export class BookListPage implements OnInit {
       publicationDateFrom:book.publicationDateFrom,
       publicationDateTo:book.publicationDateTo
     }
-    this.paginatedBooks=this.bookService.GetBooks(bookFilter);
+    this.paginatedCopies=this.bookService.GetBooks(bookFilter);
   }
 
 }
