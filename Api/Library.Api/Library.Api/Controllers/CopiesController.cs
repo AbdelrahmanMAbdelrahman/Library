@@ -1,9 +1,11 @@
 ﻿using Library.Application.Common.Models;
 using Library.Application.Features.Books.Commands.DeleteBooks;
+using Library.Application.Features.Books.Commands.ReturnCopy;
 using Library.Application.Features.Books.Commands.UpdateBooks;
 using Library.Application.Features.Books.Dtos;
 using Library.Application.Features.Books.Queries.GetBooks;
 using Library.Application.Features.Books.Queries.GetCopy;
+using System.Threading.Tasks;
 
 
 namespace Library.Api.Controllers;
@@ -97,6 +99,20 @@ public class CopiesController(ISender sender):ApiController
     [Authorize(Roles = "User")]
     public async Task<IActionResult> DeleteCopy([FromRoute] DeleteCopyCommand command,CancellationToken ct) {
         var result = await sender.Send(command, ct);
+        return result.Match(res=>NoContent(),Problem);
+    }
+    [HttpPut("{CopyId:guid}/Return")]
+    [ProducesResponseType( StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [EndpointName(nameof(ReturnBook))]
+    [EndpointSummary("return copy")]
+    [EndpointDescription("return copy")]
+    [Authorize(Roles = "User")]
+    public async Task<IActionResult> ReturnBook([FromRoute]ReturnCopyCommand command,CancellationToken ct)
+    {
+        Result<Updated>result=await sender.Send(command, ct);
         return result.Match(res=>NoContent(),Problem);
     }
 }

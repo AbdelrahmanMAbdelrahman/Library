@@ -29,5 +29,11 @@ namespace Library.Domain.Copies
             Available= false;
             return Result.Updated;
         }
+
+        public Result<Updated> SetAvailable()
+        {
+            Available = true;
+            return Result.Updated;
+        }
     }
 }

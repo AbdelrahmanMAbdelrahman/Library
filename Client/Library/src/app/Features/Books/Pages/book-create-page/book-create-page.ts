@@ -47,7 +47,7 @@ else
     
    this.bookService.CreateBook(req).subscribe({
     next:(res:BookRes)=>{
-this.router.navigate(['/BookPage','BookDetailPage',res.id]);
+this.router.navigate(['/BookPage','BookListPage']);
     },
     error:(err:HttpErrorResponse)=>{
       const failure=err.error as Failure;

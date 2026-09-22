@@ -1,1 +1,61 @@
-<p>borrowing-record-detail-component works!</p>
+<div class="card">
+    <div class="card-header"></div>
+
+    <div class="card-body">
+      <div class="form-controls">
+            <div class="form-group">
+                <label for="borrowingDate" class="form-label">Borrowing Date</label>
+                <input [disabled]="true" [value]="borrowingRecord?.borrowingDate" type="text" id="borrowingDate" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="dueDate" class="form-label">Due Date</label>
+                <input [disabled]="true" [value]="borrowingRecord?.dueDate|date:'dd/MM/yyyy'" type="text" id="dueDate" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="actualReturnDate" class="form-label">Actual return Date</label>
+                <input [disabled]="true" [value]="borrowingRecord?.actualReturnDate??'N/A'" type="text" id="actualReturnDate" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="genere" class="form-label">Genere</label>
+                <input [disabled]="true" [value]="borrowingRecord?.copy?.book?.genere" type="text" id="genere" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="title" class="form-label">Title</label>
+                <input [disabled]="true" [value]="borrowingRecord?.copy?.book?.title" type="text" id="title" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="isbn" class="form-label">ISBN</label>
+                <input [disabled]="true" [value]="borrowingRecord?.copy?.book?.isbn" type="text" id="isbn" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="publicationDate" class="form-label">Publication Date</label>
+                <input [disabled]="true" [value]="borrowingRecord?.copy?.book?.publicationDate|date:'dd/MM/yyyy'" type="text" id="publicationDate" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="name" class="form-label">Name</label>
+                <input [disabled]="true" [value]="borrowingRecord?.userInfo?.name" type="text" id="name" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="email" class="form-label">Email</label>
+                <input [disabled]="true" [value]="borrowingRecord?.userInfo?.email" type="text" id="email" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="phone" class="form-label">Phone</label>
+                <input [disabled]="true" [value]="borrowingRecord?.userInfo?.phone" type="text" id="phone" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="additionalDetails" class="form-label">Additional Details</label>
+                <textarea [disabled]="true" [value]="borrowingRecord?.copy?.book?.additionalDetails" type="text" id="additionalDetails" class="form-control"></textarea>
+            </div>
+
+      </div>
+    </div>
+
+    <div class="card-footer">
+        <div class="footer-btns">
+            <button [routerLink]="['/BorrowingRecordPage','BorrowingRecordListPage']" type="button" class="btn btn-secondary">Cancel</button>
+            <button (click)="ReturnCopy()" type="button" class="btn btn-primary">return Copy</button>
+        </div>
+    </div>
+
+</div>

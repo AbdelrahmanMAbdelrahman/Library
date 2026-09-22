@@ -1,7 +1,17 @@
 <div class="card">
-</div>
-<div class="card-header">
-    <h6 class="text-primary">Borrowing Records</h6>
+    <div class="card-header">
+        <h6 class="text-primary">Borrowing Records</h6>
+        <div class="form-group">
+            <!-- <label for="sort-by" class="">Sort By</label> -->
+            <select (change)="sort($event)" name="sort-by" id="sort-by" class="form-select">
+                <option value="">Sort By</option>
+                <option value="userName">User name</option>
+                <option value="title">Title</option>
+                <option value="genere">Genere</option>
+                <option value="borrowingDate">Borrowing Date</option>
+                <option value="dueDate">Due Date</option>
+            </select>
+        </div>
     <button class="btn btn-primary">Export</button>
 </div>
 <div class="card-body">
@@ -20,35 +30,36 @@
         <tbody>
             <tr *ngFor="let br of PaginatedBorrowingRecords?.items;let index=index">
                 <td>
-                   <a [routerLink]="['/BorrowingRecordPage','BorrowingRecordDetail',br.id]">
-                     {{index+1}}</a>
-                </td>
-                <td>
-                    <a [routerLink]="['/UserInfoPage','UserInfo',br.userInfo.userId]">
-                    {{br.userInfo.name}}</a>
-                </td>
-                <td>
-                    <a [routerLink]="['/BookPage','BookDetailPage',br.copy.id]">
-                    {{br.copy.book.title}}</a>
-                </td>
-                <td>{{br.copy.book.genere}}</td>
-                <td>{{br.borrowingDate|date:'dd/MM/yyyy'}}</td>
-                <td>{{br.dueDate|date:'dd/MM/yyyy'}}</td>
-                <td>{{br.actualReturnDate|date:'dd/MM/yyyy'}}</td>
-            </tr>
-        </tbody>
-        <!-- <tfoot>
-           
-        </tfoot> -->
-    </table>
-</div>
-<div class="card-footer">
-     <div class="borrowing-record-footer">
-                <p class="text-info">Records</p>
+                    <a [routerLink]="['/BorrowingRecordPage','BorrowingRecordDetailPage',br.id]">
+                        {{index+1}}</a>
+                    </td>
+                    <td>
+                        <a [routerLink]="['/UserInfoPage','UserInfo',br.userInfo.userId]">
+                            {{br.userInfo.name}}</a>
+                        </td>
+                        <td>
+                            <a [routerLink]="['/BookPage','BookDetailPage',br.copy.id]">
+                                {{br.copy.book.title}}</a>
+                            </td>
+                            <td>{{br.copy.book.genere}}</td>
+                            <td>{{br.borrowingDate|date:'dd/MM/yyyy'}}</td>
+                            <td>{{br.dueDate|date:'dd/MM/yyyy'}}</td>
+                            <td>{{br.actualReturnDate|date:'dd/MM/yyyy'}}</td>
+                        </tr>
+                    </tbody>
+                    <!-- <tfoot>
+                        
+                    </tfoot> -->
+                </table>
+            </div>
+            <div class="card-footer">
+                <div class="borrowing-record-footer">
+                    <p class="text-info">Records : {{PaginatedBorrowingRecords?.items?.length}}</p>
                 <div class="pagination">
-                    <button [disabled]="!PaginatedBorrowingRecords?.hasPreviousPage" class="btn btn-outline-primary">Previous</button>
+                    <button (click)="getPrev()" [disabled]="!PaginatedBorrowingRecords?.hasPreviousPage" class="btn btn-outline-primary">Previous</button>
                     <p class="align-self">Pages  {{PaginatedBorrowingRecords?.totalPages}} / {{PaginatedBorrowingRecords?.pageNumber}} </p>
-                    <button [disabled]="!PaginatedBorrowingRecords?.hasNextPage" class="btn btn-outline-primary">next</button>
+                    <button (click)="getNext()" [disabled]="!PaginatedBorrowingRecords?.hasNextPage" class="btn btn-outline-primary">next</button>
                 </div>
             </div>
-</div>
+        </div>
+    </div>

@@ -22,7 +22,6 @@ export class BookSearch implements OnInit {
     })
   }
   Search() {
-    debugger;
   let bookFilter:BookFilter={
     pageNumber: 1,
     pageSize: DefaultSettings.PageSize,

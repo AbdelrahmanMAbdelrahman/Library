@@ -20,34 +20,30 @@ export class BorrowingRecordListPage implements OnInit{
   paginatedRecords?:Observable<PaginatedList<BorrowingRecordRes>>;
   constructor(private borrowingService:BorrowingRecordService) {}
   ngOnInit(): void {
-    let searchReq:BorrowingRecordSearch={
-      sortDirection: '',
-      sortColumn: '',
-      pageSize: 10,
-      pageNumber: 1,
-      userName: '',
-      title: '',
-      genere: '',
-      fromBorrowingDate: '',
-      toBorrowingDate: '',
-      fromReturnDate: '',
-      toReturnDate: '',
-      fromActualReturnDate: '',
-      toActualReturnDate: ''
-    };
-   this.paginatedRecords=
-   this.borrowingService.getBorrowingRecords(searchReq)
-  //  .subscribe(
-  //   {
-  //   next:(res:PaginatedList< BorrowingRecordRes>)=>{
-  //     console.log("response",res);
-  //   },
-  //   error:(err:HttpErrorResponse)=>{
-  //     let failure=err.error as Failure;
-  //     console.log(failure);
-  //   }
-  //  }
-  // );
+    this.Search(null);
   }
-
+  Search(record: BorrowingRecordSearch|null) {
+    debugger;
+    let searchReq:BorrowingRecordSearch={
+      sortDirection: record?.sortDirection??'',
+      sortColumn: record?.sortColumn??'',
+      pageSize:record?.pageSize?? 10,
+      pageNumber: record?.pageNumber??1,
+      userName: record?.userName??'',
+      title: record?.title??'',
+      genere: record?.genere??'',
+      fromBorrowingDate: record?.fromBorrowingDate??'',
+      toBorrowingDate: record?.toBorrowingDate??'',
+      fromDueDate: record?.fromDueDate??'',
+      toDueDate: record?.toDueDate??'',
+      fromActualReturnDate: record?.fromActualReturnDate??'',
+      toActualReturnDate:record?.toActualReturnDate?? ''
+    };
+    this.paginatedRecords=
+    this.borrowingService.getBorrowingRecords(searchReq);
+  }
+  
+  Paginate(searchReq: BorrowingRecordSearch) {
+  this.paginatedRecords=this.borrowingService.getBorrowingRecords(searchReq);
+  }
 }

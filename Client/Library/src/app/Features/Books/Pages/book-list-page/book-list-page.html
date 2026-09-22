@@ -8,7 +8,10 @@
     </div>
     <div class="book-grid">
        <app-book-list-component
-         [paginatedCopies]="(paginatedCopies|async)!">
+         [paginatedCopies]="(paginatedCopies|async)!"
+         (OnPaginate)="paginate($event)"
+         >
+         
        </app-book-list-component>
     </div>
 </div>

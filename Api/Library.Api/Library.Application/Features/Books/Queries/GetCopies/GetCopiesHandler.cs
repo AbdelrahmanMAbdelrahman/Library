@@ -8,11 +8,13 @@ public sealed class GetCopiesHandler(ILogger<GetCopiesHandler>logger,IAppDbConte
     {
         IQueryable<Copy> CopiesQuery = context.Books.Where(
             b=>b.Copies.Any(c=>c.Available))
-            .Select(b=>b.Copies.First());
+            .Select(b=>b.Copies
+            .Where(c=>c.Available).First());
             
         CopiesQuery = ApplyFilter(
             CopiesQuery,request.Title,request.ISBN,request.PublicationDateFrom,request.PublicationDateTo,request.Genere);
         CopiesQuery = ApplySort(CopiesQuery,request.SortColumn,request.SortDirection);
+        logger.LogInformation(CopiesQuery.ToQueryString());
         //CopiesQuery=CopiesQuery.GroupBy(c => c.BookId)
         //    .Select(c => c.First());
         Result<PaginatedList<CopyDto>> Copies =await PaginatedList<CopyDto>

@@ -1,1 +1,4 @@
-<app-borrowing-record-detail-component></app-borrowing-record-detail-component>
+<app-borrowing-record-detail-component
+[borrowingRecord]="(record|async)!"
+(OnReturnCopy)="ReturnCopy($event)"
+></app-borrowing-record-detail-component>

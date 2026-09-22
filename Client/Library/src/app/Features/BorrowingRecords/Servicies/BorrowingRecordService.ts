@@ -8,6 +8,7 @@ import { BorrowingRecordSearch } from "../Models/BorrowingRecordSearch";
 
 @Injectable({providedIn:'root'})
 export class BorrowingRecordService{
+
   private  url:string="https://localhost:7010/api/BorrowingRecord";
 constructor(private http:HttpClient) {}
 
@@ -19,10 +20,10 @@ if(search.fromActualReturnDate)
     params=params.set('fromActualReturnDate',search.fromActualReturnDate);
 if(search.toActualReturnDate)
     params=params.set('toActualReturnDate',search.toActualReturnDate);
-if(search.fromReturnDate)
-    params=params.set('fromReturnDate',search.fromReturnDate);
-if(search.toReturnDate)
-    params=params.set('toReturnDate',search.toReturnDate);
+if(search.fromDueDate)
+    params=params.set('fromDueDate',search.fromDueDate);
+if(search.toDueDate)
+    params=params.set('toDueDate',search.toDueDate);
 if(search.fromBorrowingDate)
     params=params.set('fromBorrowingDate',search.fromBorrowingDate);
 if(search.toBorrowingDate)
@@ -44,5 +45,11 @@ if(search.sortDirection)
  createBorrowingRecord(req:BorrowingRecordReq):Observable<BorrowingRecordRes>{
     debugger;
     return this.http.post<BorrowingRecordRes>(this.url,req);
+ }
+ getBorrowingRecord(Id:string):Observable<BorrowingRecordRes>{
+    console.log('getBorrowingRecord CALLED');
+  console.log('Id =', Id);
+  console.log('URL =', `${this.url}/${Id}`);
+    return this.http.get<BorrowingRecordRes>(`${this.url}/${Id}`);
  }
 }

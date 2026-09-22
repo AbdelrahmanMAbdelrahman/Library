@@ -7,15 +7,17 @@ import { BookFilter } from "../Models/BookFilter";
 import { BookReq } from "../Models/BookReq";
 import { CopyRes } from "../Models/CopyRes";
 
-
-
 @Injectable({
     providedIn:'root'
 })
 export class BookService{
     baseUrl:string="https://localhost:7010/api/Copies";
     constructor(private http:HttpClient) {
-}
+    }
+    ReturnCopy(copyId: string):Observable<any> {
+        
+      return this.http.put<any>(`${this.baseUrl}/${copyId}/Return`,null);
+    }
 GetCopy(bookId:string):Observable<CopyRes>{
     
     return this.http.get<CopyRes>(`${this.baseUrl}/${bookId}`);

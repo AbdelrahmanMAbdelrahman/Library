@@ -14,7 +14,13 @@ namespace Library.Application.Features.Books.Commands.UpdateBooks
                 logger.LogError($"no book found for id = {request.CopyId}");
                 return ApplicationErrors.BookNotFound(request.CopyId);
             }
-
+            //BorrowingRecord? borrowingRecord =await context.BorrowingRecords.AsNoTracking()
+            //    .FirstOrDefaultAsync(br=>br.CopyId==request.Id&&br.AppUserId==user.Id,cancellationToken);
+            //if(borrowingRecord is null)
+            //{
+            //    logger.LogError($"invalid copy with id = {request.Id} for uesr with id = ${user.Id}");
+            //    return ApplicationErrors.CopyNotFound(request.Id);
+            //}
             Result<Updated> UpdateBookResult = copy.Book.Update(request.Title,request.ISBN,
                 request.PublicationDate,request.Genere,request.AdditionalDetails);
             if (UpdateBookResult.IsError)

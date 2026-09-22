@@ -42,7 +42,7 @@ namespace Library.Api.Controllers
                 );
         }
         [HttpGet("")]
-        [ProducesResponseType(typeof(BorrowingRecordDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(PaginatedList< BorrowingRecordDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
@@ -55,5 +55,6 @@ namespace Library.Api.Controllers
             Result<PaginatedList<BorrowingRecordDto>> paginatedResult = await sender.Send(command,ct);
             return paginatedResult.Match(res=>Ok(res),Problem);
         }
+       
     }
 }

@@ -24,6 +24,6 @@ public sealed class PaginatedList<T>
         List<T> ItemsList =await items.Skip((PageNumber-1) * PageSize)
             .Take(PageSize).ToListAsync();
 
-        return new PaginatedList<T>(ItemsList,PageNumber,PageSize,ItemsList.Count);
+        return new PaginatedList<T>(ItemsList,PageNumber,PageSize,items.Count());
     }
 }

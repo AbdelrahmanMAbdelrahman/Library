@@ -27,6 +27,10 @@ export class BookListPage implements OnInit {
     }
     this.paginatedCopies=this.bookService.GetBooks(bookFilter);
   }
+  paginate(bookFilter: BookFilter) {
+    debugger;
+  this.paginatedCopies=this.bookService.GetBooks(bookFilter);
+  }
   search(book: BookFilter) {
   let bookFilter:BookFilter={
       pageNumber: book.pageNumber,
