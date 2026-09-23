@@ -3,10 +3,11 @@ import { BookRes } from '../../Models/BookRes';
 import { RouterLink } from '@angular/router';
 import { BorrowingRecordReq } from '../../../BorrowingRecords/Models/BorrowingRecordReq';
 import { CopyRes } from '../../Models/CopyRes';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-book-detail-component',
-  imports: [RouterLink],
+  imports: [RouterLink,DatePipe],
   templateUrl: './book-detail-component.html',
   styleUrl: './book-detail-component.css',
 })

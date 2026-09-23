@@ -54,7 +54,7 @@
     <div class="card-footer">
         <div class="footer-btns">
             <button [routerLink]="['/BorrowingRecordPage','BorrowingRecordListPage']" type="button" class="btn btn-secondary">Cancel</button>
-            <button (click)="ReturnCopy()" type="button" class="btn btn-primary">return Copy</button>
+            <button (click)="ReturnCopy()" [disabled]="borrowingRecord?.actualReturnDate" type="button" class="btn btn-primary">return Copy</button>
         </div>
     </div>
 

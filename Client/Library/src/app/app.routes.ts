@@ -12,6 +12,8 @@ import { MainPage } from './Features/Dashboard/Pages/main-page/main-page';
 import { BorrowingRecordListPage } from './Features/BorrowingRecords/Pages/borrowing-record-list-page/borrowing-record-list-page';
 import { BorrowingRecordCreatePage } from './Features/BorrowingRecords/Pages/borrowing-record-create-page/borrowing-record-create-page';
 import { BorrowingRecordDetailPage } from './Features/BorrowingRecords/Pages/borrowing-record-detail-page/borrowing-record-detail-page';
+import { FinesListPage } from './Features/Fines/Pages/fines-list-page/fines-list-page';
+import { FinesDetailPage } from './Features/Fines/Pages/fines-detail-page/fines-detail-page';
 
 
 export const routes: Routes = [
@@ -32,6 +34,10 @@ export const routes: Routes = [
 
             ]
         },
+        {path:"FinePage",children:[
+            {path:"FineListPage",component:FinesListPage},
+            {path:"FineDetailPage/:id",component:FinesDetailPage},
+        ]}
         ]
     },
     {path:"AuthPage",children:[
