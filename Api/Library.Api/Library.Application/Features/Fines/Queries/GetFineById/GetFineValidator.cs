@@ -1,6 +1,6 @@
 ﻿namespace Library.Application.Features.Fines.Queries.GetFineById;
 
-public sealed class GetFineValidator:AbstractValidator<GetFineCommand>
+public sealed class GetFineValidator:AbstractValidator<GetFineQuery>
 {
     public GetFineValidator()
     {

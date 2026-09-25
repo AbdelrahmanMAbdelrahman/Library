@@ -11,8 +11,6 @@ public sealed class AuditableEntityInterceptor(IUser user,TimeProvider timeProvi
         UpdateEntities(eventData.Context);
         return base.SavingChanges(eventData, result);
     }
-
-
     public override ValueTask<InterceptionResult<int>> SavingChangesAsync(DbContextEventData eventData, InterceptionResult<int> result, CancellationToken cancellationToken = default)
     {
         UpdateEntities(eventData.Context);

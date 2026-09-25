@@ -1,5 +1,9 @@
-﻿using Library.Infrastructure.Configuration.Options;
+﻿using Library.Infrastructure.BackGroundJobs;
+using Library.Infrastructure.Configuration.Options;
 using Library.Infrastructure.Services;
+using Library.Infrastructure.Settings;
+using Microsoft.Extensions.Configuration;
+using System.Runtime.CompilerServices;
 
 namespace Library.Infrastructure;
 public static class DependencyInjection
@@ -10,6 +14,7 @@ public static class DependencyInjection
             .AddConnectionString(configuration)
             .AddDependencyInjection()
             .AddCorsService()
+            .AddOptions()
             .AddJwt(configuration);
 
     }
@@ -35,20 +40,40 @@ public static class DependencyInjection
         });
         return services;
     }
+    //public static IServiceCollection AddOptions(this IServiceCollection service,IConfiguration configuration)
+    //{
+    //    JwtOptions? jwtOptions = configuration.GetSection(nameof(JwtOptions)).Get<JwtOptions>();
+    //    ArgumentNullException.ThrowIfNull(jwtOptions);
+
+    //    AppSettings? appSettings = configuration.GetSection(nameof(appSettings)).Get<AppSettings>();
+    //    ArgumentNullException.ThrowIfNull(appSettings);
+    //    return service;
+    //}
+    public static IServiceCollection AddOptions(this IServiceCollection services)
+    {
+        services.AddOptions<JwtOptions>()
+            .BindConfiguration(nameof(JwtOptions))
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+        services.AddOptions<AppSettings>()
+            .BindConfiguration(nameof(AppSettings))
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+        return services;
+    }
     public static IServiceCollection AddJwt(this IServiceCollection services,IConfiguration configuration) {
-        JwtOptions? jwtOptions=configuration.GetSection(nameof(JwtOptions)).Get<JwtOptions>();
+
+        JwtOptions? jwtOptions = configuration.GetSection(nameof(JwtOptions)).Get<JwtOptions>();
         ArgumentNullException.ThrowIfNull(jwtOptions);
 
+        
         services.AddIdentityCore<AppUser>();
 
         services.AddIdentity<AppUser,IdentityRole>()
             .AddEntityFrameworkStores<AppDbContext>()
             .AddDefaultTokenProviders();
 
-        services.AddOptions<JwtOptions>()
-            .BindConfiguration(nameof(JwtOptions))
-            .ValidateDataAnnotations()
-            .ValidateOnStart();
+        
 
         services.AddAuthentication(options =>
         {
@@ -77,7 +102,7 @@ public static class DependencyInjection
             .AddScoped<ITokenProvider, TokenProvider>()
             .AddScoped<IFileStorage, FileStorageService>()
             .AddScoped<AppDbContextInitializer>()
-            ;
+            .AddHostedService<FineTrackingService>();
 
         return services;
     }

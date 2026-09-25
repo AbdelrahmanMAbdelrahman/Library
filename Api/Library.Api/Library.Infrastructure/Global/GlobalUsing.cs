@@ -34,5 +34,6 @@ global using Library.Infrastructure.Configuration.Options;
 global using Library.Application.Features.UploadedFiles.Dtos;
 global using Library.Domain.Reservations;
 global using Library.Application.Common.Errors;
+global using Microsoft.Extensions.Hosting;
 namespace Library.Infrastructure.Global;
 
