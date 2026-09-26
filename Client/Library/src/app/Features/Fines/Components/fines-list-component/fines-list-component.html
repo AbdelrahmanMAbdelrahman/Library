@@ -18,25 +18,33 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
+                <tr *ngFor="let fine of paginatedFines?.items;let index=index">
+                  <td>
+                    <a [routerLink]="['/FinePage','FineDetailPage',fine.id]">
+                        {{index+1}}
+                    </a>
+                    </td>
+                  <td>
+                    <a [routerLink]="['/UserPage','UserDetailPage',fine.borrowingRecordDto.userInfo.userId]">
+                    {{fine.borrowingRecordDto.userInfo.name}}</a></td>
+                  <td>
+                    <a [routerLink]="['/BookPage','BookDetailPage',fine.borrowingRecordDto.copy.id]">
+                    {{fine.borrowingRecordDto.copy.book.title}}</a></td>
+                  <td>{{fine.borrowingRecordDto.borrowingDate|date :'dd/MM/yyyy'}}</td>
+                  <td>{{fine.borrowingRecordDto.dueDate|date :'dd/MM/yyyy'}}</td>
+                  <td>{{fine.numberOfLateDays}}</td>
+                  <td>{{fine.fineAmount}}</td>
+                  <td>{{GetPaymentStatusText(fine.paymentStatus)}}</td>
                 </tr>
             </tbody>
         </table>
     </div>
     <div class="card-footer">
-       <p class="text-info">Records</p>
+       <p class="text-info">Records {{paginatedFines?.items?.length}}</p>
        <div class="pagination">
-        <button class="btn btn-outline-primary">Previous</button>
-        <span class="align-self mt-2">Page</span>
-        <button class="btn btn-outline-primary">Next</button>
+        <button (click)="getPrev()" [disabled]="!paginatedFines?.hasPreviousPage" class="btn btn-outline-primary">Previous</button>
+        <span class="align-self mt-2">Page {{paginatedFines?.pageNumber}} / {{paginatedFines?.totalPages}}</span>
+        <button (click)="getNext()" [disabled]="!paginatedFines?.hasNextPage" class="btn btn-outline-primary">Next</button>
        </div>
     </div>
 </div>

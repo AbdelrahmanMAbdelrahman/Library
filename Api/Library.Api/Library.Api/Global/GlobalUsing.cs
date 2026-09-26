@@ -22,5 +22,8 @@ global using Library.Application.Features.BorrowingRecords.Commands.CreateBorrow
 global using Library.Application.Features.BorrowingRecords.Queries.GetBorrowingRecord;
 global using Library.Application.Features.BorrowingRecords.Dtos;
 global using Microsoft.AspNetCore.Authorization;
+global using Library.Application.Common.Models;
+global using Library.Application.Features.Fines.Dtos;
+global using Library.Application.Features.Fines.Queries.GetFines;
 namespace Library.Api.Global;
 

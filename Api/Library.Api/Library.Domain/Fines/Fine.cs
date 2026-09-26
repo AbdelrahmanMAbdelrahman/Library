@@ -4,7 +4,7 @@ public sealed class Fine:Audit
 {
     public string AppUserId { get;private set; }
     public Guid BorrowingRecordId { get;private set; }
-    public double NumberOfLateDays { get;private set; }
+    public int NumberOfLateDays { get;private set; }
     public double FineAmount { get;private set; }
     public PaymentStatus PaymentStatus { get;private set; }
     
@@ -12,7 +12,7 @@ public sealed class Fine:Audit
     public AppUser AppUser { get; set; }
     public Fine(){}
     public Fine(Guid id,Guid borrowingRecordId,string userId,
-        double numberOfLateDays,double fineAmount,PaymentStatus paymentStatus){
+        int numberOfLateDays,double fineAmount,PaymentStatus paymentStatus){
         this.Id = id;
         this.AppUserId = userId;
         this.NumberOfLateDays = numberOfLateDays;
@@ -22,7 +22,7 @@ public sealed class Fine:Audit
     }
 
     public static Result<Fine> Create(Guid borrowingRecordId, string userId,
-        double numberOfLateDays, double fineAmount, PaymentStatus paymentStatus)
+        int numberOfLateDays, double fineAmount, PaymentStatus paymentStatus)
     {
         if (borrowingRecordId == Guid.Empty) return FineErrors.InvalidBorrowingRecordId;
         if (string.IsNullOrEmpty(userId)) return FineErrors.InvalidUserId;
@@ -32,7 +32,7 @@ public sealed class Fine:Audit
 
         return new Fine(Guid.NewGuid(),borrowingRecordId,userId,numberOfLateDays,fineAmount,paymentStatus);
     }
-    public Result<Updated>UpdateFine(double numberOfLateDays, double fineAmount, PaymentStatus paymentStatus)
+    public Result<Updated>UpdateFine(int numberOfLateDays, double fineAmount, PaymentStatus paymentStatus)
     {
         if (numberOfLateDays < 1 || numberOfLateDays > 100) return FineErrors.InvalidNumberOfLateDays;
         if (fineAmount < 1) return FineErrors.InvalidFineAmount;
@@ -43,6 +43,9 @@ public sealed class Fine:Audit
         return Result.Updated;
     }
 
-    
-
+    public Result<Updated> PayFine()
+    {
+        this.PaymentStatus = PaymentStatus.Paid;
+        return Result.Updated;
+    }
 }

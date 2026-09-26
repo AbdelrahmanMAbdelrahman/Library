@@ -1,8 +1,13 @@
 <div class="fine-list-page">
 <div class="fine-search-component">
-    <app-fines-search-component></app-fines-search-component>
+    <app-fines-search-component
+    (OnSearch)="Search($event)"
+    ></app-fines-search-component>
 </div>
 <div class="fine-list-component">
-    <app-fines-list-component></app-fines-list-component>
+    <app-fines-list-component
+    [paginatedFines]="(paginatedFines|async)!"
+    (OnPaginate)="Paginate($event)"
+    ></app-fines-list-component>
 </div>
 </div>

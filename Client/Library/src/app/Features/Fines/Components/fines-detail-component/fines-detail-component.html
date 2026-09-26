@@ -1,5 +1,50 @@
 <div class="card">
     <div class="card-header"></div>
-    <div class="card-body"></div>
-    <div class="card-footer"></div>
+    <div class="card-body">
+        <div class="form-groups">
+            <div class="form-group">
+                <label class="form-label" for="title">Title</label>
+                <input class="form-control" [disabled]="true" [value]="fine?.borrowingRecordDto?.copy?.book?.title" type="text" id="title">
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="genere">Genere</label>
+                <input class="form-control" [disabled]="true" [value]="fine?.borrowingRecordDto?.copy?.book?.genere" type="text" id="genere">
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="publicationDate">Publication Date</label>
+                <input class="form-control" [disabled]="true" [value]="fine?.borrowingRecordDto?.copy?.book?.publicationDate|date:'dd/MM/yyyy'" type="text" id="publicationDate">
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="userName">UserName</label>
+                <input class="form-control" [disabled]="true" [value]="fine?.borrowingRecordDto?.userInfo?.name" type="text" id="userName">
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="borrowingDate">Borrowing Date</label>
+                <input class="form-control" [disabled]="true" [value]="fine?.borrowingRecordDto?.borrowingDate|date:'dd/MM/yyyy'" type="text" id="borrowingDate">
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="dueDate">Due Date</label>
+                <input class="form-control" [disabled]="true" [value]="fine?.borrowingRecordDto?.dueDate|date:'dd/MM/yyyy'" type="text" id="dueDate">
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="lateDays">Late Days</label>
+                <input class="form-control" [disabled]="true" [value]="fine?.numberOfLateDays" type="text" id="lateDays">
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="fineAmount">Fine Amount</label>
+                <input class="form-control" [disabled]="true" [value]="fine?.fineAmount" type="text" id="fineAmount">
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="paymentStatus">Payment Status</label>
+                <input class="form-control" [disabled]="true" [value]="paymentStatus[fine?.paymentStatus!]" type="text" id="paymentStatus">
+            </div>
+            
+        </div>
+    </div>
+    <div class="card-footer">
+        <div class="footer-btns">
+            <button [routerLink]="['/FinePage','FineListPage']" class="btn btn-secondary">Cancel</button>
+            <button (click)="PayFine()" class="btn btn-primary">Pay Fine</button>
+        </div>
+    </div>
 </div>

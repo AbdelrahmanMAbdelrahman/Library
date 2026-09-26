@@ -1,0 +1,10 @@
+.form-groups{
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(40%,1fr));
+    gap: 1%;
+}
+.footer-btns{
+    display: flex;
+    justify-content: end;
+    gap: 1%;
+}

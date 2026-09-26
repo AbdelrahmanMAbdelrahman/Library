@@ -14,5 +14,5 @@ public sealed record GetFinesQuery(
     DateTime? ToDueDate=null,
     string? UserName=null,
     string?Title=null,
-    PaymentStatus?PaymentStatus=PaymentStatus.UnPaid
+    PaymentStatus?PaymentStatus=null
     ):IRequest<Result<PaginatedList<FineDto>>>;

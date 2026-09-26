@@ -43,7 +43,7 @@ namespace Library.Infrastructure.BackGroundJobs
                 
                 foreach (Fine fine in fines)
                 {
-                    double lateDays = (DateTime.UtcNow-fine.BorrowingRecord.DueDate).TotalDays;
+                    int lateDays =(int) (DateTime.UtcNow-fine.BorrowingRecord.DueDate).TotalDays;
                     double FineAmount = lateDays * options.Value.DefaultFinePerDay;
                     fine.UpdateFine(lateDays,FineAmount,PaymentStatus.UnPaid);
                 }
@@ -51,7 +51,7 @@ namespace Library.Infrastructure.BackGroundJobs
                 List<Fine> NewFines = new List<Fine>();
                 foreach(BorrowingRecord borrowingRecord in BorrowingRecordsWithNoFine)
                 {
-                    double lateDays = (DateTime.UtcNow - borrowingRecord.DueDate).TotalDays;
+                    int lateDays =(int) (DateTime.UtcNow - borrowingRecord.DueDate).TotalDays;
                     double FineAmount = lateDays * options.Value.DefaultFinePerDay;
                     
                     fineResult = Fine.Create(borrowingRecord.Id,borrowingRecord.AppUserId,lateDays,FineAmount,PaymentStatus.UnPaid);

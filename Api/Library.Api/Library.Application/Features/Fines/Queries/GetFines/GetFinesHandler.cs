@@ -9,11 +9,18 @@ public sealed class GetFinesHandler(
 {
     public async Task<Result<PaginatedList<FineDto>>> Handle(GetFinesQuery request, CancellationToken cancellationToken)
     {
-        IQueryable<Fine> FinesQuery = context.Fines.AsNoTracking();
+        IQueryable<Fine> FinesQuery = context.Fines
+            .Include(f=>f.AppUser)
+            .Include(f=>f.BorrowingRecord)
+              .ThenInclude(br=>br.AppUser)
+            .Include(f=>f.BorrowingRecord)
+              .ThenInclude(br=>br.Copy)
+                .ThenInclude(c=>c.Book)
+            .AsNoTracking();
         FinesQuery = ApplyFilter(FinesQuery,request.NumberOfLateDays,request.FineAmount,
             request.UserName,request.Title,request.FromBorrowingDate,
             request.ToBorrowingDate,request.FromDueDate,request.ToDueDate,request.PaymentStatus);
-
+        
         FinesQuery = ApplySorting(FinesQuery, request.SortColumn, request.SortDirection);
         Result<PaginatedList<FineDto>> fines =await PaginatedList<FineDto>
             .Create(FinesQuery.ToDto(),request.PageNumber,request.PageSize);
@@ -29,10 +36,10 @@ public sealed class GetFinesHandler(
 
         if(fineAmount.HasValue)
             finesQuery=finesQuery.Where(f=>f.FineAmount == fineAmount);
-        if(string.IsNullOrEmpty(UserName))
-            finesQuery=finesQuery.Where(f=>f.AppUser.Name==UserName);
-        if(string.IsNullOrEmpty(Title))
-            finesQuery=finesQuery.Where(f=>f.BorrowingRecord.Copy.Book.Title==Title);
+        if(!string.IsNullOrEmpty(UserName))
+            finesQuery=finesQuery.Where(f=>f.AppUser.Name!.Contains(UserName));
+        if(!string.IsNullOrEmpty(Title))
+            finesQuery=finesQuery.Where(f=>f.BorrowingRecord.Copy.Book.Title.Contains(Title));
         if(paymentStatus.HasValue)
             finesQuery=finesQuery.Where(f=>f.PaymentStatus==paymentStatus);
         if(FromBorrowingDate.HasValue)
