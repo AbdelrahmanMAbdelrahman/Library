@@ -1,9 +1,4 @@
-﻿
-using Library.Domain.Fines;
-using Library.Domain.Fines.Enums;
-using Library.Infrastructure.Settings;
-
-namespace Library.Infrastructure.BackGroundJobs
+﻿namespace Library.Infrastructure.BackGroundJobs
 {
     public sealed class FineTrackingService(
        
@@ -13,8 +8,8 @@ namespace Library.Infrastructure.BackGroundJobs
     {
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            using var timer = new PeriodicTimer(//TimeSpan.FromMinutes(1)
-                TimeSpan.FromHours( options.Value.DefaultPeriodicFineCheck)
+            using var timer = new PeriodicTimer(TimeSpan.FromMinutes(1)
+                //TimeSpan.FromHours( options.Value.DefaultPeriodicFineCheck)
                 );
             while (await timer.WaitForNextTickAsync(stoppingToken))
             {

@@ -44,7 +44,7 @@
     <div class="card-footer">
         <div class="footer-btns">
             <button [routerLink]="['/FinePage','FineListPage']" class="btn btn-secondary">Cancel</button>
-            <button (click)="PayFine()" class="btn btn-primary">Pay Fine</button>
+            <button [disabled]="fine?.paymentStatus===paymentStatus.Paid" (click)="PayFine()" class="btn btn-primary">Pay Fine</button>
         </div>
     </div>
 </div>

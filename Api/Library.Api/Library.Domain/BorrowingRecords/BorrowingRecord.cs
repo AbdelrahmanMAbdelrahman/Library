@@ -32,5 +32,9 @@ public sealed class BorrowingRecord : Audit
         return new BorrowingRecord(Guid.NewGuid(),copyId,appUserId,DueDate,
             borrowingDate,ActualReturnDate);
     }
-
+    public Result<Updated> ReturnCopy()
+    {
+        ActualReturnDate= DateTime.UtcNow;
+        return Result.Updated;
+    }
 }

@@ -13,7 +13,7 @@ namespace Library.Api.Controllers
         [EndpointDescription("return fines with cretieria")]
         [ProducesResponseType(typeof(PaginatedList<FineDto>),StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails),StatusCodes.Status500InternalServerError)]
-        [Authorize("User")]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> GetFines([FromQuery]GetFinesQuery query,CancellationToken ct)
         {
             Result<PaginatedList<FineDto>> GetFineResult = await sender.Send(query);
@@ -26,7 +26,7 @@ namespace Library.Api.Controllers
         [ProducesResponseType(typeof(PaginatedList<FineDto>),StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails),StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(typeof(ProblemDetails),StatusCodes.Status404NotFound)]
-        [Authorize("User")]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> GetFine([FromRoute]GetFineQuery query,CancellationToken ct)
         {
             Result<FineDto> GetFineResult = await sender.Send(query);
@@ -39,7 +39,7 @@ namespace Library.Api.Controllers
         [ProducesResponseType(typeof(PaginatedList<FineDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-        [Authorize("User")]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> PayFine([FromRoute]PayFineCommand command,CancellationToken ct)
         {
             Result<Updated> result = await sender.Send(command,ct);

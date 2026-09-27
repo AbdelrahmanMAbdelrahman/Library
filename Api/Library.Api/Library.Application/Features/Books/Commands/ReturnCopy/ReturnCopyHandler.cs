@@ -6,18 +6,23 @@ public sealed class ReturnCopyHandler
 {
     public async Task<Result<Updated>> Handle(ReturnCopyCommand request, CancellationToken cancellationToken)
     {
-        //BorrowingRecord? borrowingRecord =await context.BorrowingRecords.AsNoTracking()
-        //    .FirstOrDefaultAsync(br=>br.CopyId==request.CopyId&&br.AppUserId==request.UserId,cancellationToken);
-        //if(borrowingRecord is null)
-        //{
-        //    logger.LogError($"No Borrowing Record Found for user with id = {request.UserId} and copy with id = {request.CopyId}");
-        //    return ApplicationErrors.CopyNotFound(request.CopyId);
-        //}
+       
         Copy? copy = await context.Copies.FindAsync(request.CopyId,cancellationToken);
         if (copy is null)
         {
             logger.LogError($"No copy Found for  id = {request.CopyId}");
             return ApplicationErrors.CopyNotFound(request.CopyId);
+        }
+        if (copy.Available)
+        {
+            logger.LogError("copy with id {Id} already avaiable",copy.Id);
+            return ApplicationErrors.CopyAlreadyAvailable(copy.Id);
+        }
+        Fine? fine = await context.Fines.FirstOrDefaultAsync(f=>f.BorrowingRecord.CopyId==copy.Id,cancellationToken);
+        if(fine is not null)
+        {
+            logger.LogError("must pay fine with id = {Id} first", fine.Id);
+            return ApplicationErrors.FineExist(fine.Id);
         }
       Result<Updated> UpdateAvailabilityResult=  copy!.SetAvailable();
         if (UpdateAvailabilityResult.IsError)

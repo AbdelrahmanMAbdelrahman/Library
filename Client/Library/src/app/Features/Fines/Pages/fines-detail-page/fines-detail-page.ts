@@ -4,9 +4,10 @@ import { Observable } from 'rxjs';
 import { FineRes } from '../../Models/FineRes';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { FineService } from '../../Services/FineService';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
 import { Failure } from '../../../../Global/Failure';
+
 
 @Component({
   selector: 'app-fines-detail-page',
@@ -16,7 +17,7 @@ import { Failure } from '../../../../Global/Failure';
 })
 export class FinesDetailPage  implements OnInit{
   Fine?:Observable<FineRes>;
-  constructor(private fineService:FineService,private route:ActivatedRoute) {}
+  constructor(private fineService:FineService,private route:ActivatedRoute,private router:Router) {}
   ngOnInit(): void {
     this.Fine=this.fineService.GetFine(this.Id??"");
     console.log("fine",this.Fine)
@@ -26,6 +27,9 @@ export class FinesDetailPage  implements OnInit{
   }
   PayFine() {
   this.fineService.PayFine(this.Id??"").subscribe({
+    next:()=>{
+      this.router.navigate(['/FinePage','FineListPage'])
+    },
     error:(err:HttpErrorResponse)=>{
      let failure=err.error as Failure;
      console.log(failure)

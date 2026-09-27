@@ -6,6 +6,7 @@
 
 
 
+
 namespace Library.Application.Common.Errors;
 
 public sealed class ApplicationErrors
@@ -31,5 +32,23 @@ public sealed class ApplicationErrors
     internal static Error RefreshTokenNotFound(string RefreshToken)=>
         Error.BadRequest("ApplicationErrors.RefreshTokenNotFound",$"{RefreshToken} is not found");
 
- 
+    internal static Error BookAlreadyReturned(DateTime? actualReturnDate)
+    {
+        throw new NotImplementedException();
+    }
+
+    internal static Error CopyAlreadyAvailable(Guid id)
+    {
+        throw new NotImplementedException();
+    }
+
+    internal static Error FineExist(Guid id)
+    {
+        throw new NotImplementedException();
+    }
+
+    internal static Result<ReservationDto> ReservationAlreadyExist(Guid id)
+    {
+        throw new NotImplementedException();
+    }
 }

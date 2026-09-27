@@ -27,7 +27,8 @@ global using Microsoft.AspNetCore.Identity;
 global using Library.Application.Features.Fines.Dtos;
 global using Library.Domain.Fines.Enums;
 global using Library.Application.Features.Fines.Mappers;
-
+global using Library.Application.Features.Reservations.Dtos;
+global using Library.Domain.Reservations;
 namespace Library.Application.Global;
 
 
