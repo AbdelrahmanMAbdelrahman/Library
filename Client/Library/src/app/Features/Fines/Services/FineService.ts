@@ -7,7 +7,7 @@ import { FineRes } from "../Models/FineRes";
 
 @Injectable({providedIn:'root'})
 export class FineService{
-    private url:string="https://localhost:7010/api/Fine";
+    private url:string="https://localhost:7010/api/Fines";
     /**
      *
     */

@@ -14,6 +14,10 @@ import { BorrowingRecordCreatePage } from './Features/BorrowingRecords/Pages/bor
 import { BorrowingRecordDetailPage } from './Features/BorrowingRecords/Pages/borrowing-record-detail-page/borrowing-record-detail-page';
 import { FinesListPage } from './Features/Fines/Pages/fines-list-page/fines-list-page';
 import { FinesDetailPage } from './Features/Fines/Pages/fines-detail-page/fines-detail-page';
+import { ReservationListComponent } from './Features/Reservation/Components/reservation-list-component/reservation-list-component';
+import { ReservationDetailComponent } from './Features/Reservation/Components/reservation-detail-component/reservation-detail-component';
+import { ReservationListPage } from './Features/Reservation/Pages/reservation-list-page/reservation-list-page';
+import { ReservationDetailPage } from './Features/Reservation/Pages/reservation-detail-page/reservation-detail-page';
 
 
 export const routes: Routes = [
@@ -37,6 +41,10 @@ export const routes: Routes = [
         {path:"FinePage",children:[
             {path:"FineListPage",component:FinesListPage},
             {path:"FineDetailPage/:id",component:FinesDetailPage},
+        ]},
+        {path:"ReservationPage",children:[
+            {path:"ReservationListPage",component:ReservationListPage},
+            {path:"ReservationDetailPage/:id",component:ReservationDetailPage},
         ]}
         ]
     },

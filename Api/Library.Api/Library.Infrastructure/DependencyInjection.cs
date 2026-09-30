@@ -1,7 +1,10 @@
 ﻿using Library.Infrastructure.BackGroundJobs;
 using Library.Infrastructure.Configuration.Options;
+using Library.Infrastructure.Data.Interceptor;
+using Library.Infrastructure.RealTime;
 using Library.Infrastructure.Services;
 using Library.Infrastructure.Settings;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using System.Runtime.CompilerServices;
 
@@ -10,19 +13,25 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services,IConfiguration configuration)
     {
+        services.AddSignalR();
         return services.AddSingleton(TimeProvider.System)
             .AddConnectionString(configuration)
             .AddDependencyInjection()
             .AddCorsService()
             .AddOptions()
             .AddJwt(configuration);
+            
 
     }
     public static IServiceCollection AddConnectionString(this IServiceCollection services, IConfiguration configuration) {
         string? ConnectionString = configuration.GetConnectionString("Default");
         ArgumentNullException.ThrowIfNullOrWhiteSpace(ConnectionString);
+        services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
+        services.AddScoped<ICopyNotifier, SignalRCopyReturnNotifier>();
         services.AddDbContext<AppDbContext>((sp, options) =>
         {//interceptor later
+            
+            options.AddInterceptors(sp.GetService<ISaveChangesInterceptor>());
             options.UseSqlServer(ConnectionString);
         });
         return services;    
@@ -33,9 +42,11 @@ public static class DependencyInjection
         {
             options.AddPolicy("LibraryApp", policy =>
             {
-                policy.AllowAnyHeader()
-                 .AllowAnyMethod()
-                 .WithOrigins(["http://localhost:4200"]);
+                policy
+                    .WithOrigins("http://localhost:4200")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials();
             });
         });
         return services;

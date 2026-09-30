@@ -1,0 +1,43 @@
+     <div class="card">
+            <div class="card-header">
+                <h6 class="text-primary">books</h6>
+            </div>
+            <div class="card-body">
+                <div class="book-cards">
+
+                    <div *ngFor="let copy of paginatedCopies?.items" class="card">
+                        <!-- <div class="card-header"><p class="text-info">title</p></div> -->
+                         <!-- <a [routerLink]="['/BookPage','BookDetailPage']"> -->
+
+                             <div [routerLink]="['/ReservationPage','ReservationDetailPage',copy.id]" class="card-body">
+                                 <img [src]="filePath+'/'+ copy.book.fileId" 
+                                 class="book-img" 
+                                 alt="not found"
+                                 (error)="OnImageError($event)"
+                                 ></div>
+                                 <div class="card-footer">
+                                     <div class="book-card-details">
+                                         <p class="card-title bg-secondary p-1">{{copy.book.genere}}</p>
+                                         <p class="card-description">{{copy.book.title}}</p>
+                                        </div>
+                             </div>
+                         <!-- </a> -->
+                    </div>
+                    </div>
+            </div>
+            <div class="card-footer">
+                <div class="books-footer-details">
+                    <h6 class="text-info">Count : <span>{{paginatedCopies?.items?.length}}</span></h6>
+                    
+                     <!-- <a href="">
+                        <i class="bi bi-file-earmark-plus-fill"></i>
+                     </a> -->
+                    <div class="pagination">
+                        <button (click)="getPrev()" [disabled]="!paginatedCopies?.hasPreviousPage" class="btn btn-outline-primary">Previous</button>
+                        <p class="text-info m-2">Page {{paginatedCopies?.totalPages}}/{{paginatedCopies?.pageNumber}}</p>
+                        <button (click)="getNext()" [disabled]="!paginatedCopies?.hasNextPage" class="btn btn-outline-primary">Next</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>

@@ -33,8 +33,9 @@ public sealed class GetReservationsHandler(
         IQueryable<Reservation> reservations, string? genere, 
         string? title, string? userName, DateTime? fromReservationDate,DateTime? toReservationDate)
     {
-        if(string.IsNullOrEmpty(genere)) reservations =reservations.Where(r=>r.Copy.Book.Genere == genere);
-        if(string.IsNullOrEmpty(title)) reservations =reservations.Where(r=>r.Copy.Book.Title == title);
+        if(!string.IsNullOrEmpty(genere)) reservations =reservations.Where(r=>r.Copy.Book.Genere == genere);
+        if(!string.IsNullOrEmpty(title)) reservations =reservations.Where(r=>r.Copy.Book.Title == title);
+        if(!string.IsNullOrEmpty(userName)) reservations =reservations.Where(r=>r.User.Name == userName);
         if(fromReservationDate.HasValue) reservations =reservations.Where(r=>r.ReservationDate >= fromReservationDate);
         if(toReservationDate.HasValue) reservations =reservations.Where(r=>r.ReservationDate <= toReservationDate);
         return reservations;

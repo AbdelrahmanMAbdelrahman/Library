@@ -7,6 +7,8 @@
 
 
 
+using Library.Domain.Reservations;
+
 namespace Library.Application.Common.Errors;
 
 public sealed class ApplicationErrors
@@ -32,23 +34,27 @@ public sealed class ApplicationErrors
     internal static Error RefreshTokenNotFound(string RefreshToken)=>
         Error.BadRequest("ApplicationErrors.RefreshTokenNotFound",$"{RefreshToken} is not found");
 
-    internal static Error BookAlreadyReturned(DateTime? actualReturnDate)
-    {
-        throw new NotImplementedException();
-    }
+    internal static Error BookAlreadyReturned(DateTime? actualReturnDate) =>
+        Error.Conflict(
+            "ApplicationErrors.BookAlreadyReturned",
+            "book already returned"
+            );
 
-    internal static Error CopyAlreadyAvailable(Guid id)
-    {
-        throw new NotImplementedException();
-    }
+    internal static Error CopyAlreadyAvailable(Guid id) =>
+        Error.Conflict("ApplicationErrors.CopyAlreadyAvailable",
+            "this copy is already available");
 
-    internal static Error FineExist(Guid id)
-    {
-        throw new NotImplementedException();
-    }
+    internal static Error FineExist(Guid id) =>
+        Error.Conflict(
+            "ApplicationErrors.FineExist",
+            "already has fine"
+            );
 
-    internal static Result<ReservationDto> ReservationAlreadyExist(Guid id)
-    {
-        throw new NotImplementedException();
-    }
+    internal static Error ReservationAlreadyExist(Guid id)=>
+        Error.Conflict("ApplicationErrors.ReservationAlreadyExist",
+            $"reservation with id = {id} is already exist");
+
+    internal static Error ReservationNotFound(Guid reservationId) =>
+        Error.NotFound("ApplicationErrors.ReservationNotFound",
+            $"reservation with id = {reservationId} is not found");
 }

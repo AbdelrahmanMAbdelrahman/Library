@@ -22,6 +22,28 @@ GetCopy(bookId:string):Observable<CopyRes>{
     
     return this.http.get<CopyRes>(`${this.baseUrl}/${bookId}`);
 }
+GetUnAvailableBooks(bookFilter:BookFilter)
+    :Observable<PaginatedList<CopyRes>>{
+    debugger;
+    let params=new HttpParams()
+    .set("PageNumber",bookFilter.pageNumber)
+    .set("PageSize",bookFilter.pageSize)
+    .set("Available",false);
+    if(bookFilter.sortColumn)
+        params=params.set("SortColumn",bookFilter.sortColumn!);
+if(bookFilter.sortDirection)
+params=params.set("SortDirection",bookFilter.sortDirection!);
+if(bookFilter.title)
+    params=params.set("Title",bookFilter.title!);
+if(bookFilter.genere)
+    params= params.set("Genere",bookFilter.genere!);
+if(bookFilter.publicationDateFrom)
+    params=params.set("PublicationDateFrom",bookFilter.publicationDateFrom!.toString());
+if(bookFilter.publicationDateTo)
+    params=params.set("PublicationDateTo",bookFilter.publicationDateTo!.toString());
+
+return this.http.get<PaginatedList<CopyRes>>(this.baseUrl,{params});
+}
 GetBooks(bookFilter:BookFilter):Observable<PaginatedList<CopyRes>>{
     debugger;
     let params=new HttpParams()

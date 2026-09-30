@@ -6,7 +6,7 @@ namespace Library.Api.Controllers
 {
     [Route("api/[Controller]")]
     //[Authorize]
-    public class BorrowingRecordController(ISender sender):ApiController
+    public class BorrowingRecordsController(ISender sender):ApiController
     {
         [HttpPost()]
         [ProducesResponseType(typeof(BorrowingRecordDto),StatusCodes.Status201Created)]

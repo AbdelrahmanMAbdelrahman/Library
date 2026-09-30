@@ -8,8 +8,8 @@
     {
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            using var timer = new PeriodicTimer(TimeSpan.FromMinutes(1)
-                //TimeSpan.FromHours( options.Value.DefaultPeriodicFineCheck)
+            using var timer = new PeriodicTimer(//TimeSpan.FromMinutes(1)
+                TimeSpan.FromHours( options.Value.DefaultPeriodicFineCheck)
                 );
             while (await timer.WaitForNextTickAsync(stoppingToken))
             {

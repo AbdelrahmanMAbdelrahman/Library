@@ -5,5 +5,5 @@ genere:string,
 additionalDetails:string,
 publicationDate:string, 
 numberOfCopies:Number,
-image:File
+image?:File
 }

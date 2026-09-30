@@ -1,4 +1,6 @@
 ﻿
+using Library.Domain.Copies.Events;
+
 namespace Library.Application.Features.Fines.Commands.PayFines;
 
 public sealed class PayFineHandler (IAppDbContext context,ILogger<PayFineHandler>logger) 
@@ -47,6 +49,7 @@ public sealed class PayFineHandler (IAppDbContext context,ILogger<PayFineHandler
             logger.LogError(string.Join(" - ",PayFineResult.Errors));
             return PayFineResult.Errors;
         }
+        fine.DomainEvents.Add(new CopyReturned(borrowingRecord.CopyId));
         await context.SaveChangesAsync(cancellationToken);
         return Result.Updated;
     }

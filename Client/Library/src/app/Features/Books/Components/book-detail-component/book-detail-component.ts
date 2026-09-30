@@ -12,7 +12,7 @@ import { DatePipe } from '@angular/common';
   styleUrl: './book-detail-component.css',
 })
 export class BookDetailComponent {
-  imageUrl:string="https://localhost:7010/api/File";
+  imageUrl:string="https://localhost:7010/api/Files";
   @Input()copy?:CopyRes;
   @Output()OnSaveBorrowingRecord=new EventEmitter();
   handleImageError(event: Event) {

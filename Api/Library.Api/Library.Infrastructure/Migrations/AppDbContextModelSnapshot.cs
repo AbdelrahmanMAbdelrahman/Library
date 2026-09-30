@@ -111,8 +111,7 @@ namespace Library.Infrastructure.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.HasIndex("CopyId")
-                        .IsUnique();
+                    b.HasIndex("CopyId");
 
                     b.ToTable("BorrowingRecords");
                 });
@@ -328,8 +327,7 @@ namespace Library.Infrastructure.Migrations
 
                     SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("Id"));
 
-                    b.HasIndex("CopyId")
-                        .IsUnique();
+                    b.HasIndex("CopyId");
 
                     b.HasIndex("UserId");
 
@@ -531,8 +529,8 @@ namespace Library.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("Library.Domain.Copies.Copy", "Copy")
-                        .WithOne("BorrowingRecord")
-                        .HasForeignKey("Library.Domain.BorrowingRecords.BorrowingRecord", "CopyId")
+                        .WithMany("BorrowingRecords")
+                        .HasForeignKey("CopyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -574,8 +572,8 @@ namespace Library.Infrastructure.Migrations
             modelBuilder.Entity("Library.Domain.Reservations.Reservation", b =>
                 {
                     b.HasOne("Library.Domain.Copies.Copy", "Copy")
-                        .WithOne("Reservation")
-                        .HasForeignKey("Library.Domain.Reservations.Reservation", "CopyId")
+                        .WithMany("Reservation")
+                        .HasForeignKey("CopyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -654,11 +652,9 @@ namespace Library.Infrastructure.Migrations
 
             modelBuilder.Entity("Library.Domain.Copies.Copy", b =>
                 {
-                    b.Navigation("BorrowingRecord")
-                        .IsRequired();
+                    b.Navigation("BorrowingRecords");
 
-                    b.Navigation("Reservation")
-                        .IsRequired();
+                    b.Navigation("Reservation");
                 });
 
             modelBuilder.Entity("Library.Domain.Identity.Users.AppUser", b =>

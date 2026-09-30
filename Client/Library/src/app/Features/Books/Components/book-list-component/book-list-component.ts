@@ -18,7 +18,7 @@ import { DefaultSettings } from '../../../../Global/Consts/DefaultConsts';
 export class BookListComponent  {
   @Input()paginatedCopies?:PaginatedList<CopyRes>;
   @Output()OnPaginate=new EventEmitter<BookFilter>();
-  filePath:string="https://localhost:7010/api/File";
+  filePath:string="https://localhost:7010/api/Files";
   
   OnImageError(event: Event) {
     const img =event.target as HTMLImageElement;

@@ -55,3 +55,148 @@ i {
     font-size: 30px;
     font-weight: bold;
 }
+
+.notification {
+    position: relative;
+    margin-bottom: 1%;
+    margin-right: 1%;
+    /* margin:0 1% 1% 0; */
+}
+
+.notification-button {
+    position: relative;
+    border: none;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    font-size: 22px;
+    padding: 8px;
+}
+
+.notification-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    min-width: 18px;
+    height: 18px;
+
+    padding: 2px 5px;
+
+    border-radius: 50%;
+
+    background: red;
+    color: white;
+
+    font-size: 11px;
+    font-weight: bold;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* Popup */
+
+.notification-popup {
+    position: absolute;
+
+    top: 45px;
+    right: 0;
+
+    width: 350px;
+
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+
+    z-index: 1000;
+}
+
+
+/* Header */
+
+.notification-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 12px 15px;
+
+    border-bottom: 1px solid #eee;
+
+    font-weight: bold;
+}
+
+.close-popup {
+    border: none;
+    background: transparent;
+
+    font-size: 22px;
+
+    cursor: pointer;
+}
+
+
+/* Notification */
+
+.notification-item {
+    display: flex;
+    gap: 10px;
+
+    padding: 15px;
+
+    border-bottom: 1px solid #eee;
+}
+
+.notification-icon {
+    font-size: 20px;
+}
+
+.notification-content {
+    flex: 1;
+}
+
+.notification-content p {
+    margin: 0 0 10px 0;
+}
+
+
+/* Buttons */
+
+.notification-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-open,
+.btn-close {
+    border: none;
+    border-radius: 4px;
+
+    padding: 5px 12px;
+
+    cursor: pointer;
+}
+
+.btn-open {
+    background: #0d6efd;
+    color: white;
+}
+
+.btn-close {
+    background: #eee;
+    color: #333;
+}
+
+
+/* Empty */
+
+.empty-notification {
+    padding: 20px;
+    text-align: center;
+    color: #777;
+}

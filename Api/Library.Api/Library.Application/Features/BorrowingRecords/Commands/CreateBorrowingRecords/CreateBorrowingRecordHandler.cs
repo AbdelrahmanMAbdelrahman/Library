@@ -12,10 +12,10 @@ public sealed class CreateBorrowingRecordHandler(IUser user,
             logger.LogError($"No copy found for this id {request.CopyId}");
             return ApplicationErrors.CopyNotFound(request.CopyId); }
 
-        BorrowingRecord? existingborrowingRecord =
-            await context.BorrowingRecords.FirstOrDefaultAsync(br=>br.AppUserId==user.Id,cancellationToken);
-
-        if(existingborrowingRecord!=null &&existingborrowingRecord!.ActualReturnDate is null)
+        bool hasNotReturnedCopy=
+            await context.BorrowingRecords.Where(br=>br.AppUserId==user.Id)
+            .AnyAsync(br=>br.ActualReturnDate==null);
+        if(hasNotReturnedCopy)
         {
             logger.LogError($"there are one or more borrowing record not returned");
             return ApplicationErrors.RecordAlreadyBorrowed;

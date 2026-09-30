@@ -1,7 +1,7 @@
 ﻿namespace Library.Api.Controllers
 {
     [Route("api/[Controller]")]
-    public class FileController(ISender sender):ApiController
+    public class FilesController(ISender sender):ApiController
     {
         [HttpGet("{Id}")]
        

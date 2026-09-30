@@ -7,9 +7,9 @@ public sealed class GetCopiesHandler(ILogger<GetCopiesHandler>logger,IAppDbConte
     public async Task<Result<PaginatedList<CopyDto>>> Handle(GetCopiesQuery request, CancellationToken cancellationToken)
     {
         IQueryable<Copy> CopiesQuery = context.Books.Where(
-            b=>b.Copies.Any(c=>c.Available))
+            b=>b.Copies.Any(c=>c.Available==request.Available))
             .Select(b=>b.Copies
-            .Where(c=>c.Available).First());
+            .Where(c=>c.Available==request.Available).First());
             
         CopiesQuery = ApplyFilter(
             CopiesQuery,request.Title,request.ISBN,request.PublicationDateFrom,request.PublicationDateTo,request.Genere);

@@ -22,20 +22,23 @@ public sealed class AuditableEntityInterceptor(IUser user,TimeProvider timeProvi
         DateTimeOffset date = timeProvider.GetUtcNow();
         foreach(EntityEntry<Audit> entry in context.ChangeTracker.Entries<Audit>())
         {
-            if(entry.State is EntityState.Modified or EntityState.Added)
+            if(entry.State is EntityState.Modified or EntityState.Added ||entry.HasOwnedEntityChanged() )
             {
-                entry.Entity.CreateAt = date;
-                entry.Entity.CreatedBy = user.Id;
-            }
+                if (entry.State == EntityState.Added)
+                {
+                    entry.Entity.CreateAt = date;
+                    entry.Entity.CreatedBy = user.Id;
+                }
             entry.Entity.LastModifiedAt = date;
             entry.Entity.LastModifiedBy = user.Id;
+            }
 
             foreach(ReferenceEntry ownedEntry in entry.References)
             {
                 if(ownedEntry.EntityEntry.Entity is Audit ownedEntity &&
                    ownedEntry.EntityEntry.State is EntityState.Added or EntityState.Modified)
                 {
-                    if (ownedEntry.EntityEntry.State is EntityState.Modified or EntityState.Added)
+                    if (ownedEntry.EntityEntry.State == EntityState.Added)
                     {
                         ownedEntity.CreateAt = date;
                         ownedEntity.CreatedBy = user.Id;
@@ -45,5 +48,15 @@ public sealed class AuditableEntityInterceptor(IUser user,TimeProvider timeProvi
                 }
             }
         }
+    }
+}
+public static class Extension
+{
+    public static bool HasOwnedEntityChanged(this EntityEntry entry)
+    {
+        return entry.References.Any(e=>
+        e.TargetEntry is not null&&
+        e.TargetEntry.Metadata.IsOwned()&&
+        e.TargetEntry.State is EntityState.Added or EntityState.Modified);
     }
 }

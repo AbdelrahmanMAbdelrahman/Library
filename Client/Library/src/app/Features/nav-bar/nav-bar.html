@@ -30,11 +30,95 @@
                 </a>
             </li>
             <li>
-                <a [routerLink]="['BookPage']">
+                <a [routerLink]="['/ReservationPage','ReservationListPage']">
                     <i class="bi bi-calendar-event"></i>
                     <p class="">  Reservation</p>
                 </a>
             </li>
         </ul>
+            
     </div>
+    <div class="notification">
+
+    <button
+        type="button"
+        class="notification-button"
+        (click)="toggleNotifications()">
+
+        <i class="bi bi-bell"></i>
+
+        <span
+            *ngIf="notifications.length > 0"
+            class="notification-badge">
+            {{ notifications.length }}
+        </span>
+
+    </button>
+
+
+    <!-- Notification popup -->
+    <div
+        class="notification-popup"
+        *ngIf="showNotifications">
+
+        <div class="notification-header">
+            <span>Notifications</span>
+
+            <button
+                type="button"
+                class="close-popup"
+                (click)="closeNotifications()">
+                ×
+            </button>
+        </div>
+
+
+        <div
+            class="notification-item"
+            *ngFor="let notification of notifications">
+
+            <div class="notification-icon">
+                <i class="bi bi-book"></i>
+            </div>
+
+            <div class="notification-content">
+
+                <p>
+                    {{ notification.message }}
+                </p>
+
+                <div class="notification-actions">
+
+                    <button
+                        type="button"
+                        class="btn-open"
+                        [routerLink]="">
+                        Open
+                    </button>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="closeNotification(notification)">
+                        Close
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="empty-notification"
+            *ngIf="notifications.length === 0">
+
+            No notifications
+
+        </div>
+
+    </div>
+
+</div>
 </nav>

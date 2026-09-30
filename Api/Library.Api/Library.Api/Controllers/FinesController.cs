@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 namespace Library.Api.Controllers
 {
     [Route("api/[controller]")]
-    public class FineController(ISender sender):ApiController
+    public class FinesController(ISender sender):ApiController
     {
         [HttpGet()]
         [EndpointName(nameof( GetFines))]

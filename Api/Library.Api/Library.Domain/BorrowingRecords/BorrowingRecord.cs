@@ -7,7 +7,7 @@ public sealed class BorrowingRecord : Audit
     public DateTime BorrowingDate { get; private set; }
     public DateTime DueDate { get; private set; }
     public DateTime? ActualReturnDate { get; private set; }
-    public Copy Copy { get;  set; } = default!;
+    public  Copy Copy { get;  set; } = default!;
     public AppUser AppUser { get;  set; }=default!;
     public Fine Fine { get; set; }
     public BorrowingRecord(){}

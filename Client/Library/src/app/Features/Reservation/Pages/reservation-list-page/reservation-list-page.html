@@ -1,0 +1,11 @@
+<div class="reservation-page">
+    <div class="reservation-search">
+       <app-book-search></app-book-search>
+    </div>
+    <div class="reservation-list">
+        <app-reservation-list-component
+        [paginatedCopies]="(paginatedBooks|async)!"
+        
+        ></app-reservation-list-component>
+    </div>
+</div>

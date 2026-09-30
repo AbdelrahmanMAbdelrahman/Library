@@ -9,7 +9,7 @@ import { BorrowingRecordSearch } from "../Models/BorrowingRecordSearch";
 @Injectable({providedIn:'root'})
 export class BorrowingRecordService{
 
-  private  url:string="https://localhost:7010/api/BorrowingRecord";
+  private  url:string="https://localhost:7010/api/BorrowingRecords";
 constructor(private http:HttpClient) {}
 
  getBorrowingRecords(search:BorrowingRecordSearch):Observable<PaginatedList<BorrowingRecordRes>>{

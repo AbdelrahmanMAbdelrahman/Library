@@ -8,8 +8,8 @@ namespace Library.Domain.Copies
         public Guid BookId { get;private set; }
         public Book Book { get;private set; } = default!;
         public bool Available { get;private set; }
-        public BorrowingRecord BorrowingRecord { get;private set; }=default!;
-        public Reservation Reservation { get; set; }
+        public ICollection< BorrowingRecord> BorrowingRecords { get;private set; }=default!;
+        public ICollection< Reservation> Reservation { get; set; }
         public Copy() { }
         public Copy(Guid id,Guid bookId,bool Available) {
         this.BookId = bookId;

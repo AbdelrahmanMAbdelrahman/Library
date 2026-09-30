@@ -5,6 +5,7 @@ namespace Library.Application.Features.Reservations.Commands.CreateReservations
     public sealed class CreateReservationHandler(
         ILogger<CreateReservationHandler>logger,
         IAppDbContext context,
+        UserManager<AppUser> userManager,
         IUser user) : IRequestHandler<CreateReservationCommand, Result<ReservationDto>>
     {
         public async Task<Result<ReservationDto>> Handle(
@@ -40,7 +41,14 @@ namespace Library.Application.Features.Reservations.Commands.CreateReservations
                 logger.LogError(string.Join(" - ",createReservationResult.Errors));
                 return createReservationResult.Errors;
             }
+            await context.Reservations.AddAsync(createReservationResult.Value,cancellationToken);
             await context.SaveChangesAsync(cancellationToken);
+            createReservationResult.Value.Copy = await context.Copies!.AsNoTracking()
+                .Include(c=>c.Book)
+                .Where(c => c.Id == request.CopyId)
+                //.Select(c=>new Copy(c.Id,c.BookId,c.Available))
+                .FirstOrDefaultAsync(cancellationToken)!;
+            createReservationResult.Value.User =await userManager.FindByIdAsync(user.Id);
             return createReservationResult.Value.ToDto();
         }
     }

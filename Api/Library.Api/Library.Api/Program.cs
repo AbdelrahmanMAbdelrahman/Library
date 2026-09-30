@@ -1,3 +1,5 @@
+using Library.Infrastructure.RealTime;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -15,5 +17,5 @@ app.UseMiddleware();
 
 app.MapControllers();
 await app.InitializeAsync();
-
+app.MapHub<CopyReturnHub>(CopyReturnHub.URL);
 app.Run();

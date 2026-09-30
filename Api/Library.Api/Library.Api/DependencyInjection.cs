@@ -40,7 +40,8 @@ public static class DependencyInjection
             .UseStatusCodePages()
             .UseAuthentication()
             .UseAuthorization()
-            .UseCors("LibraryApp");
+            .UseCors("LibraryApp")
+            ;
     }
 
 }
