@@ -1,11 +1,11 @@
 <nav>
-    <div class="dashboard">
+    <!-- <div class="dashboard">
 
         <a [routerLink]="['/Dashboard']" class="nav-link d-flex ">
             <i class="bi bi-ui-radios-grid"></i>
             <p class="">Dashboard</p>
         </a>
-    </div>
+    </div> -->
     <div class="nav-bar">
         <ul>
         
@@ -77,7 +77,7 @@
             class="notification-item"
             *ngFor="let notification of notifications">
 
-            <div class="notification-icon">
+            <div class="notification-icon ">
                 <i class="bi bi-book"></i>
             </div>
 
@@ -92,7 +92,7 @@
                     <button
                         type="button"
                         class="btn-open"
-                        [routerLink]="">
+                        [routerLink]="['/BookPage','BookDetailPage',notification.copyId]">
                         Open
                     </button>
 

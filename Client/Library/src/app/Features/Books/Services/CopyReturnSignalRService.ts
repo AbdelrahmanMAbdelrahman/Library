@@ -21,21 +21,11 @@ export class CopyReturnSignalRService {
         accessTokenFactory: () => {
           const token = localStorage.getItem('accessToken');
 
-          console.log(
-            '[SignalR] accessToken exists:',
-            !!token
-          );
-
           return token ?? '';
         }
       })
       .withAutomaticReconnect()
       .build();
-
-    console.log(
-      '[SignalR] Initial state:',
-      this.hubConnection.state
-    );
 
     this.hubConnection.onreconnecting(error => {
       console.log('[SignalR] Reconnecting...', error);
@@ -55,11 +45,6 @@ export class CopyReturnSignalRService {
 
   async Start(): Promise<void> {
 
-    console.log(
-      '[SignalR] Start called. State:',
-      this.hubConnection.state
-    );
-
     if (this.hubConnection.state !== HubConnectionState.Disconnected) {
       console.log(
         '[SignalR] Already connected/connecting.'
@@ -72,20 +57,7 @@ export class CopyReturnSignalRService {
 
       await this.hubConnection.start();
 
-      console.log(
-        '[SignalR] Connected successfully!'
-      );
-
-      console.log(
-        '[SignalR] Connection ID:',
-        this.hubConnection.connectionId
-      );
-
-      console.log(
-        '[SignalR] State:',
-        this.hubConnection.state
-      );
-
+      
     } catch (error) {
 
       console.error(
@@ -102,10 +74,6 @@ OnCopyResturn(callback: (copyId: string) => void): void {
   this.hubConnection.on(
     'CopyReturned',
     (data: { copyId: string }) => {
-
-      console.log('[SignalR] CopyReturned EVENT RECEIVED');
-      console.log('[SignalR] Data:', data);
-      console.log('[SignalR] CopyId:', data.copyId);
 
       callback(data.copyId);
     }

@@ -18,7 +18,19 @@ public static class DependencyInjection
             .AddValidatorsFromAssembly(typeof(BookReq).Assembly);
         return services;
     }
-
+    //public static IServiceCollection AddOutputCaching(this IServiceCollection services)
+    //{
+    //  return  services.AddOutputCache(
+    //        options =>
+    //        {
+    //            options.SizeLimit = 10 * 1024 * 1024;
+    //            options.AddBasePolicy(policy =>
+    //            {
+    //                policy.Expire(TimeSpan.FromSeconds(60));
+    //            });
+    //        }
+    //        );
+    //}
     public static IServiceCollection AddMediator(this IServiceCollection services)
     {
         services.AddMediatR(config =>
@@ -40,8 +52,8 @@ public static class DependencyInjection
             .UseStatusCodePages()
             .UseAuthentication()
             .UseAuthorization()
-            .UseCors("LibraryApp")
-            ;
+            
+            .UseCors("LibraryApp");
     }
 
 }

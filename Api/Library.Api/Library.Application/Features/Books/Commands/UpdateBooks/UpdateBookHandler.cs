@@ -1,7 +1,12 @@
 ﻿
+using Microsoft.Extensions.Caching.Hybrid;
+
 namespace Library.Application.Features.Books.Commands.UpdateBooks
 {
-    public sealed class UpdateBookHandler(IAppDbContext context,ILogger<UpdateBookHandler>logger) 
+    public sealed class UpdateBookHandler(
+        IAppDbContext context,
+        HybridCache hybridCache
+        ,ILogger<UpdateBookHandler>logger) 
         : IRequestHandler<UpdateBookCommand, Result<Updated>>
     {
         public async Task<Result<Updated>> Handle(UpdateBookCommand request, CancellationToken cancellationToken)
@@ -30,7 +35,8 @@ namespace Library.Application.Features.Books.Commands.UpdateBooks
             }
 
             await context.SaveChangesAsync(cancellationToken);
-
+            await hybridCache.RemoveByTagAsync("Copies", cancellationToken);
+            await hybridCache.RemoveByTagAsync("Copy", cancellationToken);
             return Result.Updated;
         }
     }

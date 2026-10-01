@@ -1,7 +1,10 @@
-﻿namespace Library.Application.Features.BorrowingRecords.Commands.CreateBorrowingRecords;
+﻿using Microsoft.Extensions.Caching.Hybrid;
+
+namespace Library.Application.Features.BorrowingRecords.Commands.CreateBorrowingRecords;
 
 public sealed class CreateBorrowingRecordHandler(IUser user,
     ILogger<CreateBorrowingRecordHandler>logger,
+    HybridCache hybridCache,
     IAppDbContext context,UserManager<AppUser> userManager) :
     IRequestHandler<CreateBorrowingRecordCommand, Result<BorrowingRecordDto>>
 {
@@ -39,6 +42,7 @@ public sealed class CreateBorrowingRecordHandler(IUser user,
 
         await context.BorrowingRecords.AddAsync(borrowingRecord,cancellationToken);
         await context.SaveChangesAsync(cancellationToken);
+        await hybridCache.RemoveByTagAsync("BorrowingRecords", cancellationToken);
         borrowingRecord.AppUser=await userManager.FindByIdAsync(user.Id);
         borrowingRecord.Copy=copy;
         return BorrowingRecordResult.Value.ToDto();

@@ -1,10 +1,12 @@
 ﻿using Library.Domain.BorrowingRecords;
 using Library.Domain.Copies.Events;
+using Microsoft.Extensions.Caching.Hybrid;
 
 namespace Library.Application.Features.Books.Commands.ReturnCopy;
 
 public sealed class ReturnCopyHandler 
-    (IAppDbContext context,IUser user,ILogger<ReturnCopyHandler>logger)
+    (IAppDbContext context,IUser user,
+    HybridCache hybridCache,ILogger<ReturnCopyHandler>logger)
     : IRequestHandler<ReturnCopyCommand, Result<Updated>>
 {
     public async Task<Result<Updated>> Handle(ReturnCopyCommand request, CancellationToken cancellationToken)
@@ -54,6 +56,7 @@ public sealed class ReturnCopyHandler
     borrowingRecord.CopyId,
     borrowingRecord.Copy.DomainEvents.Count);
         await context.SaveChangesAsync(cancellationToken);
+        await hybridCache.RemoveByTagAsync("Copies", cancellationToken);
         return Result.Updated;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Library.Application.Features.Reservations.Mappers;
+using Microsoft.Extensions.Caching.Hybrid;
 
 namespace Library.Application.Features.Reservations.Commands.CreateReservations
 {
@@ -6,6 +7,7 @@ namespace Library.Application.Features.Reservations.Commands.CreateReservations
         ILogger<CreateReservationHandler>logger,
         IAppDbContext context,
         UserManager<AppUser> userManager,
+        HybridCache hybridCache,
         IUser user) : IRequestHandler<CreateReservationCommand, Result<ReservationDto>>
     {
         public async Task<Result<ReservationDto>> Handle(
@@ -43,6 +45,7 @@ namespace Library.Application.Features.Reservations.Commands.CreateReservations
             }
             await context.Reservations.AddAsync(createReservationResult.Value,cancellationToken);
             await context.SaveChangesAsync(cancellationToken);
+            await hybridCache.RemoveByTagAsync("Reservations", cancellationToken);
             createReservationResult.Value.Copy = await context.Copies!.AsNoTracking()
                 .Include(c=>c.Book)
                 .Where(c => c.Id == request.CopyId)

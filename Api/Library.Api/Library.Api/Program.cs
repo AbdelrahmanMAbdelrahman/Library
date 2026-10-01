@@ -3,7 +3,7 @@ using Library.Infrastructure.RealTime;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddInfrastructure(builder.Configuration).AddPresentation();
+builder.Services.AddInfrastructure(builder.Configuration).AddApplication().AddPresentation();
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.

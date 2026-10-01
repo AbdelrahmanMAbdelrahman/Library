@@ -1,9 +1,10 @@
 ﻿
 using Library.Domain.Copies.Events;
+using Microsoft.Extensions.Caching.Hybrid;
 
 namespace Library.Application.Features.Fines.Commands.PayFines;
 
-public sealed class PayFineHandler (IAppDbContext context,ILogger<PayFineHandler>logger) 
+public sealed class PayFineHandler (IAppDbContext context,HybridCache hybridCache,ILogger<PayFineHandler>logger) 
     : IRequestHandler<PayFineCommand, Result<Updated>>
 {
     public async Task<Result<Updated>> Handle(PayFineCommand request, CancellationToken cancellationToken)
@@ -51,6 +52,8 @@ public sealed class PayFineHandler (IAppDbContext context,ILogger<PayFineHandler
         }
         fine.DomainEvents.Add(new CopyReturned(borrowingRecord.CopyId));
         await context.SaveChangesAsync(cancellationToken);
+        await hybridCache.RemoveByTagAsync("Copies", cancellationToken);
+        await hybridCache.RemoveByTagAsync("Fines", cancellationToken);
         return Result.Updated;
     }
 }

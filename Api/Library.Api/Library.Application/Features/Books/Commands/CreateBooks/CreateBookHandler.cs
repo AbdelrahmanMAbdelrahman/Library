@@ -1,8 +1,10 @@
 ﻿
+using Microsoft.Extensions.Caching.Hybrid;
+
 namespace Library.Application.Features.Books.Commands.CreateBooks;
 
 public sealed class CreateBookHandler
-    (ILogger<CreateBookHandler>logger,IAppDbContext context,IFileStorage fileStorage)
+    (ILogger<CreateBookHandler>logger,IAppDbContext context,HybridCache hybridCache,IFileStorage fileStorage)
     : IRequestHandler<CreateBookCommand, Result<BookDto>>
 {
     public async Task<Result<BookDto>> Handle(CreateBookCommand request, CancellationToken cancellationToken)
@@ -33,7 +35,7 @@ public sealed class CreateBookHandler
         await context.Books.AddAsync(CreateBookResult.Value,cancellationToken);
         await context.UploadedFiles.AddAsync(CreateFileResult.Value,cancellationToken);
         await context.SaveChangesAsync(cancellationToken);
-        
+        await hybridCache.RemoveByTagAsync("Copies",cancellationToken);
         return CreateBookResult.Value.ToDto();
     }
 }

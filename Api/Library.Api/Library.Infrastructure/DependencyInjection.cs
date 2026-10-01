@@ -5,6 +5,7 @@ using Library.Infrastructure.RealTime;
 using Library.Infrastructure.Services;
 using Library.Infrastructure.Settings;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.Caching.Hybrid;
 using Microsoft.Extensions.Configuration;
 using System.Runtime.CompilerServices;
 
@@ -103,6 +104,19 @@ public static class DependencyInjection
                 ValidAudience=jwtOptions.Audience,
                 ClockSkew=TimeSpan.Zero
             };
+            options.Events = new JwtBearerEvents
+            {
+                OnMessageReceived = context =>
+                {
+                    var accessToken = context.Request.Query["access_token"];
+                    var path = context.HttpContext.Request.Path;
+                    if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/Hubs/CopyNotifier"))
+                    {
+                        context.Token = accessToken;
+                    }
+                    return Task.CompletedTask;
+                }
+            };
         });
         
         return services;
@@ -114,7 +128,14 @@ public static class DependencyInjection
             .AddScoped<IFileStorage, FileStorageService>()
             .AddScoped<AppDbContextInitializer>()
             .AddHostedService<FineTrackingService>();
-
+        services.AddHybridCache(options =>
+        {
+            options.DefaultEntryOptions = new HybridCacheEntryOptions
+            {
+                Expiration = TimeSpan.FromMinutes(10),
+                LocalCacheExpiration = TimeSpan.FromSeconds(30)
+            };
+        });
         return services;
     }
     

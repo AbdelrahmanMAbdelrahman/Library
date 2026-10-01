@@ -1,4 +1,7 @@
-﻿namespace Library.Domain.Common.Results;
+﻿using System.ComponentModel;
+using System.Text.Json.Serialization;
+
+namespace Library.Domain.Common.Results;
 
 public static class Result 
 {
@@ -17,6 +20,8 @@ public sealed class Result<T> : IResult<T>
     public bool IsError => !IsSuccess;
     public List<Error> Errors =>IsError? _errors! : [];
     public Error? TopError =>Errors.Count>0? _errors![0]:default;
+    [JsonConstructor()]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public Result(T value,List<Error>errors,bool isSuccess)
     {
         if (isSuccess)

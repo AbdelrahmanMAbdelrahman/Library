@@ -7,16 +7,7 @@ public sealed class SignalRCopyReturnNotifier(
     ILogger<SignalRCopyReturnNotifier> logger)
     : ICopyNotifier
 {
-    public async Task NotifyCopyReturned(
-        CancellationToken ct)
-    {
-        logger.LogInformation(
-            "Sending CopyReturned to ALL clients");
-
-        await hubContext.Clients.All.SendAsync(
-            "CopyReturned",
-            ct);
-    }
+  
 
     public async Task NotifyCopyReturned(
     string userId,
@@ -24,8 +15,8 @@ public sealed class SignalRCopyReturnNotifier(
     CancellationToken ct)
     {
         logger.LogInformation(
-            "Sending CopyReturned to ALL clients. UserId={UserId}, CopyId={CopyId}",
-            userId,
+            "Sending CopyReturned to ALL clients.  CopyId={CopyId}",
+            
             copyId);
 
         await hubContext.Clients.All.SendAsync(

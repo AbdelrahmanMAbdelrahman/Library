@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 
 namespace Library.Application.Common.Models;
 
@@ -18,6 +19,21 @@ public sealed class PaginatedList<T>
         HasNextPage = PageNumber < TotalPages;
         HasPreviousPage = pageNumber > 1;
     }
+    [JsonConstructor]
+    public PaginatedList(
+          List<T> items,
+          bool hasNextPage,
+          bool hasPreviousPage,
+          int pageNumber,
+          int totalPages)
+    {
+        Items = items;
+        HasNextPage = hasNextPage;
+        HasPreviousPage = hasPreviousPage;
+        PageNumber = pageNumber;
+        TotalPages = totalPages;
+    }
+
 
     public static async Task<Result<PaginatedList<T>>>Create(IQueryable<T> items,int PageNumber=1,int PageSize = 10)
     {
