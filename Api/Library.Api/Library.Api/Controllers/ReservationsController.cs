@@ -2,6 +2,7 @@
 using Library.Application.Features.Reservations.Dtos;
 using Library.Application.Features.Reservations.Queries.GetReservations;
 using Microsoft.AspNetCore.Components.RenderTree;
+using Microsoft.AspNetCore.RateLimiting;
 using System.Threading.Tasks;
 
 namespace Library.Api.Controllers
@@ -10,6 +11,7 @@ namespace Library.Api.Controllers
     public class ReservationsController(ISender sender):ApiController
     {
         [HttpGet("{Id}")]
+        [EnableRateLimiting("SlidingWindow")]
         [ProducesResponseType(typeof(ReservationDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
@@ -40,6 +42,7 @@ namespace Library.Api.Controllers
                 Problem);
         }
         [HttpGet("")]
+        [EnableRateLimiting("SlidingWindow")]
         [ProducesResponseType(typeof(ReservationDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]

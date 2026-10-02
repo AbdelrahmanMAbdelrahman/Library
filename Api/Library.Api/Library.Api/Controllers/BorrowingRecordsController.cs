@@ -1,5 +1,6 @@
 ﻿using Library.Application.Common.Models;
 using Library.Application.Features.BorrowingRecords.Queries.GetBorrowingRecords;
+using Microsoft.AspNetCore.RateLimiting;
 using System.Threading.Tasks;
 
 namespace Library.Api.Controllers
@@ -25,6 +26,7 @@ namespace Library.Api.Controllers
                 );
         }
         [HttpGet("{Id}")]
+        [EnableRateLimiting("SlidingWindow")]
         [ProducesResponseType(typeof(BorrowingRecordDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
@@ -42,6 +44,7 @@ namespace Library.Api.Controllers
                 );
         }
         [HttpGet("")]
+        [EnableRateLimiting("SlidingWindow")]
         [ProducesResponseType(typeof(PaginatedList< BorrowingRecordDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]

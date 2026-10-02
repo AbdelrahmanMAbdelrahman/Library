@@ -1,5 +1,6 @@
 ﻿using Library.Application.Features.Fines.Commands.PayFines;
 using Library.Application.Features.Fines.Queries.GetFineById;
+using Microsoft.AspNetCore.RateLimiting;
 using System.Threading.Tasks;
 
 namespace Library.Api.Controllers
@@ -8,6 +9,7 @@ namespace Library.Api.Controllers
     public class FinesController(ISender sender):ApiController
     {
         [HttpGet()]
+        [EnableRateLimiting("SlidingWindow")]
         [EndpointName(nameof( GetFines))]
         [EndpointSummary("get fines")]
         [EndpointDescription("return fines with cretieria")]
@@ -20,6 +22,7 @@ namespace Library.Api.Controllers
             return GetFineResult.Match(res => Ok(res), Problem);
         }
         [HttpGet("{Id}")]
+        [EnableRateLimiting("SlidingWindow")]
         [EndpointName(nameof( GetFine))]
         [EndpointSummary("get fine")]
         [EndpointDescription("return fine with Id")]

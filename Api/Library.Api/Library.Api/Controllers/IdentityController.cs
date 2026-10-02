@@ -1,4 +1,6 @@
-﻿namespace Library.Api.Controllers;
+﻿using Microsoft.AspNetCore.RateLimiting;
+
+namespace Library.Api.Controllers;
 
 [Route("api/[Controller]")]
 public class IdentityController(ISender sender):ApiController
@@ -15,6 +17,7 @@ public class IdentityController(ISender sender):ApiController
         Result<Success> result = await sender.Send(command,ct);
         return result.Match(_=>NoContent(), Problem);
     }
+    [EnableRateLimiting("SlidingWindow")]
     [ProducesResponseType(typeof(TokenResponse),StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]

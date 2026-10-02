@@ -5,6 +5,7 @@ using Library.Application.Features.Books.Commands.UpdateBooks;
 using Library.Application.Features.Books.Dtos;
 using Library.Application.Features.Books.Queries.GetBooks;
 using Library.Application.Features.Books.Queries.GetCopy;
+using Microsoft.AspNetCore.RateLimiting;
 using System.Threading.Tasks;
 
 
@@ -33,6 +34,7 @@ public class CopiesController(ISender sender):ApiController
             );
     }
     [HttpGet("{Id}")]
+    [EnableRateLimiting("SlidingWindow")]
     [ProducesResponseType(typeof(CopyDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
@@ -50,6 +52,7 @@ public class CopiesController(ISender sender):ApiController
             );
     }
     [HttpGet()]
+    [EnableRateLimiting("SlidingWindow")]
     [ProducesResponseType(typeof(PaginatedList<CopyDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
