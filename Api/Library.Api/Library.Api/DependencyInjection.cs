@@ -1,4 +1,7 @@
-﻿namespace Library.Api;
+﻿using Microsoft.AspNetCore.RateLimiting;
+using System.Threading.RateLimiting;
+
+namespace Library.Api;
 
 public static class DependencyInjection
 {
@@ -8,7 +11,8 @@ public static class DependencyInjection
         services.AddSwaggerGen();
         services.AddValidation()
             .AddIdentityInfrastructure()
-            .AddMediator() ;
+            .AddMediator()
+            .AddRateLimiting();
         return services;
     }
 
@@ -31,6 +35,24 @@ public static class DependencyInjection
     //        }
     //        );
     //}
+    public static IServiceCollection AddRateLimiting(this IServiceCollection services)
+    {
+        services.AddRateLimiter(options =>
+        {
+            options.AddSlidingWindowLimiter("SlidingWindow", limitOptions =>
+            {
+                limitOptions.QueueLimit = 1;
+                limitOptions.PermitLimit = 1;
+                limitOptions.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+                limitOptions.AutoReplenishment = true;
+                limitOptions.SegmentsPerWindow = 6;
+                limitOptions.Window = TimeSpan.FromMinutes(1);
+                
+            });
+            options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+        });
+        return services;
+    }
     public static IServiceCollection AddMediator(this IServiceCollection services)
     {
         services.AddMediatR(config =>
@@ -52,8 +74,8 @@ public static class DependencyInjection
             .UseStatusCodePages()
             .UseAuthentication()
             .UseAuthorization()
-            
-            .UseCors("LibraryApp");
+            .UseCors("LibraryApp")
+            .UseRateLimiter();
     }
 
 }

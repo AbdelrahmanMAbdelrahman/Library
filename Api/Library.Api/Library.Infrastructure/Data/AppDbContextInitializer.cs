@@ -39,7 +39,7 @@ public sealed class AppDbContextInitializer(
 
 
 
-       Result< AppUser> Admin = AppUser.Create("Abdelrahman","Abdelrahman$hussien10@gmail.com","01114308227", "abdelrahman_hussien@gmail.com");
+       Result< AppUser> Admin = AppUser.Create("Abdelrahman","AbdelrahmanHussien10@gmail.com","01114308227", "AbdelrahmanHussien10@gmail.com");
         if ( userManager.Users.All(u => u.Email != Admin.Value.Email))
         {
             IdentityResult result = await userManager.CreateAsync(Admin.Value,Admin.Value.Email!);

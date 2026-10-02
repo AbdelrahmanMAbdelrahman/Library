@@ -12,7 +12,7 @@
         [EndpointName(nameof(DownloadFile))]
         [EndpointSummary("return image file")]
         [EndpointDescription("return image file by providing an id")]
-        //[Authorize(Roles = "User")]
+        [AllowAnonymous]
         public async Task<IActionResult> DownloadFile([FromRoute]GetFileQuery query,CancellationToken ct)
         {
             Result<Application.Features.UploadedFiles.Dtos.DownloadFileDto> result = await sender.Send(query,ct);

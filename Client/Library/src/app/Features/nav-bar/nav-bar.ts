@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CopyReturnSignalRService } from '../Books/Services/CopyReturnSignalRService';
+import { AuthStateService } from '../Auth/Services/AuthStateService';
 
 @Component({
   selector: 'app-nav-bar',
@@ -28,7 +29,7 @@ closeNotification(notification: AppNotification): void {
   /**
    *
    */
-  constructor(private notificationService: CopyReturnSignalRService) {
+  constructor(private notificationService: CopyReturnSignalRService,public authState:AuthStateService) {
     
   }
 async ngOnInit(): Promise<void> {

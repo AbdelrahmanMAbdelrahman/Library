@@ -15,21 +15,21 @@
                     <i class="bi bi-book"></i>
                     <p class="text-light">Books</p>
                 </a>
-                </li>
-            <li>
+            </li>
+            <li *ngIf="authState.getRole()==='Admin'">
                 <a [routerLink]="['/BorrowingRecordPage','BorrowingRecordListPage']">
 
                     <i class="bi bi-journal-plus"></i>
                     <p class="">Borrowing Record</p>    
                 </a>
             </li>
-            <li>
+            <li *ngIf="authState.getRole()==='Admin'">
                 <a [routerLink]="['/FinePage','FineListPage']">
                     <i class="bi bi-coin"></i>
                     <p class="">  Fines</p>
                 </a>
             </li>
-            <li>
+            <li >
                 <a [routerLink]="['/ReservationPage','ReservationListPage']">
                     <i class="bi bi-calendar-event"></i>
                     <p class="">  Reservation</p>

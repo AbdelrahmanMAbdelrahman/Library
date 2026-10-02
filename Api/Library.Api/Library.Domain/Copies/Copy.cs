@@ -8,6 +8,7 @@ namespace Library.Domain.Copies
         public Guid BookId { get;private set; }
         public Book Book { get;private set; } = default!;
         public bool Available { get;private set; }
+        public byte[] RowVersion { get;private set; } = [];
         public ICollection< BorrowingRecord> BorrowingRecords { get;private set; }=default!;
         public ICollection< Reservation> Reservation { get; set; }
         public Copy() { }

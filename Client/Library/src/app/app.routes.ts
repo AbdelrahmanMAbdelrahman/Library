@@ -18,33 +18,50 @@ import { ReservationListComponent } from './Features/Reservation/Components/rese
 import { ReservationDetailComponent } from './Features/Reservation/Components/reservation-detail-component/reservation-detail-component';
 import { ReservationListPage } from './Features/Reservation/Pages/reservation-list-page/reservation-list-page';
 import { ReservationDetailPage } from './Features/Reservation/Pages/reservation-detail-page/reservation-detail-page';
+import { RoleGuard } from './Global/RoleGuard';
 
 
 export const routes: Routes = [
     {path:"",component:MainPage,canActivate:[AuthGuard],
         children:[
-    {path:"Dashboard",component:DashboardPage,canActivate:[AuthGuard]},
+    // {path:"Dashboard",component:DashboardPage,canActivate:[AuthGuard]},
     {path:"BookPage",
         children:[
             {path:"BookListPage",component:BookListPage,canActivate:[AuthGuard]},
-            {path:"BookCreatePage/:id",component:BookCreatePage,canActivate:[AuthGuard]},
+            {path:"BookCreatePage/:id",component:BookCreatePage,canActivate:[AuthGuard,
+                RoleGuard],
+                data:{role:"Admin"}
+            },
             {path:"BookDetailPage/:id",component:BookDetailPage,canActivate:[AuthGuard]},
         ]},
         {path:"BorrowingRecordPage",
             children:[
-                {path:"BorrowingRecordListPage",component:BorrowingRecordListPage},
-                {path:"BorrowingRecordCreatePage/:id",component:BorrowingRecordCreatePage},
-                {path:"BorrowingRecordDetailPage/:id",component:BorrowingRecordDetailPage},
+                {path:"BorrowingRecordListPage",component:BorrowingRecordListPage,
+                    canActivate:[AuthGuard,RoleGuard],
+                data:{role:"Admin"}
+                },
+                {path:"BorrowingRecordCreatePage/:id",component:BorrowingRecordCreatePage,
+                    canActivate:[AuthGuard]
+                },
+                {path:"BorrowingRecordDetailPage/:id",component:BorrowingRecordDetailPage,
+                    canActivate:[AuthGuard]
+                },
 
             ]
         },
         {path:"FinePage",children:[
-            {path:"FineListPage",component:FinesListPage},
-            {path:"FineDetailPage/:id",component:FinesDetailPage},
+            {path:"FineListPage",component:FinesListPage,canActivate:[AuthGuard,RoleGuard],
+                data:{role:"Admin"}},
+            {path:"FineDetailPage/:id",component:FinesDetailPage,canActivate:[AuthGuard,RoleGuard],
+                data:{role:"Admin"}},
         ]},
         {path:"ReservationPage",children:[
-            {path:"ReservationListPage",component:ReservationListPage},
-            {path:"ReservationDetailPage/:id",component:ReservationDetailPage},
+            {path:"ReservationListPage",component:ReservationListPage,
+                canActivate:[AuthGuard]
+            },
+            {path:"ReservationDetailPage/:id",component:ReservationDetailPage,
+                canActivate:[AuthGuard]
+            },
         ]}
         ]
     },

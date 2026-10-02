@@ -17,7 +17,7 @@ namespace Library.Api.Controllers
         [EndpointName(nameof(GetReservation))]
         [EndpointSummary("return Reservation")]
         [EndpointDescription("return Reservation by provide an id")]
-        //[Authorize(Roles = "User")]
+        [Authorize(Roles = "User,Admin")]
         public async Task<IActionResult> GetReservation([FromRoute]GetReservationQuery query,CancellationToken ct)
         {
             Result<ReservationDto> result = await sender.Send(query,ct);
@@ -31,7 +31,7 @@ namespace Library.Api.Controllers
         [EndpointName(nameof(CreateReservation))]
         [EndpointSummary("return created Reservation")]
         [EndpointDescription("return Reservation after creation")]
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "User,Admin")]
         public async Task<IActionResult> CreateReservation(CreateReservationCommand command,CancellationToken ct)
         {
             Result<ReservationDto>result=await sender.Send(command,ct);
@@ -47,7 +47,7 @@ namespace Library.Api.Controllers
         [EndpointName(nameof(GetReservations))]
         [EndpointSummary("return Reservations")]
         [EndpointDescription("return Reservations with criteria")]
-        //[Authorize(Roles = "User")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetReservations([FromQuery]GetReservationsQuery query,CancellationToken ct)
         {
             Result<PaginatedList<ReservationDto>> result = await sender.Send(query, ct);

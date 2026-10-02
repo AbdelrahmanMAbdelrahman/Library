@@ -45,7 +45,7 @@ export class BookDetailPage implements OnInit {
       }
     this.borrowingService.createBorrowingRecord(req).subscribe({
       next:(record:BorrowingRecordRes)=>{
-this.router.navigate(['/BorrowingRecordPage','BorrowingRecordListPage'])
+this.router.navigate(['/BookPage','BookListPage'])
       },
       error:(err:HttpErrorResponse)=>{
         let failure=err.error as Failure;

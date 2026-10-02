@@ -19,7 +19,7 @@ public class CopiesController(ISender sender):ApiController
     [EndpointName(nameof(CreateBook))]
     [EndpointSummary("create borrowing record")]
     [EndpointDescription("return created book")]
-    [Authorize(Roles = "User")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> CreateBook([FromForm]BookReq book,CancellationToken ct)
     {
         CreateBookCommand createBookCommand = new CreateBookCommand(
@@ -40,7 +40,7 @@ public class CopiesController(ISender sender):ApiController
     [EndpointName(nameof(GetCopy))]
     [EndpointSummary("return copy")]
     [EndpointDescription("return book by provide an id")]
-    [Authorize(Roles = "User")]
+    [Authorize(Roles = "User,Admin")]
     public async Task<IActionResult> GetCopy([FromRoute] GetCopyQuery query,CancellationToken ct)
     {
         var result = await sender.Send(query);
@@ -56,7 +56,7 @@ public class CopiesController(ISender sender):ApiController
     [EndpointName(nameof(GetCopies))]
     [EndpointSummary("return copies")]
     [EndpointDescription("return All copies")]
-    [Authorize(Roles = "User")]
+    [Authorize(Roles = "User,Admin")]
     public async Task<IActionResult> GetCopies([FromQuery]GetCopiesQuery query,CancellationToken ct)
     {
         var result = await sender.Send(query,ct);
@@ -82,7 +82,7 @@ public class CopiesController(ISender sender):ApiController
     [EndpointName(nameof(UpdateBook))]
     [EndpointSummary("update Copies")]
     [EndpointDescription("update All Copies")]
-    [Authorize(Roles = "User")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> UpdateBook([FromRoute]Guid Id, [FromForm]UpdateBookReq req,CancellationToken ct) {
         UpdateBookCommand command = new UpdateBookCommand(Id,req.Title,req.ISBN,req.Genere,req.AdditionalDetails,
             req.PublicationDate,req.Image?.OpenReadStream(),req.Image?.ContentType,req.Image?.FileName);
@@ -96,7 +96,7 @@ public class CopiesController(ISender sender):ApiController
     [EndpointName(nameof(DeleteCopy))]
     [EndpointSummary("deletes copy")]
     [EndpointDescription("deletes copy by id")]
-    [Authorize(Roles = "User")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> DeleteCopy([FromRoute] DeleteCopyCommand command,CancellationToken ct) {
         var result = await sender.Send(command, ct);
         return result.Match(res=>NoContent(),Problem);
@@ -109,7 +109,7 @@ public class CopiesController(ISender sender):ApiController
     [EndpointName(nameof(ReturnBook))]
     [EndpointSummary("return copy")]
     [EndpointDescription("return copy")]
-    [Authorize(Roles = "User")]
+    [Authorize(Roles = "User,Admin")]
     public async Task<IActionResult> ReturnBook([FromRoute]ReturnCopyCommand command,CancellationToken ct)
     {
         Result<Updated>result=await sender.Send(command, ct);

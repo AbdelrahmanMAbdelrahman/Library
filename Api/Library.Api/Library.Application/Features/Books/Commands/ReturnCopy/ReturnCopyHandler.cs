@@ -57,6 +57,7 @@ public sealed class ReturnCopyHandler
     borrowingRecord.Copy.DomainEvents.Count);
         await context.SaveChangesAsync(cancellationToken);
         await hybridCache.RemoveByTagAsync("Copies", cancellationToken);
+        await hybridCache.RemoveByTagAsync("BorrowingRecords", cancellationToken);
         return Result.Updated;
     }
 }

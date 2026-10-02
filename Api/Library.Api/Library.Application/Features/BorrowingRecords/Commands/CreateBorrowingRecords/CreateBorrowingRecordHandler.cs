@@ -43,6 +43,7 @@ public sealed class CreateBorrowingRecordHandler(IUser user,
         await context.BorrowingRecords.AddAsync(borrowingRecord,cancellationToken);
         await context.SaveChangesAsync(cancellationToken);
         await hybridCache.RemoveByTagAsync("BorrowingRecords", cancellationToken);
+        await hybridCache.RemoveByTagAsync("Copies", cancellationToken);
         borrowingRecord.AppUser=await userManager.FindByIdAsync(user.Id);
         borrowingRecord.Copy=copy;
         return BorrowingRecordResult.Value.ToDto();

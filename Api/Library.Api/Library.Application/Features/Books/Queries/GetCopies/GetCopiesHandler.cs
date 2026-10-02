@@ -46,11 +46,11 @@ public sealed class GetCopiesHandler(ILogger<GetCopiesHandler>logger,IAppDbConte
         
         if (!string.IsNullOrEmpty(title))
         {
-            CopiesQuery = CopiesQuery.Where(b => b.Book.Title.StartsWith( title));
+            CopiesQuery = CopiesQuery.Where(b => b.Book.Title.Contains( title));
         }
         if (!string.IsNullOrEmpty(iSBN))
         {
-            CopiesQuery = CopiesQuery.Where(b => b.Book. ISBN.StartsWith( iSBN));
+            CopiesQuery = CopiesQuery.Where(b => b.Book. ISBN.Contains( iSBN));
         }
         if (publicationDateFrom.HasValue)
         {
@@ -62,7 +62,7 @@ public sealed class GetCopiesHandler(ILogger<GetCopiesHandler>logger,IAppDbConte
         }
         if (!string.IsNullOrEmpty(genere))
         {
-            CopiesQuery = CopiesQuery.Where(b => b.Book.Genere.StartsWith( genere));
+            CopiesQuery = CopiesQuery.Where(b => b.Book.Genere.Contains( genere));
         }
         return CopiesQuery;
     }

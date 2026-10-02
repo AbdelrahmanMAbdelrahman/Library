@@ -8,6 +8,7 @@ public sealed class CopyConfiguration : IEntityTypeConfiguration<Copy>
     public void Configure(EntityTypeBuilder<Copy> builder)
     {
         builder.HasKey(c => c.Id).IsClustered();
+        builder.Property(c => c.RowVersion).IsRowVersion();
         
     }
 }

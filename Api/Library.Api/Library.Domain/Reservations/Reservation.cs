@@ -5,6 +5,8 @@ public sealed class Reservation:Audit
     public Guid CopyId {  get;private set; }
     public string UserId { get; private set; } = default!;
     public DateTime ReservationDate { get; private set; }
+    public byte[] RowVersion { get; private set; } = [];
+    
     public Copy Copy { get; set; } 
     public AppUser User { get;  set; } = default!;
     public Reservation(){}

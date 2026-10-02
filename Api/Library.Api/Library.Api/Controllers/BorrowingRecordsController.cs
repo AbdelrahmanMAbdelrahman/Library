@@ -15,7 +15,7 @@ namespace Library.Api.Controllers
         [EndpointName(nameof(CreateBorrowingRecord))]
         [EndpointSummary("pass borrowing record data to create one")]
         [EndpointDescription("provide borrowing record information to create one")]
-        [Authorize(Roles ="User")]
+        [Authorize(Roles ="User,Admin")]
         public async Task<IActionResult> CreateBorrowingRecord(CreateBorrowingRecordCommand command,CancellationToken ct)
         {
             Result<BorrowingRecordDto> result =await sender.Send(command);
@@ -32,7 +32,7 @@ namespace Library.Api.Controllers
         [EndpointName(nameof(GetBorrowingRecord))]
         [EndpointSummary("return borrowing record")]
         [EndpointDescription("return borrowing record by provide an id")]
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "User,Admin")]
         public async Task<IActionResult> GetBorrowingRecord([FromRoute] GetBorrowingRecordQuery command,CancellationToken ct)
         {
             Result<BorrowingRecordDto> result = await sender.Send(command);
@@ -49,7 +49,7 @@ namespace Library.Api.Controllers
         [EndpointName(nameof(GetBorrowingRecords))]
         [EndpointSummary("return borrowing records")]
         [EndpointDescription("return borrowing records ")]
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetBorrowingRecords([FromQuery]GetBorrowingRecordsQuery command,CancellationToken ct)
         {
             Result<PaginatedList<BorrowingRecordDto>> paginatedResult = await sender.Send(command,ct);

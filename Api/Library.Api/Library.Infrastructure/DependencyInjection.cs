@@ -102,7 +102,8 @@ public static class DependencyInjection
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.Key)),
                 ValidIssuer =jwtOptions.Issuer,
                 ValidAudience=jwtOptions.Audience,
-                ClockSkew=TimeSpan.Zero
+                ClockSkew=TimeSpan.Zero,
+                //RoleClaimType="role"
             };
             options.Events = new JwtBearerEvents
             {
