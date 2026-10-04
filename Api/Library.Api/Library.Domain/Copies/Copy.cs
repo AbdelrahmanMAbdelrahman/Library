@@ -1,5 +1,6 @@
 ﻿
 using Library.Domain.BorrowingRecords;
+using Library.Domain.Copies.Enum;
 
 namespace Library.Domain.Copies
 {
@@ -7,33 +8,39 @@ namespace Library.Domain.Copies
     {
         public Guid BookId { get;private set; }
         public Book Book { get;private set; } = default!;
-        public bool Available { get;private set; }
+        public CopyStatus Status { get;private set; }
         public byte[] RowVersion { get;private set; } = [];
         public ICollection< BorrowingRecord> BorrowingRecords { get;private set; }=default!;
         public ICollection< Reservation> Reservation { get; set; }
         public Copy() { }
-        public Copy(Guid id,Guid bookId,bool Available) {
+        public Copy(Guid id,Guid bookId, CopyStatus status) {
         this.BookId = bookId;
             this.Id = id;
-        this.Available=Available;
+        this.Status=status;
         }
 
-        public static Result<Copy> Create(Guid id, Guid bookId, bool Available)
+        public static Result<Copy> Create(Guid id, Guid bookId, CopyStatus status)
         {
             if (id == Guid.Empty) return CopyErrors.InvalidCopyId;
             if (bookId == Guid.Empty) return CopyErrors.InvalidBookId;
-            return new Copy(id, bookId,Available);
+            
+            return new Copy(id, bookId,status);
         }
 
-        public Result<Updated> SetUnAvailable()
+        public Result<Updated> SetBorrowed()
         {
-            Available= false;
+            Status= CopyStatus.Borrowed;
             return Result.Updated;
         }
 
         public Result<Updated> SetAvailable()
         {
-            Available = true;
+            Status = CopyStatus.Available;
+            return Result.Updated;
+        }
+        public Result<Updated> SetReserved()
+        {
+            Status = CopyStatus.Reserved;
             return Result.Updated;
         }
     }

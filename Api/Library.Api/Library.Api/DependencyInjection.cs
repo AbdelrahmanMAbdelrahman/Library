@@ -41,8 +41,8 @@ public static class DependencyInjection
         {
             options.AddSlidingWindowLimiter("SlidingWindow", limitOptions =>
             {
-                limitOptions.QueueLimit = 1;
-                limitOptions.PermitLimit = 1;
+                limitOptions.QueueLimit = 10;
+                limitOptions.PermitLimit = 100;
                 limitOptions.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
                 limitOptions.AutoReplenishment = true;
                 limitOptions.SegmentsPerWindow = 6;

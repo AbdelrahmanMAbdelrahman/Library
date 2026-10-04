@@ -1,3 +1,5 @@
-﻿namespace Library.Application.Features.Books.Dtos;
+﻿using Library.Domain.Copies.Enum;
 
-public sealed record CopyDto(Guid Id,BookDto book,bool IsAvailable);
+namespace Library.Application.Features.Books.Dtos;
+
+public sealed record CopyDto(Guid Id,BookDto Book,CopyStatus Status);

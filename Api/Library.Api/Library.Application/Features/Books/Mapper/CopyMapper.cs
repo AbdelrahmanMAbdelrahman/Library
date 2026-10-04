@@ -9,11 +9,11 @@ public static class CopyMapper
         return new CopyDto(copy.Id,
             new BookDto( copy.BookId,copy.Book.Title,copy.Book.ISBN,copy.Book.Genere
             ,copy.Book.AdditionalNotes??"",copy.Book.PublicationDate,copy.Book.UploadedFileId),
-            copy.Available);
+            copy.Status);
     }
     public static IQueryable<CopyDto> ToDto(this IQueryable<Copy> copies)
     {
-        return copies.Select(c=>new CopyDto(c.Id,c.Book.ToDto(),c.Available));
+        return copies.Select(c=>new CopyDto(c.Id,c.Book.ToDto(),c.Status));
 
             //new CopyDto(copy.Id,
             //new BookDto( copy.BookId,copy.Book.Title,copy.Book.ISBN,copy.Book.Genere

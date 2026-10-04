@@ -6,6 +6,7 @@ import { BookRes } from "../Models/BookRes";
 import { BookFilter } from "../Models/BookFilter";
 import { BookReq } from "../Models/BookReq";
 import { CopyRes } from "../Models/CopyRes";
+import { CopyStatus } from "../Enums/CopyStatus";
 
 @Injectable({
     providedIn:'root'
@@ -28,7 +29,7 @@ GetUnAvailableBooks(bookFilter:BookFilter)
     let params=new HttpParams()
     .set("PageNumber",bookFilter.pageNumber)
     .set("PageSize",bookFilter.pageSize)
-    .set("Available",false);
+    .set("Status",CopyStatus.UnAvailable);
     if(bookFilter.sortColumn)
         params=params.set("SortColumn",bookFilter.sortColumn!);
 if(bookFilter.sortDirection)

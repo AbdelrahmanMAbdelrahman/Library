@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Caching.Hybrid;
+﻿using Library.Domain.Copies.Enum;
+using Microsoft.Extensions.Caching.Hybrid;
 
 namespace Library.Application.Features.BorrowingRecords.Commands.CreateBorrowingRecords;
 
@@ -11,7 +12,7 @@ public sealed class CreateBorrowingRecordHandler(IUser user,
     public async Task<Result<BorrowingRecordDto>> Handle(CreateBorrowingRecordCommand request, CancellationToken cancellationToken)
     {
         Copy? copy =await context.Copies.Include(c=>c.Book).FirstOrDefaultAsync(c=>c.Id==request.CopyId);
-        if (copy is null || !copy.Available) {
+        if (copy is null || copy.Status!=CopyStatus.Available) {
             logger.LogError($"No copy found for this id {request.CopyId}");
             return ApplicationErrors.CopyNotFound(request.CopyId); }
 
@@ -32,7 +33,7 @@ public sealed class CreateBorrowingRecordHandler(IUser user,
             logger.LogError(string.Join(" - ",BorrowingRecordResult.Errors));
             return BorrowingRecordResult.Errors; }
         BorrowingRecord borrowingRecord = BorrowingRecordResult.Value;
-       Result<Updated> UpdateResult= copy.SetUnAvailable();
+       Result<Updated> UpdateResult= copy.SetBorrowed();
 
         if (UpdateResult.IsError)
         {

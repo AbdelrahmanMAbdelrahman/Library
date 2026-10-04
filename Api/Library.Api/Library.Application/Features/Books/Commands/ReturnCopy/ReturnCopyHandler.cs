@@ -1,4 +1,5 @@
 ﻿using Library.Domain.BorrowingRecords;
+using Library.Domain.Copies.Enum;
 using Library.Domain.Copies.Events;
 using Microsoft.Extensions.Caching.Hybrid;
 
@@ -20,13 +21,8 @@ public sealed class ReturnCopyHandler
             logger.LogError($"No borrowing record found for Copy Id = ${request.CopyId}");
             return ApplicationErrors.BorrowingRecordNotFound(borrowingRecord.Id);
         }
-        //Copy? copy = await context.Copies.FindAsync(request.CopyId,cancellationToken);
-        //if (copy is null)
-        //{
-        //    logger.LogError($"No copy Found for  id = {request.CopyId}");
-        //    return ApplicationErrors.CopyNotFound(request.CopyId);
-        //}
-        if (borrowingRecord.Copy.Available)
+       
+        if (borrowingRecord.Copy.Status==CopyStatus.Available)
         {
             logger.LogError("copy with id {Id} already avaiable",borrowingRecord.CopyId);
             return ApplicationErrors.CopyAlreadyAvailable(borrowingRecord.CopyId);
@@ -38,7 +34,7 @@ public sealed class ReturnCopyHandler
             logger.LogError("must pay fine with id = {Id} first", fine.Id);
             return ApplicationErrors.FineExist(fine.Id);
         }
-      Result<Updated> UpdateAvailabilityResult=  borrowingRecord.Copy!.SetAvailable();
+        Result<Updated> UpdateAvailabilityResult=  borrowingRecord.Copy!.SetAvailable();
         if (UpdateAvailabilityResult.IsError)
         {
             logger.LogError(string.Join(" - ", UpdateAvailabilityResult.Errors));

@@ -1,4 +1,5 @@
-﻿using Library.Domain.UplodedFiles;
+﻿using Library.Domain.Copies.Enum;
+using Library.Domain.UplodedFiles;
 
 namespace Library.Domain.Books;
 public sealed class Book:Audit
@@ -37,7 +38,7 @@ public sealed class Book:Audit
         List<Copy> copies = new List<Copy>();
         for(int i = 0; i < NumberOfCopies; i++)
         {
-            copies.Add(new Copy(Guid.NewGuid(),BookId,true));
+            copies.Add(new Copy(Guid.NewGuid(),BookId,CopyStatus.Available));
         }
         return new Book(BookId,title, isbn, publicationDate, genere, additionalNotes,fileId, copies);
     }
