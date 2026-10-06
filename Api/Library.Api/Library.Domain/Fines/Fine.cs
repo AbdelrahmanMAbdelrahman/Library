@@ -28,7 +28,9 @@ public sealed class Fine:Audit
         if (string.IsNullOrEmpty(userId)) return FineErrors.InvalidUserId;
         if (numberOfLateDays < 1 || numberOfLateDays > 100) return FineErrors.InvalidNumberOfLateDays;
         if (fineAmount < 1) return FineErrors.InvalidFineAmount;
-        if (!Enum.IsDefined(paymentStatus)) return FineErrors.InvalidPaymentStatus;
+        if (!Enum.IsDefined(paymentStatus)||
+            paymentStatus == PaymentStatus.Paid
+            ) return FineErrors.InvalidPaymentStatus;
 
         return new Fine(Guid.NewGuid(),borrowingRecordId,userId,numberOfLateDays,fineAmount,paymentStatus);
     }
@@ -36,6 +38,7 @@ public sealed class Fine:Audit
     {
         if (numberOfLateDays < 1 || numberOfLateDays > 100) return FineErrors.InvalidNumberOfLateDays;
         if (fineAmount < 1) return FineErrors.InvalidFineAmount;
+        if (fineAmount / 5 != numberOfLateDays) return FineErrors.InvalidFineAmount;
         if (!Enum.IsDefined(paymentStatus)) return FineErrors.InvalidPaymentStatus;
         this.NumberOfLateDays= numberOfLateDays;
         this.FineAmount= fineAmount;

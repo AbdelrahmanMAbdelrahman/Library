@@ -20,8 +20,8 @@ public sealed class Reservation:Audit
     public static Result<Reservation> Create(Guid copyId, string userId, DateTime reservationDate)
     {
         if (copyId == Guid.Empty) return ReservationErrors.InvalidCopyId;
-        if (string.IsNullOrEmpty(userId)) return ReservationErrors.InvalidUserId;
-        if (reservationDate < DateTime.UtcNow.Subtract(TimeSpan.FromDays(1))) return ReservationErrors.InvalidReservationDate;
+        if (!Guid.TryParse(userId,out Guid id)) return ReservationErrors.InvalidUserId;
+        if (Math.Abs( reservationDate.Subtract( DateTimeOffset.UtcNow.LocalDateTime).TotalMilliseconds)>1000) return ReservationErrors.InvalidReservationDate;
 
         return new Reservation(Guid.NewGuid(),copyId,userId,reservationDate);
     }

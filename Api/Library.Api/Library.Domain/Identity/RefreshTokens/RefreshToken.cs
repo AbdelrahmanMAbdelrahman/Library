@@ -16,6 +16,7 @@ namespace Library.Domain.Identity.RefreshTokens
 
         private RefreshToken(){}
         private RefreshToken(Guid id,string token,string userId,DateTimeOffset expireOn):base(id){
+            this.Id = id;
         ExpireOn = expireOn;
             Token = token;
             UserId = userId;
@@ -24,7 +25,7 @@ namespace Library.Domain.Identity.RefreshTokens
         public static Result<RefreshToken> Create(Guid id,string token, string userId, DateTimeOffset expireOn) {
             if (id == Guid.Empty) return RefreshTokenErrors.IdRequired;
             if (string.IsNullOrEmpty(token))return RefreshTokenErrors.TokenRequired;
-            if (string.IsNullOrEmpty(userId)) return RefreshTokenErrors.UserIdRequired;
+            if (!Guid.TryParse(userId,out Guid UserId)) return RefreshTokenErrors.UserIdRequired;
             if (expireOn <= DateTime.UtcNow) return RefreshTokenErrors.InvalidExpirationDate;
             return new RefreshToken(id,token,userId,expireOn);
         }

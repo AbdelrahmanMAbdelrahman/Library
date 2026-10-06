@@ -2,6 +2,9 @@
 
 internal sealed class BookErrors
 {
+    internal static Error InvalidNumberOfCopies =>
+        Error.Validation("BookErrors.InvalidNumberOfCopies", "Provide a valid Number Of Copies");
+
     internal static Error InvalidPublicationDate=> 
         Error.Validation("BookErrors.InvalidPublicationDate", "Provide a valid Publication Date");
 

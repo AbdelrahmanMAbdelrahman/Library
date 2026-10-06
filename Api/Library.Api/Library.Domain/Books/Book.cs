@@ -29,11 +29,11 @@ public sealed class Book:Audit
         string additionalNotes, Guid fileId, int NumberOfCopies)
     {
         Guid BookId = Guid.NewGuid();
-
-        if (fileId == Guid.Empty) return BookErrors.NotValidFileId;
+        if (NumberOfCopies < 1) return BookErrors.InvalidNumberOfCopies;
+        //if (fileId == Guid.Empty) return BookErrors.NotValidFileId;//nullable
         if (string.IsNullOrWhiteSpace(title)) return BookErrors.EmptyTitle;
         if (string.IsNullOrWhiteSpace(isbn)) return BookErrors.EmptyISBN;
-        if (publicationDate > DateTime.UtcNow) return BookErrors.InvalidPublicationDate;
+        if (publicationDate > DateTimeOffset.UtcNow) return BookErrors.InvalidPublicationDate;
         if(string.IsNullOrWhiteSpace(genere)) return BookErrors.EmptyGenere;
         List<Copy> copies = new List<Copy>();
         for(int i = 0; i < NumberOfCopies; i++)
