@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Domain.Tests", "Lib
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Application.Tests", "Library.Application.Tests\Library.Application.Tests.csproj", "{086C6276-CB25-4F8D-881C-6732B9AC25FA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Application.SubCutaneousTests", "Library.Application.SubCutaneousTests\Library.Application.SubCutaneousTests.csproj", "{892758D2-EF44-4AE4-38E5-71FFA09E38D7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{086C6276-CB25-4F8D-881C-6732B9AC25FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{086C6276-CB25-4F8D-881C-6732B9AC25FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{086C6276-CB25-4F8D-881C-6732B9AC25FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{892758D2-EF44-4AE4-38E5-71FFA09E38D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{892758D2-EF44-4AE4-38E5-71FFA09E38D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{892758D2-EF44-4AE4-38E5-71FFA09E38D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{892758D2-EF44-4AE4-38E5-71FFA09E38D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

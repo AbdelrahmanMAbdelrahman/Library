@@ -15,8 +15,9 @@ public sealed class Book:Audit
     public IEnumerable<Copy> Copies => _Copies;
     protected Book(){}
     protected Book(
-        Guid Id,string title,string isbn,DateTime publicationDate,string genere,
+        Guid id,string title,string isbn,DateTime publicationDate,string genere,
         string additionalNotes,Guid fileId,List<Copy>? copies){
+        Id = id;
         this.Title = title;
         this.ISBN = isbn;
         this.PublicationDate = publicationDate;

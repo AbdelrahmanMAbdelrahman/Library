@@ -6,8 +6,8 @@ namespace Library.Tests.Common.BorrowingRecords;
 public class BorrowingRecordFactory
 {
     public static Result<BorrowingRecord> CreateBorrowingRecord(
-        DateTime? actualReturnDate, DateTime? borrowingDate, 
-        DateTime? dueDate, string? appUserId, Guid? copyId)
+        DateTime? actualReturnDate=null, DateTime? borrowingDate = null, 
+        DateTime? dueDate=null, string? appUserId=null, Guid? copyId = null)
     {
         return BorrowingRecord.Create(
             copyId??Guid.NewGuid(),

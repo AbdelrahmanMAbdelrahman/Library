@@ -16,6 +16,10 @@ public static class BorrowingRecordMappers
     {
         return borrowingRecords.Select(b=>b.ToDto());
     }
+    public static List<BorrowingRecordDto> ToDto(this List<BorrowingRecord> borrowingRecords)
+    {
+        return borrowingRecords.Select(b=>b.ToDto()).ToList();
+    }
 
     
 }

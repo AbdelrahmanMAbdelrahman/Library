@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Library.Application.Tests.BookMappers
+namespace Library.Application.Tests.Mappers.BookMappers
 {
     public class BookMapperTests
     {

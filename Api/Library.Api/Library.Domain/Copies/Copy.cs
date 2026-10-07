@@ -7,7 +7,7 @@ namespace Library.Domain.Copies
     public sealed class Copy:Audit
     {
         public Guid BookId { get;private set; }
-        public Book Book { get;private set; } = default!;
+        public Book Book { get; set; } = default!;
         public CopyStatus Status { get;private set; }
         public byte[] RowVersion { get;private set; } = [];
         public ICollection< BorrowingRecord> BorrowingRecords { get;private set; }=default!;

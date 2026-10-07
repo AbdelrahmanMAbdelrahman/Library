@@ -33,7 +33,7 @@ public class BorrowingRecordTest
            Result < BorrowingRecord > borrowingRecordResult =
             BorrowingRecordFactory.CreateBorrowingRecord(
              DateTime.UtcNow, null, DateTime.UtcNow,
-            Guid.NewGuid().ToString(), null
+            Guid.NewGuid().ToString(), Guid.Empty
            );
         Assert.False(borrowingRecordResult.IsSuccess);
     }
@@ -53,7 +53,7 @@ public class BorrowingRecordTest
     {
         Result<BorrowingRecord> borrowingRecordResult =
             BorrowingRecordFactory.CreateBorrowingRecord(
-             DateTime.UtcNow,null,DateTime.UtcNow,
+             DateTime.UtcNow,DateTime.UtcNow.AddDays(-1),DateTime.UtcNow,
             Guid.NewGuid().ToString(), Guid.NewGuid()
            );
         Assert.False(borrowingRecordResult.IsSuccess);
@@ -63,7 +63,7 @@ public class BorrowingRecordTest
     {
         Result<BorrowingRecord> borrowingRecordResult =
             BorrowingRecordFactory.CreateBorrowingRecord(
-             DateTime.UtcNow,DateTime.UtcNow,null,
+             DateTime.UtcNow,DateTime.UtcNow,DateTime.UtcNow,
             Guid.NewGuid().ToString(), Guid.NewGuid()
            );
         Assert.False(borrowingRecordResult.IsSuccess);
