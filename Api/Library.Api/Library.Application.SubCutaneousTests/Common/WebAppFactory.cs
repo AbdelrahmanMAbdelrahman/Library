@@ -20,13 +20,13 @@ public class WebAppFactory : WebApplicationFactory<IAssemblyMarker>, IAsyncLifet
         var scope = Services.CreateScope();
         return scope.ServiceProvider.GetRequiredService<IAppDbContext>();
     }
-    public Task InitializeAsync()
+    public async Task InitializeAsync()
     {
-        throw new NotImplementedException();
+        await dbContainer.StartAsync();
     }
 
-    Task IAsyncLifetime.DisposeAsync()
+    async Task IAsyncLifetime.DisposeAsync()
     {
-        throw new NotImplementedException();
+        await dbContainer.DisposeAsync();
     }
 }

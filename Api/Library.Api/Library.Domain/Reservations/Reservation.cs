@@ -21,7 +21,7 @@ public sealed class Reservation:Audit
     {
         if (copyId == Guid.Empty) return ReservationErrors.InvalidCopyId;
         if (!Guid.TryParse(userId,out Guid id)) return ReservationErrors.InvalidUserId;
-        if (Math.Abs( reservationDate.Subtract( DateTimeOffset.UtcNow.LocalDateTime).TotalMilliseconds)>1000) return ReservationErrors.InvalidReservationDate;
+        if ( reservationDate> DateTimeOffset.UtcNow.LocalDateTime) return ReservationErrors.InvalidReservationDate;
 
         return new Reservation(Guid.NewGuid(),copyId,userId,reservationDate);
     }

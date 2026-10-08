@@ -18,6 +18,7 @@ public sealed class CreateBookValidator:AbstractValidator<CreateBookCommand>
             "'{PropertyName}' Must Has At least '{MinLenth} chars , '{MaxLength}' chars at most ");
         RuleFor(b => b.PublicationDate).Must(d => d <= DateTime.UtcNow)
             .WithMessage("Provide a valid '{PropertyName}");
+        RuleFor(b => b.NumberOfCopies).Must(x => x > 0).WithMessage("{PropertyName} Must be greate than 0");
         
     }
 }

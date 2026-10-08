@@ -4,8 +4,10 @@ public sealed class CreateBorrowingRecordValidator:AbstractValidator<CreateBorro
 {
     public CreateBorrowingRecordValidator()
     {
-        RuleFor(b => b.CopyId).NotEmpty().WithMessage("Must Provide '{PropertyName}'");
-        RuleFor(b => b.BorrowingDate).NotEmpty().WithMessage("Must Provide '{PropertyName}'");
+        RuleFor(b => b.CopyId).Must(i=>i!=Guid.Empty).WithMessage("Must Provide valid'{PropertyName}'");
+        RuleFor(b => b.BorrowingDate).NotEmpty()
+            .Must(d=>d<=DateTime.UtcNow)
+            .WithMessage("Must Provide '{PropertyName}'");
        
             
      

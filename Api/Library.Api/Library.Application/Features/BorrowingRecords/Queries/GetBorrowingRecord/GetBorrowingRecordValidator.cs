@@ -4,6 +4,6 @@ public sealed class GetBorrowingRecordValidator:AbstractValidator<GetBorrowingRe
 {
     public GetBorrowingRecordValidator()
     {
-        RuleFor(b => b.Id).NotEmpty().WithMessage("must provide '{PropertyName}'");
+        RuleFor(b => b.Id).Must(id=>id!=Guid.Empty).WithMessage("must provide valid '{PropertyName}'");
     }
 }

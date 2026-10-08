@@ -29,7 +29,7 @@ public class ReservationTests
         Guid copyId= Guid.NewGuid();
         string userId = Guid.NewGuid().ToString();
 
-        Result< Reservation> reservationRes = ReservationFactory.Create(time.AddDays(-1), copyId,userId);
+        Result< Reservation> reservationRes = ReservationFactory.Create(time.AddDays(1), copyId,userId);
         Assert.False(reservationRes.IsSuccess);
          
     }

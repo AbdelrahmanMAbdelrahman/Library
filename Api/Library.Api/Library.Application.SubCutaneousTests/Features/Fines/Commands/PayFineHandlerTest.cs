@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Library.Application.Features.Reservations.Commands.DeleteReservations
+namespace Library.Application.SubCutaneousTests.Features.Fines.Commands
 {
-    public class DeleteReservationCommand
+    internal class PayFineHandlerTest
     {
     }
 }
