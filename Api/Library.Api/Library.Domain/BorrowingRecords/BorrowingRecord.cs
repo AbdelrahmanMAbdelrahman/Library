@@ -10,8 +10,8 @@ public sealed class BorrowingRecord : Audit
     public  Copy Copy { get;  set; } = default!;
     public AppUser AppUser { get;  set; }=default!;
     public Fine Fine { get; set; }
-    public BorrowingRecord(){}
-    public BorrowingRecord(Guid id,Guid copyId,string appUserId,DateTime DueDate,
+    private BorrowingRecord(){}
+    private BorrowingRecord(Guid id,Guid copyId,string appUserId,DateTime DueDate,
          DateTime borrowingDate,DateTime? ActualReturnDate){
         this.CopyId = copyId;
         this.AppUserId = appUserId;

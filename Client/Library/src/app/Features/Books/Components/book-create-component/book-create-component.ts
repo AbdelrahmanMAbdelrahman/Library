@@ -43,7 +43,7 @@ export class BookCreateComponent implements OnInit,OnChanges {
       'genere':new FormControl(null,Validators.required),
       'additionalDetails':new FormControl(null,Validators.required),
       'publicationDate':new FormControl(null,Validators.required),
-      'numberOfCopies':new FormControl(null,Validators.required),
+      'numberOfCopies':new FormControl(null),
       'image':new FormControl<File|null>(null),
     });
   }

@@ -8,8 +8,8 @@ public sealed class UploadedFile:Audit
     public  string Extension { get;private set; }
     public long FileSize { get;private set; }
     public Book book { get;private set; }
-    public UploadedFile() { }
-    public UploadedFile(Guid id, string fileName, string storedFileName, string contentType,
+    private UploadedFile() { }
+    private UploadedFile(Guid id, string fileName, string storedFileName, string contentType,
         string extension, long fileSize)
     {
         this.Id = id;

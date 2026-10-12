@@ -12,8 +12,8 @@ namespace Library.Domain.Copies
         public byte[] RowVersion { get;private set; } = [];
         public ICollection< BorrowingRecord> BorrowingRecords { get;private set; }=default!;
         public ICollection< Reservation> Reservation { get; set; }
-        public Copy() { }
-        public Copy(Guid id,Guid bookId, CopyStatus status) {
+        private Copy() { }
+        private Copy(Guid id,Guid bookId, CopyStatus status) {
         this.BookId = bookId;
             this.Id = id;
         this.Status=status;

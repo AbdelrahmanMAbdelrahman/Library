@@ -10,8 +10,8 @@ public sealed class Fine:Audit
     
     public BorrowingRecord BorrowingRecord { get; set; }
     public AppUser AppUser { get; set; }
-    public Fine(){}
-    public Fine(Guid id,Guid borrowingRecordId,string userId,
+    private Fine(){}
+    private Fine(Guid id,Guid borrowingRecordId,string userId,
         int numberOfLateDays,double fineAmount,PaymentStatus paymentStatus){
         this.Id = id;
         this.AppUserId = userId;

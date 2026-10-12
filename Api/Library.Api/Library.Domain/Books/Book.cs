@@ -13,8 +13,8 @@ public sealed class Book:Audit
     public UploadedFile uploadedFile { get; private set; }
     private List<Copy> _Copies = [];
     public IEnumerable<Copy> Copies => _Copies;
-    protected Book(){}
-    protected Book(
+    private Book(){}
+    private Book(
         Guid id,string title,string isbn,DateTime publicationDate,string genere,
         string additionalNotes,Guid fileId,List<Copy>? copies){
         Id = id;

@@ -9,8 +9,8 @@ public sealed class Reservation:Audit
     
     public Copy Copy { get; set; } 
     public AppUser User { get;  set; } = default!;
-    public Reservation(){}
-    public Reservation(Guid id,Guid copyId,string userId,DateTime reservationDate ){
+    private Reservation(){}
+    private Reservation(Guid id,Guid copyId,string userId,DateTime reservationDate ){
     this.CopyId = copyId;
         this.UserId = userId;
         this.ReservationDate = reservationDate;
