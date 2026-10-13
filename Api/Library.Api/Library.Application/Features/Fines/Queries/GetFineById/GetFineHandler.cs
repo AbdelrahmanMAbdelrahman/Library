@@ -1,17 +1,21 @@
-﻿
-namespace Library.Application.Features.Fines.Queries.GetFineById;
+﻿namespace Library.Application.Features.Fines.Queries.GetFineById;
 
-public sealed class GetFineHandler(ILogger<GetFineHandler>logger,IAppDbContext context) 
+public sealed class GetFineHandler(
+    ILogger<GetFineHandler>logger,IAppDbContext context,
+    IUser user,IIdentityService identity) 
     : IRequestHandler<GetFineQuery, Result<FineDto>>
 {
     public async Task<Result<FineDto>> Handle(GetFineQuery request, CancellationToken cancellationToken)
     {
-        Fine? fine = await context.Fines
+        IQueryable<Fine> query =  context.Fines
             .Include(f=>f.BorrowingRecord)
               .ThenInclude(br=>br.Copy)
                 .ThenInclude(c=>c.Book)
             .Include(f=>f.AppUser)
-            .FirstOrDefaultAsync(f=>f.Id==request.Id);
+            .Where(f=>f.Id==request.Id);
+        if (!await identity.IsInRoleAsync(user.Id ?? "", nameof(Role.Admin)))
+            query = query.Where(f => f.AppUserId == user.Id);
+        Fine? fine = await query.FirstOrDefaultAsync(cancellationToken);
         if(fine is null)
         {
             logger.LogError($"no fine found for id = {request.Id}");

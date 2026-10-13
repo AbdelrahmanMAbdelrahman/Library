@@ -32,6 +32,8 @@ global using Library.Domain.Reservations;
 global using Library.Application.Common.Behaviors;
 global using Microsoft.Extensions.DependencyInjection;
 global using System.Reflection;
+global using Library.Domain.Identity.Roles;
+global using Library.Application.Features.Reservations.Mappers;
 namespace Library.Application.Global;
 
 

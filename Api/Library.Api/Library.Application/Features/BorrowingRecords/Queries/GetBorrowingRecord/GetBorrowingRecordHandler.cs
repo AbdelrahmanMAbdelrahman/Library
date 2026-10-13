@@ -2,16 +2,21 @@
 
 public sealed class GetBorrowingRecordHandler(
     ILogger<GetBorrowingRecordHandler>logger,
+    IIdentityService identity,
+    IUser user,
     IAppDbContext context) : IRequestHandler<GetBorrowingRecordQuery, Result<BorrowingRecordDto>>
 {
     public async Task<Result<BorrowingRecordDto>> Handle(GetBorrowingRecordQuery request, CancellationToken cancellationToken)
     {
-        BorrowingRecord? borrowingRecord = await context.BorrowingRecords
+        IQueryable<BorrowingRecord> query =  context.BorrowingRecords
            .Include(b => b.AppUser)
            .Include(b => b.Copy)
              .ThenInclude(c => c.Book)
-             .FirstOrDefaultAsync(b=>b.Id==request.Id);
-
+             .Where(b=>b.Id==request.Id);
+        if (!await identity.IsInRoleAsync(user.Id??"", "Admin")) {
+           query= query.Where(br => br.AppUserId == user.Id);
+        }
+        BorrowingRecord? borrowingRecord=await query.FirstOrDefaultAsync(cancellationToken);
         if(borrowingRecord is null)
         {
             logger.LogError($"No Borrowing record for this id {request.Id}");

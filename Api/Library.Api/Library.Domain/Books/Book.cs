@@ -39,7 +39,7 @@ public sealed class Book:Audit
         List<Copy> copies = new List<Copy>();
         for(int i = 0; i < NumberOfCopies; i++)
         {
-            copies.Add(new Copy(Guid.NewGuid(),BookId,CopyStatus.Available));
+            copies.Add( Copy.Create(Guid.NewGuid(),BookId,CopyStatus.Available).Value);
         }
         return new Book(BookId,title, isbn, publicationDate, genere, additionalNotes,fileId, copies);
     }
