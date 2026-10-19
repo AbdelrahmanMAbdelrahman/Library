@@ -62,7 +62,7 @@
             int OldRefreshTokens =await context.RefreshTokens
                 .Where(rt => rt.UserId == appUser.Id).ExecuteDeleteAsync(ct);
 
-           Result<RefreshToken> refreshTokenResult = RefreshToken.Create(Guid.NewGuid(),GenerateRefreshToken(),
+           Result<RefreshToken> refreshTokenResult = RefreshToken.Create(GenerateRefreshToken(),
                 appUser.Id,DateTime.UtcNow.AddDays(7));
             if (refreshTokenResult.IsError) { return refreshTokenResult.Errors; }
             await context.RefreshTokens.AddAsync(refreshTokenResult.Value);

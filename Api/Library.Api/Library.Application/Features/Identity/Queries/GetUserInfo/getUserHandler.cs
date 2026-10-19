@@ -4,7 +4,7 @@ public sealed class getUserHandler
 {
     public async Task<Result<AppUserDto>> Handle(getUserQuery request, CancellationToken cancellationToken)
     {
-        Result<AppUserDto> getuserResult=await service.GetUserByIdAsync(request.Id??"");
+        Result<AppUserDto> getuserResult=await service.GetUserByIdAsync(request.Id??"",cancellationToken);
         if (getuserResult.IsError)
         {
             logger.LogError("no user found ");

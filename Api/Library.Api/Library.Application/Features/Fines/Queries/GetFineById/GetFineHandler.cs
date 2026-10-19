@@ -13,7 +13,7 @@ public sealed class GetFineHandler(
                 .ThenInclude(c=>c.Book)
             .Include(f=>f.AppUser)
             .Where(f=>f.Id==request.Id);
-        if (!await identity.IsInRoleAsync(user.Id ?? "", nameof(Role.Admin)))
+        if (!await identity.IsInRoleAsync(user.Id ?? "", nameof(Role.Admin), cancellationToken))
             query = query.Where(f => f.AppUserId == user.Id);
         Fine? fine = await query.FirstOrDefaultAsync(cancellationToken);
         if(fine is null)

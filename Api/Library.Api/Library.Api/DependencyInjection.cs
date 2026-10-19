@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.RateLimiting;
+﻿using Library.Api.Infrastructure;
+using Microsoft.AspNetCore.RateLimiting;
 using System.Threading.RateLimiting;
 
 namespace Library.Api;
@@ -12,7 +13,8 @@ public static class DependencyInjection
         services.AddValidation()
             .AddIdentityInfrastructure()
             .AddMediator()
-            .AddRateLimiting();
+            .AddRateLimiting()
+            .AddExceptionHandler<GlobalExceptionHandler>().AddProblemDetails();
         return services;
     }
 
@@ -75,7 +77,8 @@ public static class DependencyInjection
             .UseAuthentication()
             .UseAuthorization()
             .UseCors("LibraryApp")
-            .UseRateLimiter();
+            .UseRateLimiter()
+            .UseExceptionHandler();
     }
 
 }

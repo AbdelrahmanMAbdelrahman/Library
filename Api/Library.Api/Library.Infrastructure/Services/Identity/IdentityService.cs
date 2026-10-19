@@ -4,7 +4,7 @@
         IAuthorizationService authorizationService,
         IUserClaimsPrincipalFactory<AppUser> userClaimsPrincipalFactory) : IIdentityService
     {
-        public async Task<Result<AppUserDto>> AuthenticateAsync(string Email, string Password)
+        public async Task<Result<AppUserDto>> AuthenticateAsync(string Email, string Password, CancellationToken ct)
         {
             AppUser? appUser=await manager.FindByEmailAsync(Email);
             if (appUser is null) return Error.NotFound("AppUser.NotFound","No user found for this email");
@@ -19,7 +19,7 @@
                 await manager.GetClaimsAsync(appUser));
         }
 
-        public async Task<bool> AuthorizeAsync(string UserId, string? policyName)
+        public async Task<bool> AuthorizeAsync(string UserId, string? policyName , CancellationToken ct)
         {
             AppUser? appUser = await manager.FindByIdAsync(UserId);
             if(appUser is null)return false;
@@ -29,7 +29,7 @@
             return authorizeResult.Succeeded;
         }
 
-        public async Task<Result<AppUserDto>> GetUserByIdAsync(string UserId)
+        public async Task<Result<AppUserDto>> GetUserByIdAsync(string UserId, CancellationToken ct)
         {
             AppUser? appUser = await manager.FindByIdAsync(UserId);
             if (appUser is null) throw new InvalidOperationException("id not found");
@@ -38,19 +38,20 @@
             return new AppUserDto(UserId,appUser.Name,appUser.Email!,roles,claims);
         }
 
-        public async Task<string> GetUserNameAsync(string UserId)
+        public async Task<string> GetUserNameAsync(string UserId, CancellationToken ct)
         {
             AppUser? appUser=await manager.FindByIdAsync(UserId);
             return appUser?.UserName??"";
         }
 
-        public async Task<bool> IsInRoleAsync(string UserId, string Role)
+        public async Task<bool> IsInRoleAsync(string UserId, string Role, CancellationToken ct)
         {
            AppUser? appUser=await manager.FindByIdAsync(UserId);
-            return (appUser is null) || (await manager.IsInRoleAsync(appUser,Role));
+            return (appUser is not null) && (await manager.IsInRoleAsync(appUser,Role));
         }
 
-        public async Task<Result<Success>> SignUp(string Name, string Email, string Phone, string UserName, string Password)
+        public async Task<Result<Success>> SignUp(
+            string Name, string Email, string Phone, string UserName, string Password, CancellationToken ct)
         {
             AppUser? appUser = await manager.FindByEmailAsync(Email);
             if (appUser is not null) return Error.Conflict("AppUser.UserExist", "User Already Exist");

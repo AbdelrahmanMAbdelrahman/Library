@@ -1,11 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Library.Domain.Identity.RefreshTokens
+﻿namespace Library.Domain.Identity.RefreshTokens
 {
    
     public class RefreshToken:Audit
@@ -22,12 +15,12 @@ namespace Library.Domain.Identity.RefreshTokens
             UserId = userId;
         }
 
-        public static Result<RefreshToken> Create(Guid id,string token, string userId, DateTimeOffset expireOn) {
-            if (id == Guid.Empty) return RefreshTokenErrors.IdRequired;
+        public static Result<RefreshToken> Create(string token, string userId, DateTimeOffset expireOn) {
             if (string.IsNullOrEmpty(token))return RefreshTokenErrors.TokenRequired;
             if (!Guid.TryParse(userId,out Guid UserId)) return RefreshTokenErrors.UserIdRequired;
             if (expireOn <= DateTime.UtcNow) return RefreshTokenErrors.InvalidExpirationDate;
-            return new RefreshToken(id,token,userId,expireOn);
+
+            return new RefreshToken(Guid.NewGuid(),token,userId,expireOn);
         }
 
     }

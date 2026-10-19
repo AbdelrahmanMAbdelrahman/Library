@@ -12,7 +12,7 @@ public sealed class GetReservationHandler (
             .Include(r=>r.User)
             .Include(r=>r.Copy)
               .ThenInclude(c=>c.Book).Where(r => r.Id == request.Id);
-        if (!await identity.IsInRoleAsync(user.Id??"", nameof(Role.Admin)))
+        if (!await identity.IsInRoleAsync(user.Id??"", nameof(Role.Admin), cancellationToken))
             query = query.Where(r=>r.UserId==user.Id);
         Reservation?reservation= await query.FirstOrDefaultAsync(cancellationToken);
 

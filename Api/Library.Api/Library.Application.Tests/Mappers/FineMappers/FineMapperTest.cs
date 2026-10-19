@@ -1,5 +1,6 @@
 ﻿using Library.Domain.Books;
 using Library.Domain.BorrowingRecords;
+using Library.Domain.Copies;
 using Library.Domain.Copies.Enum;
 using Library.Domain.Fines;
 using Library.Tests.Common.AppUsers;
@@ -17,7 +18,7 @@ public class FineMapperTest
         Fine fine = FineFactory.CreateFine().Value;
         fine.BorrowingRecord = BorrowingRecordFactory.CreateBorrowingRecord(dueDate: DateTime.UtcNow.AddDays(5)).Value;
         Book book = BookFactory.CreateBook().Value;
-        fine.BorrowingRecord.Copy=new Domain.Copies.Copy(Guid.NewGuid(),book.Id,CopyStatus.Available);
+        fine.BorrowingRecord.Copy= Copy.Create(Guid.NewGuid(), book.Id, Domain.Copies.Enum.CopyStatus.Available).Value;
         fine.BorrowingRecord.Copy.Book = book;
         var user = AppUserFactory.Create().Value;
         fine.BorrowingRecord.AppUser = user;
@@ -36,7 +37,7 @@ public class FineMapperTest
         var fine = fines[0];
         fine.BorrowingRecord = BorrowingRecordFactory.CreateBorrowingRecord(dueDate: DateTime.UtcNow.AddDays(5)).Value;
         Book book = BookFactory.CreateBook().Value;
-        fine.BorrowingRecord.Copy=new Domain.Copies.Copy(Guid.NewGuid(),book.Id,CopyStatus.Available);
+        fine.BorrowingRecord.Copy= Copy.Create(Guid.NewGuid(), book.Id, Domain.Copies.Enum.CopyStatus.Available).Value;
         fine.BorrowingRecord.Copy.Book = book;
         var user = AppUserFactory.Create().Value;
         fine.BorrowingRecord.AppUser = user;

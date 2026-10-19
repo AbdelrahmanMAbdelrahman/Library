@@ -3,6 +3,7 @@
 using Library.Application.Features.BorrowingRecords.Mappers;
 using Library.Domain.Books;
 using Library.Domain.BorrowingRecords;
+using Library.Domain.Copies;
 using Library.Tests.Common.AppUsers;
 using Library.Tests.Common.Books;
 using Library.Tests.Common.BorrowingRecords;
@@ -17,7 +18,7 @@ public class BorrowingRecordMappersTests
         BorrowingRecord record = BorrowingRecordFactory.CreateBorrowingRecord(dueDate: DateTime.UtcNow.AddDays(5)).Value;
         record.AppUser = AppUserFactory.Create().Value;
         Book book=BookFactory.CreateBook().Value;
-        record.Copy = new Domain.Copies.Copy(Guid.NewGuid(),book.Id,Domain.Copies.Enum.CopyStatus.Available);
+        record.Copy = Copy.Create(Guid.NewGuid(),book.Id,Domain.Copies.Enum.CopyStatus.Available).Value;
         record.Copy.Book = book;
         var dto = record.ToDto();
         Assert.NotNull(dto);
@@ -30,7 +31,7 @@ public class BorrowingRecordMappersTests
         BorrowingRecord record = BorrowingRecordFactory.CreateBorrowingRecord(dueDate:DateTime.UtcNow.AddDays(5)).Value;
         record.AppUser = AppUserFactory.Create().Value;
         Book book=BookFactory.CreateBook().Value;
-        record.Copy = new Domain.Copies.Copy(Guid.NewGuid(),book.Id,Domain.Copies.Enum.CopyStatus.Available);
+        record.Copy = Copy.Create(Guid.NewGuid(), book.Id, Domain.Copies.Enum.CopyStatus.Available).Value;
         record.Copy.Book = book;
         List<BorrowingRecord> borrowingRecords = [record];
         var dtos = borrowingRecords.ToDto();

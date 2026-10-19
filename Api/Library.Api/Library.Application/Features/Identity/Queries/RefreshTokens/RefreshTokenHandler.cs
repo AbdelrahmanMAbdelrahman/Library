@@ -19,7 +19,7 @@
                 return ApplicationErrors.UserNotFound(userId);
             }
 
-           Result<AppUserDto> getUserResult =await identityService.GetUserByIdAsync(userId);
+           Result<AppUserDto> getUserResult =await identityService.GetUserByIdAsync(userId,cancellationToken);
             if (getUserResult.IsError)
             {
                 logger.LogError("no user found ");

@@ -17,7 +17,7 @@ public class RefreshTokenTests
         string token = "ksdfjosj";
         string userId = Guid.NewGuid().ToString();
         DateTime expireOn = timeProvider.GetUtcNow().LocalDateTime;
-        Result<RefreshToken> refreshTokenRes = RefreshToken.Create(id,token,userId,expireOn.AddDays(7));
+        Result<RefreshToken> refreshTokenRes = RefreshToken.Create(token,userId,expireOn.AddDays(7));
         Assert.True(refreshTokenRes.IsSuccess);
         RefreshToken rt = refreshTokenRes.Value;
         Assert.Equal(rt.Id,id);
@@ -31,7 +31,7 @@ public class RefreshTokenTests
     {
         FakeTimeProvider timeProvider = new FakeTimeProvider();
         DateTime expireOn = timeProvider.GetUtcNow().LocalDateTime;
-        Result<RefreshToken> refreshTokenRes = RefreshToken.Create(Guid.NewGuid(), token, userId, expireOn.AddDays(7));
+        Result<RefreshToken> refreshTokenRes = RefreshToken.Create(token, userId, expireOn.AddDays(7));
         Assert.False(refreshTokenRes.IsSuccess);
     }
     [Fact]
@@ -41,7 +41,7 @@ public class RefreshTokenTests
         string userId = Guid.NewGuid().ToString();
         FakeTimeProvider timeProvider = new FakeTimeProvider();
         DateTime expireOn = timeProvider.GetUtcNow().LocalDateTime;
-        Result<RefreshToken> refreshTokenRes = RefreshToken.Create(Guid.Empty, token, userId, expireOn.AddDays(7));
+        Result<RefreshToken> refreshTokenRes = RefreshToken.Create( token, userId, expireOn.AddDays(7));
         Assert.False(refreshTokenRes.IsSuccess);
     }
 [Fact]
@@ -51,7 +51,7 @@ public class RefreshTokenTests
         string userId = Guid.NewGuid().ToString();
         FakeTimeProvider timeProvider = new FakeTimeProvider();
         DateTime expireOn = timeProvider.GetUtcNow().LocalDateTime;
-        Result<RefreshToken> refreshTokenRes = RefreshToken.Create(Guid.NewGuid(), token, userId, expireOn.AddDays(-7));
+        Result<RefreshToken> refreshTokenRes = RefreshToken.Create( token, userId, expireOn.AddDays(-7));
         Assert.False(refreshTokenRes.IsSuccess);
     }
 }

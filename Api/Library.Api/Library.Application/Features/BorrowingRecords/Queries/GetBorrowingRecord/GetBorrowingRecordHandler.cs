@@ -13,7 +13,7 @@ public sealed class GetBorrowingRecordHandler(
            .Include(b => b.Copy)
              .ThenInclude(c => c.Book)
              .Where(b=>b.Id==request.Id);
-        if (!await identity.IsInRoleAsync(user.Id??"", "Admin")) {
+        if (!await identity.IsInRoleAsync(user.Id??"", "Admin",cancellationToken)) {
            query= query.Where(br => br.AppUserId == user.Id);
         }
         BorrowingRecord? borrowingRecord=await query.FirstOrDefaultAsync(cancellationToken);

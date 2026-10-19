@@ -7,7 +7,7 @@ public class SignUpHandler(IIdentityService identityService,ILogger<SignUpHandle
     public async Task<Result<Success>> Handle(SignUpCommand request, CancellationToken cancellationToken)
     {
        Result<Success> signUpResult =await identityService
-            .SignUp(request.Name,request.Email,request.Phone,request.UserName,request.Password);
+            .SignUp(request.Name,request.Email,request.Phone,request.UserName,request.Password,cancellationToken);
         if (signUpResult.IsError)
         {
             logger.LogError("Error Sign up");

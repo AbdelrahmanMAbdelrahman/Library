@@ -6,8 +6,7 @@ using Library.Infrastructure.Services;
 using Library.Infrastructure.Settings;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Caching.Hybrid;
-using Microsoft.Extensions.Configuration;
-using System.Runtime.CompilerServices;
+
 
 namespace Library.Infrastructure;
 public static class DependencyInjection
@@ -122,6 +121,7 @@ public static class DependencyInjection
         
         return services;
     }
+     
     public static IServiceCollection AddDependencyInjection(this IServiceCollection services) {
         services.AddScoped<IIdentityService, IdentityService>()
             .AddScoped<IAppDbContext, AppDbContext>()

@@ -16,7 +16,7 @@ public class ReservationMapperTests
         Reservation reservation = ReservationFactory.Create().Value;
         reservation.User = AppUserFactory.Create().Value;
         Book book=BookFactory.CreateBook().Value;
-        reservation.Copy = new Domain.Copies.Copy(Guid.NewGuid(),book.Id,Domain.Copies.Enum.CopyStatus.Available);
+        reservation.Copy =  Copy.Create(Guid.NewGuid(), book.Id, Domain.Copies.Enum.CopyStatus.Available).Value;
         reservation.Copy.Book = book;
         Assert.NotNull(reservation);
         Assert.NotNull(reservation.Copy);
@@ -30,7 +30,7 @@ public class ReservationMapperTests
         var reservation = reservations[0];
         reservation.User = AppUserFactory.Create().Value;
         Book book=BookFactory.CreateBook().Value;
-        reservation.Copy = new Domain.Copies.Copy(Guid.NewGuid(),book.Id,Domain.Copies.Enum.CopyStatus.Available);
+        reservation.Copy =  Copy.Create(Guid.NewGuid(), book.Id, Domain.Copies.Enum.CopyStatus.Available).Value;
         reservation.Copy.Book = book;
         Assert.NotNull(reservation);
         Assert.NotNull(reservation.Copy);

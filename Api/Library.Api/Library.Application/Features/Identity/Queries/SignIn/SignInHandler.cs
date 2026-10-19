@@ -6,13 +6,15 @@ public sealed class SignInHandler
 {
     public async Task<Result<TokenResponse>> Handle(SignInQuery request, CancellationToken cancellationToken)
     {
-       Result<AppUserDto>authenticateResult=await identityService.AuthenticateAsync(request.Email,request.Password);
+       Result<AppUserDto>authenticateResult=
+            await identityService.AuthenticateAsync(request.Email,request.Password,cancellationToken);
         if (authenticateResult.IsError)
         {
             logger.LogError("Authentication failed");
             return authenticateResult.Errors;
         }
-        Result<TokenResponse> tokenResult =await tokenProvider.GenerateJwtToken(authenticateResult.Value,cancellationToken);
+        Result<TokenResponse> tokenResult =
+            await tokenProvider.GenerateJwtToken(authenticateResult.Value,cancellationToken);
         if (tokenResult.IsError) {
             logger.LogError("Failed to generate token");
             return tokenResult.Errors;
