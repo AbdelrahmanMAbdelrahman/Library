@@ -15,6 +15,8 @@ namespace Library.Application.Features.Reservations.Commands.CreateReservations
             CreateReservationCommand request, CancellationToken cancellationToken)
         {
             Copy? copy = await context.Copies
+                .AsNoTracking()
+                .Include(c=>c.Book)
                 .FirstOrDefaultAsync(c=>c.Id== request.CopyId,cancellationToken);
             if(copy is null)
             {
